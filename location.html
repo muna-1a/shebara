@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عزز اقامتك</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Tahoma', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: none; /* بدون خلفية */
+      box-shadow: none;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+    }
+
+    nav a {
+      color: #000;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary {
+      border: 1px solid #000;
+      background: none;
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #000;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+    .header-box {
+  display: flex;
+  justify-content: center; /* يخلي المحتوى بالوسط */
+  align-items: center;     /* يوسطن عمودياً */
+  margin: 70px 0;    
+  margin-top: 150px;      /* مسافة فوق وتحت */
+  text-align: center;
+}
+
+.header-box h3 {
+  margin: 0;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.sub-header-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;       /* مسافة أصغر من العنوان الأساسي */
+  text-align: center;
+}
+
+.sub-header-box h3 {
+  margin: 0;
+  font-size: 25px;      /* أصغر من 50px */
+  font-weight: normal;  /* أخف من العنوان */
+  color: #444;          /* لون أفتح شوي */
+}
+
+  .location {
+  padding: 80px 0;
+  background-color: #f8f9fa;
+}
+
+.location-map {
+  width: 100%;
+  height: 400px; /* اتحكم بالارتفاع */
+  margin-bottom: 30px; /* مسافة بين الصورة والنص */
+}
+
+.location-map img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* الصورة تغطي كامل المساحة */
+  border-radius: 8px;
+}
+
+.location-info {
+  text-align: center; /* بشكل عام النص بالوسط */
+}
+
+.location-info h2 {
+  font-size: 36px;
+  color: #0a0a0a;
+  margin-bottom: 30px;
+}
+
+.location-info p {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 30px; /* مسافة بين الفقرات */
+  line-height: 0.05;   /* ارتفاع السطر لسهولة القراءة */
+  display: block;     /* يتأكد إنه بلوك كامل */
+  width: 100%;        /* كل فقرة تاخد عرضها كامل */
+}
+
+/* النص يمين */
+.location-info .right-text {
+  text-align: right;
+}
+
+/* النص يسار */
+.location-info .left-text {
+  text-align: left;
+}
+
+.location-info .btn {
+  background: #fff;
+  color: #0a0808;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.location-info .btn:hover {
+  color: #ddd;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* عمودين متساويين */
+  gap: 30px; /* مسافة بين العمودين */
+}
+
+.right-col {
+  text-align: right;
+}
+
+.left-col {
+  text-align: right;   /* يخلي البداية من يسار */
+  direction: right;     /* يخلي الكتابة تبدأ من اليسار */
+}
+ 
+.spa-section {
+  max-width: 800px;
+  margin: 60px auto;
+  text-align: center; /* العنوان بالنص */
+}
+
+.spa-section h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.spa-section .subtitle {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 30px; /* مسافة تحت العنوان */
+}
+
+.spa-image img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 30px; /* مسافة تحت الصورة */
+}
+
+.spa-info {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333;
+  text-align: justify; /* يخلي النصوص مرتبة */
+}
+
+.info-slider {
+  position: relative;
+  max-width: 1000px;
+  margin: 50px auto;
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.info-card {
+  flex: 0 0 250px; /* عرض الكرت */
+  margin: 0 10px;
+  background: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.card-header {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.card-header .icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.card-header h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.card-body {
+  display: none;
+  padding: 20px;
+  background: #fff;
+  text-align: justify;
+  position: relative;
+}
+
+.card-body .close-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.info-card.active .card-body {
+  display: block;
+}
+
+/* أزرار السلايدر */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.7); /* خلفية شبه شفافة */
+  color: #fff;
+  border: none;
+  font-size: 28px;
+  padding: 12px 18px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10; /* يخلي الزر فوق أي عنصر */
+}
+
+.slider-btn.prev {
+  left: 10px;   /* قريب شوي من الكرت */
+}
+
+.slider-btn.next {
+  right: 10px;  /* قريب شوي من الكرت */
+}
+
+.icon {
+  width: 50px;   /* العرض */
+  height: 50px;  /* الارتفاع */
+  object-fit: contain; /* يخلي الأيقونة ما تتمدد غلط */
+  margin-left: 12px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;  /* يخلي العناصر فوق بعض */
+  align-items: center;     /* يوسطنهم بالنص أفقياً */
+  text-align: center;      /* يخلي النصوص بالنص */
+  margin-bottom: 20px;     /* مسافة بعد الهيدر */
+}
+
+.card-header h3 {
+  margin-top: 10px;   /* مسافة صغيرة بين الأيقونة والعنوان */
+  font-size: 22px;    /* حجم العنوان */
+  font-weight: bold;
+}
+
+.icon {
+  width: 70px;    /* كبر حجم الأيقونة */
+  height: 70px;
+}
+
+.after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+
+.after-location .divider {
+  border: none;
+  border-top: 3px solid #000; /* سُمك الخط (كبرتو شوي) */
+  width: 100%;                /* يغطي العرض كامل */
+  margin: 50px 0;             /* مسافة فوق وتحت */
+}
+
+    </style>
+  </head>
+<body>
+
+    <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">شيبارة</div>
+        <nav>
+          <ul>
+            <li><a href="villas.html">الفلل</a></li>
+            <li><a href="offers.html">العروض الخاصة</a></li>
+            <li><a href="dining.html">تناول الطعام</a></li>
+            <li><a href="activities.html">التجارب والنشاطات</a></li>
+            <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+            <li><a href="location.html">الموقع</a></li>
+            <li><a href="contact.html">للتواصل معنا</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+  <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+  <div class="language-switcher">
+    <button class="language-btn">
+      العربية <i class="fas fa-chevron-down"></i>
+    </button>
+    <ul class="language-menu">
+      <li><a href="index-ar.html">العربية</a></li>
+      <li><a href="index-en.html">English</a></li>
+    </ul>
+  </div>
+</div>
+      </div>
+    </div>
+  </header>
+
+     <section>
+    <div class="header-box">
+      <h3>موقعنا وطريقة الوصول</h3>
+</div>
+  </section>
+
+   <section>
+    <div class="sub-header-box">
+      <h3>جزيرة شيبارة - البحر الأحمر - المملكة العربية السعودية</h3>
+</div>
+  </section>
+
+   <!-- قسم الموقع -->
+   <section class="location" id="location">
+  <div class="container">
+
+    <!-- الصورة فوق -->
+    <div class="location-map">
+      <img src="181.jpg" alt="خريطة الموقع">
+    </div>
+
+    <!-- النصوص تحت -->
+    <div class="location-info">
+  <div class="two-columns">
+    <!-- العمود اليمين -->
+    <div class="right-col">
+      <p>تقع وجهة البحر الأحمر الساحرة على بعد 500 كيلومتر شمال مدينة</p>
+      <p>جدة، بين مدينتي الوجه وأملج. ويسهل مطار البحر الأحمر الدولي</p>
+      <p>الوصول إلى هذه الوجهة الفريدة من مختلف أنحاء العالم، مما يفتح</p>
+      <p>أبوابها للزوار الباحثين عن تجربة استثنائية.</p>
+    </div>
+
+    <!-- العمود اليسار -->
+    <div class="left-col">
+      <p>منتجع شيبارة: واحة من الهدوء، يقع على بعد 30-40 دقيقة فقط بالقارب من صالة</p>
+      <p>الوصول في فندق ترتل باي، أو 30 دقيقة بالطائرة المائية من مطار البحر الأحمر</p>
+      <p>الدولي. بمجرد وصولك، ستكتشف عالمًا من الهدوء والسكينة، حيث يمكنك</p>
+      <p>الاسترخاء وتجديد نشاطك بعيدًا عن صخب الحياة اليومية.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+ <section class="spa-section">
+  <!-- العنوان -->
+  <h2>الوصول إلى مطار البحر الأحمر الدولي (RSI)</h2>
+
+  <!-- الصورة -->
+  <div class="spa-image">
+    <img src="124.jpg">
+  </div>
+
+  <!-- النصوص -->
+  <div class="spa-info">
+    <p>يقع مطار البحر الأحمر الدولي في مدينة حنك، تبوك، غرب المملكة العربية السعودية، وهو بوابتك إلى عالم من الهدوء والاسترخاء في منتجع شيبارة.</p>
+    <p>استقبال خاص ورحلة مريحة:
+عند وصولك إلى المطار، سيقابلك فريق خدمة الاستقبال من منتجع شيبارة، ليضمن لك بداية سلسة ومريحة لرحلتك.
+</p>
+    <p>سيساعدك الفريق في جميع الإجراءات اللازمة ويرافقك إلى وسيلة النقل المفضلة لديك للوصول إلى المنتجع، سواء كان ذلك بالقارب أو بالطائرة المائية.</p>
+  </div>
+</section>
+
+<section class="spa-section">
+  <!-- العنوان -->
+  <h2>رحلة برية إلى البحر الأحمر</h2>
+
+  <!-- الصورة -->
+  <div class="spa-image">
+    <img src="125.jpg">
+  </div>
+
+  <!-- النصوص -->
+  <div class="spa-info">
+    <p>إذا كنت تفضل الاستمتاع بجمال المناظر الطبيعية السعودية أثناء رحلتك، فإن السفر براً إلى وجهة البحر الأحمر هو الخيار الأمثل. تقع الوجهة على بعد 500 كيلومتر شمال جدة، و375 كيلومتر شمال غرب المدينة المنورة. استمتع بالقيادة عبر الطرق السريعة الحديثة والمناظر الطبيعية الصحراوية الخلابة.</p>
+    <p>استقبال حار في مركز استقبال الضيوف: عند وصولك إلى مركز استقبال الضيوف في وجهة البحر الأحمر، ستجد فريق الضيافة في انتظارك بحفاوة وترحيب. سيقومون بمساعدتك في إتمام إجراءات الوصول وتنسيق نقلك إلى منتجع شيبارة باستخدام وسيلة النقل التي تفضلها، سواء كانت بالقارب أو بالطائرة المائية.</p>
+  </div>
+</section>
+
+ <section>
+    <div class="header-box">
+      <h3>_____</h3>
+</div>
+  </section>
+  <section>
+    <div class="header-box">
+      <h3>الوصول إلى المنتجع</h3>
+</div>
+  </section>
+
+  <section class="spa-section">
+  <!-- العنوان -->
+  <h2>الوصول بالطائرة البحرية</h2>
+
+  <!-- الصورة -->
+  <div class="spa-image">
+    <img src="126.jpg">
+  </div>
+
+  <!-- النصوص -->
+  <div class="spa-info">
+    <p>تسجيل الوصول بالطائرة المائية بكل سهولة:
+بمجرد وصولك إلى مطار البحر الأحمر الدولي، سيرافقك فريق الاستقبال المخصص إلى محطة الطائرات المائية لتسجيل الوصول بسلاسة وبدون أي متاعب.</p>
+    <p>استعد لتجربة استقبال رائع في الڤيلا عند وصولك إلى منتجع شيبارة، سيرحب بك فريقنا وسيرافقك إلى الڤيلا الفاخرة الخاصة بك، حيث يمكنك الاسترخاء والاستمتاع بإقامتك.</p>
+    <p>نصيحة هامة:
+لا تنسَ حجز خدمة النقل بالطائرة المائية عند حجز إقامتك في منتجع شيبارة. سيضمن لك ذلك تجربة سفر سلسة ومريحة من البداية إلى النهاية.</p>
+  </div>
+</section>
+
+<section class="spa-section">
+  <!-- العنوان -->
+  <h2>الوصول بالقارب</h2>
+
+  <!-- الصورة -->
+  <div class="spa-image">
+    <img src="127.jpg">
+  </div>
+
+  <!-- النصوص -->
+  <div class="spa-info">
+    <p>ترحيب ونقل حصري: بمجرد وصولك إلى مطار البحر الأحمر الدولي، سيرافقك فريق الترحيب المخصص إلى سيارتك الكهربائية الصديقة للبيئة.</p>
+    <p>استمتع برحلة مريحة لمدة 30 دقيقة عبر المناظر الطبيعية الخلابة إلى صالة الوصول بفندق تيرتل باي، الذي يقع على بعد 20 كم فقط.</p>
+    <p>رحلة بالقارب الساحرة: من رصيف الفندق، استقل قاربًا خاصًا وانطلق في رحلة هادئة لمدة 30-40 دقيقة عبر المياه الصافية. استمتع بجمال البحر الأحمر والجزر المحيطة بها بينما تتجه نحو جزيرة شيبارة الساحرة.</p>
+    <p>ستقبال الڤيلا الأنيق: عند وصولك إلى منتجع شيبارة، سيرحب بك فريقنا بحرارة ويرافقك إلى ڤيلتك الفاخرة، حيث يمكنك الاسترخاء والاستمتاع بإقامتك في أجواء من الفخامة والخصوصية.</p>
+    <p>نصيحة هامة: لا تنسَ حجز خدمة النقل بالسيارة والقارب عند حجز إقامتك في منتجع شيبارة. سيضمن لك ذلك تجربة سفر سلسة ومريحة من البداية إلى النهاية.</p>
+  </div>
+</section>
+
+<section>
+    <div class="header-box">
+      <h3>_____</h3>
+</div>
+  </section>
+  <section>
+    <div class="header-box">
+      <h3>اسمح لنا بتصميم إجازتك المثالية</h3>
+</div>
+  </section>
+  <section>
+    <div class="sub-header-box">
+      <h3>قبل السفر</h3>
+</div>
+  </section>
+
+ <section class="info-slider">
+  <button class="slider-btn prev">‹</button>
+  <div class="slider-track">
+
+    <!-- الكرت الأول -->
+    <div class="info-card">
+      <div class="card-header">
+        <img src="01.svg" alt="معلومات رحلات الطيران" class="icon">
+        <h3>معلومات رحلات الطيران</h3>
+      </div>
+      <div class="card-body">
+        <button class="close-btn">×</button>
+        <p>انطلق في رحلتك إلى وجهة البحر الأحمر مع خيارات سفر متنوعة</p>
+        <p>سافر براحة وأناقة مع الخطوط الجوية السعودية، التي تقدم ست رحلات أسبوعية من مطار الملك خالد الدولي في الرياض وثلاث رحلات من مطار الملك عبد العزيز الدولي في جدة إلى مطار البحر الأحمر الدولي.</p>
+        <p>إذا كنت مسافرًا من دبي، فلاي دبي هي خيارك الأمثل، حيث توفر رحلتين أسبوعيتين من مطار دبي الدولي إلى مطار البحر الأحمر الدولي.</p>
+        <p>يوفر لك طيران الخطوط القطرية خيارًا ممتازًا مع ثلاث رحلات أسبوعيتين من مطار الدوحة إلى مطار البحر الأحمر الدولي، مما يمنحك المزيد من المرونة في تخطيط رحلتك.</p>
+      </div>
+    </div>
+
+    <!-- الكرت الثاني -->
+    <div class="info-card">
+      <div class="card-header">
+        <img src="02.svg" alt="تأشيرة الدخول" class="icon">
+        <h3>تأشيرة الدخول</h3>
+      </div>
+      <div class="card-body">
+        <button class="close-btn">×</button>
+        <p>خطط رحلتك إلى البحر الأحمر وتأكد من حصولك على التأشيرة المناسبة. لمعرفة التأشيرة التي تحتاجها أو لتقديم طلب للحصول على تأشيرة إلكترونية يرجى زيارة:</p>
+        <p>https://www.visitsaudi.com/en/plan-your-trip/visa-regulations</p>
+      </div>
+    </div>
+
+    <!-- الكرت الثالث -->
+    <div class="info-card">
+      <div class="card-header">
+        <img src="03.svg" alt="العملة" class="icon">
+        <h3>العملة</h3>
+      </div>
+      <div class="card-body">
+        <button class="close-btn">×</button>
+        <p>العملة المتداولة في المملكة العربية السعودية هي الريال السعودي (SAR). وينقسم الريال إلى 100 هللة ويرتبط بالدولار الأمريكي. ويساوي الدولار الأمريكي الواحد 3.75 ريال سعودي.</p>
+        <p>الأوراق النقدية من فئة خمسة ريالات، و10 ريالات، و50 ريالاً، و100 ريال، و500 ريال. والعملات المعدنية من فئة ريال واحد، وريالين، و50 هللة، و25 هللة، و10 هللات، و5 هللات، أو هللة واحدة.</p>
+      </div>
+    </div>
+
+    <!-- الكرت الرابع -->
+    <div class="info-card">
+      <div class="card-header">
+        <img src="04.svg" alt="ماذا ترتدي" class="icon">
+        <h3>ماذا ترتدي</h3>
+      </div>
+      <div class="card-body">
+        <button class="close-btn">×</button>
+        <p>يعتبر البحر الأحمر وجهة خاصة للاستمتاع بأشعة الشمس والبحر والرمال، ويجب على الزوار ارتداء ما يشعرون بالراحة عند ارتدائه.</p>
+        <p>عند زيارة القرى المحلية أو المواقع الدينية، ننصح الرجال والنساء بارتداء ملابس محتشمة، مع تغطية الذراعين والركبتين وارتداء ملابس فضفاضة. ليس من الضروري أن تغطي النساء شعرهن.</p>
+      </div>
+    </div>
+
+  </div>
+  <button class="slider-btn next">›</button>
+</section>
+
+<section class="after-location">
+  <div class="after-container">
+    <h1 class="brand">شيبارة</h1>
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    </div>
+
+    <hr class="divider">
+    
+    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+  </div>
+</section>
+
+
+<script>
+// فتح/إغلاق الكرت
+const cards = document.querySelectorAll(".info-card");
+cards.forEach(card => {
+  card.querySelector(".card-header").addEventListener("click", () => {
+    card.classList.toggle("active");
+  });
+
+  card.querySelector(".close-btn").addEventListener("click", (e) => {
+    e.stopPropagation(); // ما يخلي الكرت يفتح من جديد
+    card.classList.remove("active");
+  });
+});
+
+// السلايدر
+const track = document.querySelector(".slider-track");
+const prevBtn = document.querySelector(".slider-btn.prev");
+const nextBtn = document.querySelector(".slider-btn.next");
+
+let index = 0;
+const cardWidth = 270; // عرض الكرت + المارجن
+
+nextBtn.addEventListener("click", () => {
+  if (index < cards.length - 1) {
+    index++;
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+  }
+});
+
+prevBtn.addEventListener("click", () => {
+  if (index > 0) {
+    index--;
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+  }
+});
+
+ function toggleDetails(btn) {
+      const details = btn.closest('.villa-banner').querySelector('.villa-details');
+      details.classList.toggle('show');
+      btn.textContent = details.classList.contains('show') ? "إخفاء التفاصيل" : "تفاصيل العرض";
+    }
+
+    document.querySelector('.language-btn').addEventListener('click', function() {
+  document.querySelector('.language-menu').classList.toggle('show');
+});
+
+// إغلاق القائمة إذا ضغطت برة
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.language-switcher')) {
+    document.querySelector('.language-menu').classList.remove('show');
+  }
+});
+
+</script>

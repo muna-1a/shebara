@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المنتجع الصحي والسبا</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <style>
+    /* ---------- dining hero ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: none; /* بدون خلفية */
+      box-shadow: none;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+    }
+
+    nav a {
+      color: #000;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary {
+      border: 1px solid #000;
+      background: none;
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #000;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+    .dining-hero {
+      background: none;
+      padding: 30px 0;
+    }
+
+     .img-right {
+  margin-top: 40px;
+}
+
+.img-left {
+  margin-top: 20px;
+}
+
+    .dining-hero .top-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+    .dining-hero .top-images .img-right { grid-column: 2; }
+    .dining-hero .top-images .img-left  { grid-column: 1; }
+
+    .dining-hero .hero-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .dining-hero .hero-text {
+      margin-top: 150px;
+      text-align: center;
+      padding: 0 18px;
+    }
+    .dining-hero .hero-text h1 {
+      font-size: 36px;
+      margin-bottom: 18px;
+      color: #000;
+    }
+    .dining-hero .hero-text p {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #444;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .dining-hero .bottom-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .dining-hero .top-images,
+      .dining-hero .bottom-images {
+        grid-template-columns: 1fr;
+      }
+      .dining-hero .hero-img { height: 220px; }
+      .dining-hero .hero-text { margin-top: 40px; }
+      .dining-hero .hero-text h1 { font-size: 28px; }
+    }
+
+    /* ---------- offers / restaurants ---------- */
+    .dining-offer {
+      margin: 60px 0;
+    }
+
+    .offer-card {
+      max-width: 800px;
+      margin: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .offer-top {
+      position: relative;
+    }
+    .offer-top img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+    .offer-title {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+    .offer-title h3 {
+      color: #fff;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .offer-bottom {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .offer-bottom .blur-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(12px) brightness(0.7);
+      z-index: 1;
+    }
+    .offer-info {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+    }
+    .offer-info p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .offer-info .btn {
+      background: #fff;
+      color: #000;
+      padding: 10px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .policy-box {
+  border: 2px solid #000;   /* إطار أسود */
+  padding: 14px 20px;
+  border-radius: 10px;
+  background: transparent;  
+  display: flex;            /* يخلي المحتوى بمحاذاة وسط */
+  justify-content: center;  /* بالنصف أفقياً */
+  margin: 40px auto;        /* مسافة فوق وتحت + بالنصف */
+  max-width: 800px;         /* أقصى عرض */
+  text-align: center;
+}
+
+.policy-box p {
+  margin: 0;
+  font-size: 20px;          /* خط أكبر */
+  font-weight: 700;         /* عريض */
+  color: #000;
+  display: flex;
+  flex-wrap: wrap;          /* إذا الجملة طويلة تنزل تحت */
+  align-items: center;
+  gap: 16px;                /* فراغ بين النص والزر */
+}
+
+.policy-details {
+  display: none;
+  text-align: right;
+  margin-top: 20px;
+  line-height: 1.7;
+  font-size: 16px;
+  color: #000;
+}
+
+.policy-details h3 {
+  font-size: 20px;
+  margin: 20px 0 10px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 6px;
+}
+
+.villa-banner {
+  margin: 60px auto;
+  max-width: 1000px;
+  text-align: center;
+}
+
+.villa-banner .caption {
+  margin-bottom: 20px;
+}
+.villa-banner .caption h2 {
+  font-size: 40px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #000;
+}
+.villa-banner .caption p {
+  font-size: 18px;
+  color: #444;
+}
+
+.villa-banner .villa-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.villa-banner .villa-info {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.villa-banner .villa-actions {
+  margin-top: 20px;
+}
+.villa-banner .btn-book {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.villa-banner .btn-book:hover {
+  background: #444;
+}
+
+.dishes-section {
+  display: block;   /* أو احذف display: none */
+  margin: 60px auto;
+  max-width: 1000px;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+    .dishes-section h2 {
+      font-size: 26px;
+      margin-bottom: 30px;
+      color: #000;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      gap: 20px;
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;        /* يخلي التمرير أفقي */
+      overflow-y: hidden;      /* نلغي أي تمرير عامودي */
+      -webkit-overflow-scrolling: touch; /* يخلي السحب ناعم بالموبايل */
+      scrollbar-width: none;   /* يخفي السكرول بالفَيَرفُكس */
+    }
+    .slider-wrapper::-webkit-scrollbar {
+      display: none;           /* يخفي السكرول بكروم وسفاري */
+    }
+
+    .dish {
+      flex: 0 0 80%;              /* حجم كل عنصر: 80% من عرض الشاشة */
+      scroll-snap-align: center;  /* يخلي كل صورة تثبت بنص الشاشة */
+      text-align: center;
+    }
+
+    .dishes-slider {
+      margin: 40px auto;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      max-width: 100%;
+      border-radius: 12px;
+      position: relative; /* مهم للأزرار */
+    }
+
+    .dish img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .dish p {
+      font-size: 16px;
+      color: #333;
+      margin: 0;
+    }
+
+    /* ---------- slider buttons ---------- */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      font-size: 30px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+    }
+    .slider-btn.prev { left: 10px; }
+    .slider-btn.next { right: 10px; }
+
+    .slider-btn:hover {
+      background: rgba(0,0,0,0.7);
+    } 
+
+    
+.after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+
+.after-location .divider {
+  border: none;
+  border-top: 3px solid #000; /* سُمك الخط (كبرتو شوي) */
+  width: 100%;                /* يغطي العرض كامل */
+  margin: 50px 0;             /* مسافة فوق وتحت */
+}
+
+.big-title {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.big-title1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.big-title2 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.big-title3 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.big-title4 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.big-title5 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.big-title6 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.big-title7 {
+  font-size: 42px;
+  font-weight: 700;
+}
+    </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">شيبارة</div>
+        <nav>
+          <ul>
+            <li><a href="villas.html">الفلل</a></li>
+            <li><a href="offers.html">العروض الخاصة</a></li>
+            <li><a href="dining.html">تناول الطعام</a></li>
+            <li><a href="activities.html">التجارب والنشاطات</a></li>
+            <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+            <li><a href="location.html">الموقع</a></li>
+            <li><a href="contact.html">للتواصل معنا</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+  <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+  <div class="language-switcher">
+    <button class="language-btn">
+      العربية <i class="fas fa-chevron-down"></i>
+    </button>
+    <ul class="language-menu">
+      <li><a href="index-ar.html">العربية</a></li>
+      <li><a href="index-en.html">English</a></li>
+    </ul>
+  </div>
+</div>
+      </div>
+    </div>
+  </header>
+
+ <section class="dining-hero">
+    <div class="container">
+      <div class="top-images">
+        <img src="88.jpg" alt="صورة يمين" class="hero-img img-right">
+        <img src="89.jpg" alt="صورة يسار" class="hero-img img-left">
+      </div>
+
+      <div class="hero-text">
+        <h1>انغمس في عالم من الاسترخاء والرفاهية</h1>
+        <p>مرحباً بكم في ملاذكم الخاص بالهدوء والرفاهية. انغمس في عالم من السكينة والصفاء في منتجعنا الصحي الحصري. هنا، تجتمع الفخامة والهدوء لتمنحك تجربة استرخاء وتجديد لا مثيل لها. ندعوك لاكتشاف أحدث العلاجات الفاخرة ووسائل الراحة المميزة، المصممة خصيصاً لتدليل جسمك وعقلك وتنشيط حواسك.</p>
+        <p>ساعات العمل: 10:00 صباحًا - 9:00 مساءً</p>
+      </div>
+
+      <div class="bottom-images">
+        <img src="90.jpg" alt="صورة سفلية 1" class="hero-img">
+        <img src="91.jpg" alt="صورة سفلية 2" class="hero-img">
+      </div>
+    </div>
+  </section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>علاجات السبا المميزة</h2>
+    </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>رحلة شيبارة المميزة – (120 دقيقة)</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="92.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>رحلة شيبارة المميزة هي تجسيد للفخامة، مستوحاة من سلسلة اللؤلؤ التي تشتهر بها الجزيرة، وقوة فقاعات الفضة البلاتينية المتصاعدة من أعماق البحر وتغذية الكافيار الأخضر. يبدأ هذا العلاج الفاخر بتنظيف دقيق لللؤلؤ ينقي البشرة. ثم ينتقل بسلاسة إلى تقشير غني بالكافيار. تتوج الرحلة بزيت علاجي مخصص من شيبارة ممزوج بشكل مثالي باللؤلؤ والكافيار الأخضر. ينتهي العلاج بوضع كريم نحت الجسم لإمداد البشرة بالأكسجين.</p>
+    </div>
+     </section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2 class="big-title">حمام اللؤلؤ والكافيار الأخضر المميز – 75 دقيقة</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="93.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>انغمس في تجربة فاخرة حيث يلتقي جوهر المحيط بجمال بشرتك. يغمرك هذا العلاج بمزيج فريد من الطحالب الدقيقة المستخرجة من اللؤلؤ الأسود التاهيتي والكافيار الأخضر، ليمنحك تجربة تطهير عميقة وترطيبًا لا مثيل له. يبدأ العلاج بتنظيف شامل للجسم بالبخار لإزالة الشوائب وتجهيز بشرتك لتقشير فريد باستخدام قفاز الكيسا التقليدي، يليه قناع الجسم بالراسول المغذي. تتوج هذه الرحلة بتدليك فاخر باستخدام كريم غني باللؤلؤ الأسود التاهيتي، ليترك بشرتك ناعمة ومشرقة، محصنة ضد عوامل التلوث البيئي.</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2 class="big-title1">مساج نيزك ضوء القمر (60 دقيقة)</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="94.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>قمة الإبداع في مجال العافية حيث تلتقي الفخامة بالعلم المتقدم. ويشكل زيت العلاج المميز من AMRA، والذي يحتوي على مستخلص النيزك، جوهر هذه التجربة السماوية، حيث يستغل محتوى معدنيًا غير عادي ومُثريًا بالمواد النشطة الخلوية الدقيقة. ومع تطور الرحلة، تعمل تقنيات التدليك المتخصصة مع المواد النشطة العلمية، مما يعزز تدفق الدم ويدعم التصريف اللمفاوي ويسهل طرد السموم، مما يجعلك تتحول وتستعيد نشاطك بشكل عميق.</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2 class="big-title2">منتجات سبا المتميزة</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="95.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>منتجات العناية بالبشرة الفاخرة من AMRA (الولايات المتحدة)</p>
+    </div>
+     </section>
+
+      <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+     <h2 class="big-title3">استمتعي بفخامة منتجات العناية بالبشرة الشهيرة من AMRA، والتي تشتهر بجودتها وفعاليتها الاستثنائية.</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="96.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>دكتور بورجنر (سويسرا)</p>
+      <p>استمتعي بالابتكارات المتقدمة في مجال العناية بالبشرة من الدكتور بورجنر، المعروف بدمج العلم مع الطبيعة لتقديم نتائج مذهلة.</p>
+    </div>
+     </section>
+
+      <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>وسائل الراحة في السبا</h2>
+    </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2 class="big-title4">غرف علاجية فاخرة</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="97.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>استمتع بأقصى درجات الاسترخاء مع غرف العلاج الخمس الفاخرة لدينا، بما في ذلك جناح الأزواج الرومانسيين للاستمتاع المشترك.</p>
+      <p>كبائن سبا خارجية: مثالية للعلاجات الشخصية وجلسات التأمل والمزيد، كل ذلك في بيئة خارجية هادئة.</p>
+      <p>التجارب العلاجية :</p>
+      <p>جاكوزي وساونا وغرفة بخار: مناطق منفصلة للرجال والنساء مجهزة بجاكوزي وساونا وغرف بخار ومحطات رقائق الثلج ودشات تجربة لتعزيز رحلة العافية الخاصة بك.</p>
+      <p>صالات الاسترخاء الداخلية: استرخِ في صالاتنا الداخلية الهادئة، والمصممة لتوفير المساحة المثالية للسلام والاسترخاء.</p>
+    </div>
+     </section>
+
+      <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+     <h2 class="big-title5">حمام السباحة الحيوي الخارجي</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="98.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>قم بتجديد نشاطك وحيويتك في حمام السباحة الحيوي الخارجي الهادئ.</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2 class="big-title6">الخدمات الحصرية</h2>
+        <p>استمتع بمزيج مثالي من الفخامة والهدوء في منتجعنا الصحي. يلتزم فريقنا المتخصص من المحترفين بضمان أن كل زيارة تجعلك تشعر بالحيوية والدلال والاسترخاء التام. تفضل بزيارتنا وانطلق في رحلة من العافية والاسترخاء الرائعين.</p>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="99.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>متجر التسوق</p>
+      <p>قم بتوسيع تجربة السبا الخاصة بك في المنزل مع مجموعتنا المختارة بعناية من المنتجات المتميزة المتوفرة في متجر التجزئة الخاص بنا.</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2 class="big-title7">حقق أهدافك في اللياقة البدنية</h2>
+        <p>مفتوح 24 ساعة في اليوم</p>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="100.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>مرحبًا بكم في مركز اللياقة البدنية المتطور لدينا، حيث تعتبر رحلة العافية الخاصة بك هي أولويتنا الأولى. تم تصميم مركزنا لتلبية احتياجات عشاق اللياقة البدنية من جميع المستويات، حيث يوفر مجموعة واسعة من وسائل الراحة والخدمات لمساعدتك على تحقيق أهدافك الصحية واللياقة البدنية على مدار الساعة.</p>
+    </div>
+     </section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>الخدمات الحصرية</h2>
+      <p>المدربون الشخصيون (7:00 صباحًا - 7:00 مساءً): استفد من جلسات التدريب الشخصية مع مدربينا الخبراء، الذين يكرسون جهودهم لمساعدتك في تحقيق أهداف اللياقة البدنية الخاصة بك.</p>
+    </div>
+</section> 
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>المساحات المتخصصة</h2>
+      <p>جناح اليوغا واليوغا الجوية: استمتع بفوائد اليوجا في بناء القوة والهدوء في جناحنا الهادئ. جرّب فصول اليوجا الجوية لدينا للحصول على تمرين فريد من نوعه يتحدى الجاذبية ويعزز المرونة والقوة.</p>
+    </div>
+</section> 
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>أفضل المعدات</h2>
+      <p>معدات تكنوجيم: تدرب باستخدام أفضل ما توصلت إليه تكنولوجيا اللياقة البدنية. تم تجهيز صالة الألعاب الرياضية لدينا بأحدث معدات تكنوجيم، المصممة لتوفير تمرين شامل وفعال.</p>
+    </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>المرافق الرياضية الخارجية</h2>
+      <p>ملعب التنس (7:00 صباحًا - 10:00 مساءً): تدرب على إرسال الكرة أو استمتع بمباراة تنافسية على ملعب التنس الذي يتم صيانته جيدًا، متوفر لراحتك طوال الصباح والمساء.</p>
+      <p>ملعب البادل (7:00 صباحًا - 10:00 مساءً): اكتشف رياضة البادل السريعة والممتعة على ملعبنا المخصص، وهو مثالي للاعبين من جميع مستويات المهارة.</p>
+    </div>
+</section> 
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <p>في مركز اللياقة البدنية لدينا، يمكنك ممارسة التمارين الرياضية في أي وقت يناسبك، بدعم من مرافق من الدرجة الأولى وإرشادات من الخبراء. سواء كنت رياضيًا محترفًا أو بدأت للتو رحلة اللياقة البدنية، يوفر مركزنا كل ما تحتاجه للبقاء متحفزًا وتحقيق أهدافك.</p>
+    </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض"> 
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <p>انضم إلينا واستمتع ببيئة لياقة بدنية لا مثيل لها، حيث تم تصميم كل التفاصيل لإلهامك وتمكينك من عيش حياتك الأكثر صحة ونشاطًا.</p>
+    </div>
+</section> 
+
+
+ <section class="after-location">
+  <div class="after-container">
+    <h1 class="brand">شيبارة</h1>
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    </div>
+
+    <hr class="divider">
+    
+    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+  </div>
+</section>
+
+<script>
+   function toggleDetails(btn) {
+      const details = btn.closest('.villa-banner').querySelector('.villa-details');
+      details.classList.toggle('show');
+      btn.textContent = details.classList.contains('show') ? "إخفاء التفاصيل" : "تفاصيل العرض";
+    }
+
+    document.querySelector('.language-btn').addEventListener('click', function() {
+  document.querySelector('.language-menu').classList.toggle('show');
+});
+
+// إغلاق القائمة إذا ضغطت برة
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.language-switcher')) {
+    document.querySelector('.language-menu').classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>

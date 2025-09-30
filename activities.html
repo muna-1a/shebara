@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التجارب والنشاطات</title>
+  <link rel="stylesheet" href="style.css"> <!-- نفس ملف التنسيقات -->
+</head>
+<body>
+
+    <style>
+    /* ---------- dining hero ---------- */
+header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: none; /* بدون خلفية */
+      box-shadow: none;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+    }
+
+    nav a {
+      color: #000;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary {
+      border: 1px solid #000;
+      background: none;
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #000;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+    /* مسافة تحت الهيدر */
+    .page-content {
+      padding-top: 200px;
+    }
+
+     .img-right {
+  margin-top: 40px;
+}
+
+.img-left {
+  margin-top: 20px;
+}
+
+    .dining-hero {
+      background: none;
+      padding: 30px 0;
+    }
+
+    .dining-hero .top-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+    .dining-hero .top-images .img-right { grid-column: 2; }
+    .dining-hero .top-images .img-left  { grid-column: 1; }
+
+    .dining-hero .hero-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .dining-hero .hero-text {
+      margin-top: 150px;
+      text-align: center;
+      padding: 0 18px;
+    }
+    .dining-hero .hero-text h1 {
+      font-size: 36px;
+      margin-bottom: 18px;
+      color: #000;
+    }
+    .dining-hero .hero-text p {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #444;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .dining-hero .bottom-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .dining-hero .top-images,
+      .dining-hero .bottom-images {
+        grid-template-columns: 1fr;
+      }
+      .dining-hero .hero-img { height: 220px; }
+      .dining-hero .hero-text { margin-top: 40px; }
+      .dining-hero .hero-text h1 { font-size: 28px; }
+    }
+
+    /* ---------- offers / restaurants ---------- */
+    .dining-offer {
+      margin: 60px 0;
+    }
+
+    .offer-card {
+      max-width: 800px;
+      margin: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .offer-top {
+      position: relative;
+    }
+    .offer-top img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+    .offer-title {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+    .offer-title h3 {
+      color: #fff;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .offer-bottom {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .offer-bottom .blur-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(12px) brightness(0.7);
+      z-index: 1;
+    }
+    .offer-info {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+    }
+    .offer-info p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .offer-info .btn {
+      background: #fff;
+      color: #000;
+      padding: 10px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .policy-box {
+  border: 2px solid #000;   /* إطار أسود */
+  padding: 14px 20px;
+  border-radius: 10px;
+  background: transparent;  
+  display: flex;            /* يخلي المحتوى بمحاذاة وسط */
+  justify-content: center;  /* بالنصف أفقياً */
+  margin: 40px auto;        /* مسافة فوق وتحت + بالنصف */
+  max-width: 800px;         /* أقصى عرض */
+  text-align: center;
+}
+
+.policy-box p {
+  margin: 0;
+  font-size: 20px;          /* خط أكبر */
+  font-weight: 700;         /* عريض */
+  color: #000;
+  display: flex;
+  flex-wrap: wrap;          /* إذا الجملة طويلة تنزل تحت */
+  align-items: center;
+  gap: 16px;                /* فراغ بين النص والزر */
+}
+
+/* زر قراءة المزيد */
+.policy-box .btn-read {
+  padding: 8px 16px;
+  border: 2px solid #000;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.policy-box .btn-read:hover {
+  background: #000;
+  color: #fff;
+}
+
+.policy-details {
+  display: none;
+  text-align: right;
+  margin-top: 20px;
+  line-height: 1.7;
+  font-size: 16px;
+  color: #000;
+}
+
+.policy-details h3 {
+  font-size: 20px;
+  margin: 20px 0 10px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 6px;
+}
+
+.villa-banner {
+  margin: 60px auto;
+  max-width: 1000px;
+  text-align: center;
+}
+
+.villa-banner .caption {
+  margin-bottom: 20px;
+}
+.villa-banner .caption h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #000;
+}
+.villa-banner .caption p {
+  font-size: 18px;
+  color: #444;
+}
+
+.villa-banner .villa-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.villa-banner .villa-info {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.villa-banner .villa-actions {
+  margin-top: 20px;
+}
+.villa-banner .btn-book {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.villa-banner .btn-book:hover {
+  background: #444;
+}
+
+.dishes-section {
+  display: block;   /* أو احذف display: none */
+  margin: 60px auto;
+  max-width: 1000px;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+    .dishes-section h2 {
+      font-size: 26px;
+      margin-bottom: 30px;
+      color: #000;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      gap: 20px;
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;        /* يخلي التمرير أفقي */
+      overflow-y: hidden;      /* نلغي أي تمرير عامودي */
+      -webkit-overflow-scrolling: touch; /* يخلي السحب ناعم بالموبايل */
+      scrollbar-width: none;   /* يخفي السكرول بالفَيَرفُكس */
+    }
+    .slider-wrapper::-webkit-scrollbar {
+      display: none;           /* يخفي السكرول بكروم وسفاري */
+    }
+
+    .dish {
+      flex: 0 0 80%;              /* حجم كل عنصر: 80% من عرض الشاشة */
+      scroll-snap-align: center;  /* يخلي كل صورة تثبت بنص الشاشة */
+      text-align: center;
+    }
+
+    .dishes-slider {
+      margin: 40px auto;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      max-width: 100%;
+      border-radius: 12px;
+      position: relative; /* مهم للأزرار */
+    }
+
+    .dish img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .dish p {
+      font-size: 16px;
+      color: #333;
+      margin: 0;
+    }
+
+    /* ---------- slider buttons ---------- */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      font-size: 30px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+    }
+    .slider-btn.prev { left: 10px; }
+    .slider-btn.next { right: 10px; }
+
+    .slider-btn:hover {
+      background: rgba(0,0,0,0.7);
+    }
+
+     /* ---------- footer ---------- */
+    footer {
+      background: #0a0a0a;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+
+    .after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+
+.after-location .divider {
+  border: none;
+  border-top: 3px solid #000; /* سُمك الخط (كبرتو شوي) */
+  width: 100%;                /* يغطي العرض كامل */
+  margin: 50px 0;             /* مسافة فوق وتحت */
+}
+      </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+ <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">شيبارة</div>
+        <nav>
+          <ul>
+            <li><a href="villas.html">الفلل</a></li>
+            <li><a href="offers.html">العروض الخاصة</a></li>
+            <li><a href="dining.html">تناول الطعام</a></li>
+            <li><a href="activities.html">التجارب والنشاطات</a></li>
+            <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+            <li><a href="location.html">الموقع</a></li>
+            <li><a href="contact.html">للتواصل معنا</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+  <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+  <div class="language-switcher">
+    <button class="language-btn">
+      العربية <i class="fas fa-chevron-down"></i>
+    </button>
+    <ul class="language-menu">
+      <li><a href="index-ar.html">العربية</a></li>
+      <li><a href="index-en.html">English</a></li>
+    </ul>
+  </div>
+</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- بانر -->
+  <section class="dining-hero">
+    <div class="container">
+      <div class="top-images">
+        <img src="67.jpg" alt="صورة يمين" class="hero-img img-right">
+        <img src="68.jpg" alt="صورة يسار" class="hero-img img-left">
+      </div>
+
+      <div class="hero-text">
+        <h1>تجارب استثنائية لأجل أوقات لا تنسى</h1>
+        <p>في شيبارة، نخلق تجربة ساحرة حيث تتناغم الطبيعة مع المياه الفيروزية. هنا، كل لحظة تدعو للاسترخاء، مع أنشطة تجمع بين الفخامة والإثارة، لصنع ذكريات خالدة.</p>
+      </div>
+
+      <div class="bottom-images">
+        <img src="69.jpg" alt="صورة سفلية 1" class="hero-img">
+        <img src="70.jpg" alt="صورة سفلية 2" class="hero-img">
+      </div>
+    </div>
+  </section>
+
+   <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>علاجات السبا المميزة</h2>
+      <p>حمام اللؤلؤ والكافيار الأخضر المميز – 75 دقيقة</p>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="71.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>تبدأ رحلتك نحو بشرة متألقة بتنظيف عميق وبخار يزيلان كل أثر للإجهاد والتعب. ثم، يقشر قفاز الكيسا بشرتك بلطف، ويكسوها قناع الجسم بالراسول ذو اللمسة المخملية، فتتفتح مسامك لاستقبال الكنوز.</p>
+      <p>وأخيرًا، يلامس بشرتك تدليك كريمي غني باللؤلؤ الأسود التاهيتي، فيغمرها بترطيب عميق ويمنحها قوة لا تقاوم أمام تحديات البيئة.</p>
+      <p>اخرج من هذه التجربة ببشرة مشرقة، نابضة بالحياة، كأنها ولدت من جديد.</p>
+    </div>
+
+    <!-- الأزرار -->
+    <div class="villa-actions">
+      <a href="mas.html" class="btn-book">استكشف المنتجع الصحي والسبا</a>
+    </div>
+     </section>
+
+      <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>الصالة الرياضية</h2>
+      <p>الصالة الرياضية - حقق أهدافك في اللياقة البدنية</p>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="72.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>مرحباً بكم في ملاذكم الرياضي المتكامل، حيث تأتي صحتكم ولياقتكم في مقدمة أولوياتنا. صممنا هذا المركز ليوفر تجربة مخصصة لكل عشاق الرياضة، بغض النظر عن مستوياتهم. استمتعوا بمرافق وخدمات متنوعة متاحة على مدار الساعة لتحقيق أهدافكم في عالم الصحة واللياقة بسهولة ويسر.</p>
+    </div>
+
+    <!-- الأزرار -->
+    <div class="villa-actions">
+      <a href="mas.html" class="btn-book">استكشف المنتجع الصحي والسبا</a>
+    </div>
+     </section>
+
+      <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>حمام سباحة للبالغين</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="73.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>انغمس في رفاهية لا مثيل لها في مسبحنا المخصص للبالغين ذو الاطلالة الفريدة على البحر الأحمر، والمصمم خصيصًا لتجربة استرخاء لا تُنسى. انعم بالهدوء على كراسي التشمس الفاخرة، واستمتع بنعومة المناشف الفخمة، وتلذذ بأشعة الشمس الدافئة، واحتسي كوكتيلات مبتكرة من بار سوليرا الأنيق المستوحى من سحر البحر الأحمر. تخلق أشجار النخيل الشاهقة والنباتات الخضراء المورقة ملاذًا استوائيًا ساحرًا، بينما ترسم المياه الزرقاء لوحة فنية خلابة تبعث على السكينة والصفاء.</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>حمام سباحة عائلي</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="74.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>يُعد مسبحنا العائلي ملاذًا ساحرًا يمتزج بسلاسة مع مياه البحر الأحمر الفيروزية، وتحيط به رمال ناعمة كالحرير، مما يوفر للعائلات تجربة لا تُنسى.استمتعوا بإطلالات بانورامية خلابة على البحر الأحمر الساحر، حيث تصبح كل لحظة تقضونها في مسبحنا على شاطئ البحر متعة حقيقية للحواس. يقدم مسبحنا تجربة متكاملة للعائلة بأكملها، حيث تتوفر مناطق لعب ممتعة للأطفال الصغار، وأركان هادئة للكبار للاسترخاء والراحة. إنه المكان المثالي للعائلات للاستمتاع بوقتهم الثمين معًا في أجواء من الفخامة والهدوء. استعدوا لتجربة لا تُنسى، مليئة باللحظات السعيدة والذكريات الجميلة التي ستبقى معكم إلى الأبد بجانب جمال البحر الأحمر الأخاذ في كل زاوية.</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>نادي الاطفال</h2>
+      <p>نادي الأطفال هو الوجهة المثالية حيث تتشكل الصداقات الجميلة، وتبدأ المغامرات الشيقة، وتُصنع الذكريات التي تدوم مدى الحياة</p>
+      <p>انضموا إلينا في نادي الأطفال، ودعوا أطفالكم ينطلقوا في يوم حافل بالمرح والأنشطة المُلهمة في بيئة آمنة ومُحفزة على النمو.</p>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="75.jpg">
+    </div>
+     </section>
+
+<section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>اكتشفوا عالم المغامرات</h2>
+      <p>ساعات العمل: 10:00 صباحًا - 7:00 مساءً</p>
+      <p>نادي الأطفال هو وجهتكم المثالية للأطفال من عمر 3 إلى 12 سنة، حيث نوفر بيئة آمنة ومحفزة مليئة بالمرح والتعلم. صممنا تجارب استثنائية تلهم الأطفال على الاستكشاف واللعب والتفاعل في جو من المرح والتشويق.</p>
+      <p>أطفالنا الصغار مرحب بهم أيضاً! نرحب بالأطفال من عمر 1 إلى 2 للاستمتاع بوقت رائع برفقة أحد الوالدين أو الوصي.</p>
+    </div>
+     </section>
+
+     <div class="dishes-section" id="dishesSection1">
+    <div class="dishes-slider">
+      <!-- الأزرار جوه السلايدر -->
+      <button class="slider-btn prev" onclick="slide('dishesSection1', -1)">❮</button>
+<button class="slider-btn next" onclick="slide('dishesSection1', 1)">❯</button>
+
+      <div class="slider-wrapper">
+        <div class="dish">
+          <img src="77.jpg" alt="طبق 1">
+          <p>منطقة اللعب الخارجية</p>
+          <p>استمتعوا بالهواء الطلق واللعب النشط في مساحة اللعب الخارجية الآمنة والواسعة. (يرجى الملاحظة: لا يشمل برنامجنا أنشطة السباحة).</p>
+        </div>
+        <div class="dish">
+          <img src="78.jpg" alt="طبق 2">
+          <p>أطلقوا العنان للإبداع</p>
+          <p>انغمسوا في عالم الفنون والحرف والألعاب وجلسات سرد القصص التفاعلية التي تشجع على الإبداع والخيال.</p>
+        </div>
+        <div class="dish">
+          <img src="76.jpg" alt="طبق 3">
+          <p>اللعب التعليمي</p>
+          <p>اكتشفوا متعة التعلم من خلال الألعاب والأنشطة التعليمية الشيقة المصممة خصيصاً لتناسب مختلف الأعمار.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>انغمس في مغامرات مائية مثيرة</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="79.jpg">
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>رحلات تحت الماء</h2>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>اكتشف رحلات الغطس المثيرة لدينا!</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="80.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>انطلق في رحلات الغطس المثيرة لدينا! اختر جولة إرشادية للشعاب المرجانية النابضة بالحياة أو استكشف الشعاب المرجانية الخارجية الخلابة التي تعج بالحياة البحرية.</p>
+      <p>جرب الغطس الليلي وشاهد التلألؤ الحيوي المذهل. هل أنت جديد على هذه الرياضة؟ توفر دروس السباحة لدينا مقدمة آمنة مع مدربين خبراء. يمكن للعائلات الاستمتاع باستئجار قارب غطس خاص لمغامرة لا تُنسى معًا. انضم إلينا لتجربة لا تُنسى!</p>
+    </div>
+     </section>
+
+      <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>انطلق في مغامرة: طوّر مهاراتك في الغوص</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="81.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>انضم إلى مجموعتنا المتنوعة من الدورات التدريبية المخصصة للغواصين المعتمدين! سواء كنت تتابع دورة غواص المياه المفتوحة أو غواص المياه المفتوحة المتقدم أو غواص الإنقاذ أو تستكشف الغوص الليلي والغوص العميق، لدينا خيارات لكل باحث عن المغامرة. عزز مهاراتك مع PADI Aware Fish ID واستمتع بالعالم تحت الماء كما لم يحدث من قبل!</p>
+    </div>
+     </section>
+
+       <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>تنتظرك مغامرات مائية عائلية!</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="82.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>استمتع بدروس الغطس، ورحلة بالقارب الخاص، وصانع الفقاعات للأطفال، وتحديات فريق Seal Team، واكتشاف الغوص. اصنع ذكريات مائية لا تُنسى معًا في بيئة مذهلة!</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>الأنشطة المائية</h2>
+    </div>
+</section>
+
+  <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>دروس رياضة ركوب الأمواج الشراعية</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="83.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>استعدوا لتجربة بحرية لا تُنسى مع عودة رياضة الإبحار الكلاسيكية إلى الواجهة. سنستغل الرياح الشمالية الغربية المثالية لننطلق في مغامرة شيقة حول شيبارة، حيث سنبحر في قلب المياه الزرقاء الصافية ونتحدى الأمواج.</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>الإبحار بالقوارب الشراعية</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="84.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>استمتع بفن الإبحار مع فريقنا المتميز من المدربين الدوليين، الذين يكرسون جهودهم لمساعدتك على إتقان هذه المهارة الخالدة. نقدم مجموعة متنوعة من البرامج المصممة لتناسب جميع مستويات الخبرة، حيث نعلمك تفاصيل القوارب الشراعية وتقنيات الإبحار. سواء كنت مبتدئًا أو تبحث عن تحسين مهاراتك، سيرشدك مدربونا على الماء لرحلة لا تُنسى.</p>
+    </div>
+     </section>
+
+      <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>تجارب مائية مثيرة باستخدام محرك كهربائي</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="85.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>استمتع بالمستوى التالي من الرياضات المائية مع أنشطتنا المثيرة التي تعتمد على المحركات الكهربائية! انزلق بسهولة على لوح التزلج الكهربائي أو انطلق في السماء مع التزلج الكهربائي. جرب سكوتر التزلج الكهربائي المبتكر لرحلة فريدة من نوعها أو اختبر الإثارة التي يوفرها التزلج الكهربائي وركوب الأمواج الكهربائية. أما بالنسبة لأولئك الذين يبحثون عن المزيد من المغامرة، فيمكنهم الاستمتاع بالتزلج على الأمواج أو ركوب الأمواج على متن قاربنا الكهربائي. استمتع بالمزيج المثالي من الإثارة والراحة على الماء!</p>
+    </div>
+     </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>جولة المناظر الخلابة في أحضان البحر الأحمر</h2>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="86.jpg">
+    </div>
+    </section>
+
+     <section class="villa-banner container" aria-label="تفاصيل العرض">
+    <!-- النص فوق الصورة -->
+    <div class="caption">
+      <h2>استكشف البحر الأحمر: رحلة نحو آفاق زرقاء بلا حدود</h2>
+      <p>حلّق فوق البحر الأحمر في مغامرة رائعة بالطائرة المائية</p>
+    </div>
+
+    <!-- صورة وحدة -->
+    <div class="villa-image">
+      <img src="87.jpg">
+    </div>
+
+    <!-- التفاصيل تحت الصورة -->
+    <div class="villa-info">
+      <p>نطلق في تجربة فريدة تأخذك إلى سماء البحر الأحمر الخلابة على متن الطائرة المائية. هنا، ستستمتع برحلة مدتها 30 دقيقة على امتداد البحر الأحمر الساحر كأنه لوحة فنية حية. انزلق فوق المياه الفيروزية لجزر أمهات، شيبارة، وشورى، حيث يلتقي الجمال البكر مع جمال الطبيعة الساحرة. انغمس في مزيج البحيرات المتلألئة والشعاب المرجانية البكر والروائع المعمارية المنسوجة بسلاسة مع المناظر الطبيعية. هذه الرحلة هي أكثر من مجرد جولة ذات مناظر طبيعية خلابة؛ إنها لمحة نادرة لعالم لم يمسه أحد، حيث يتباطأ الزمن، ويتجلى جمال الطبيعة أمام عينيك.</p>
+    </div>
+     </section>
+
+
+    <section class="after-location">
+  <div class="after-container">
+    <h1 class="brand">شيبارة</h1>
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    </div>
+
+    <hr class="divider">
+    
+    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+  </div>
+</section>
+
+  <script>
+    // تحريك السلايدر يمين/شمال لقسم معيّن
+  function slide(sectionId, direction) {
+    const wrapper = document.querySelector(`#${sectionId} .slider-wrapper`);
+    if (!wrapper) return;
+    const dish = wrapper.querySelector('.dish');
+    if (!dish) return;
+
+    // حساب الفراغ (gap) إذا معرف، وإلا 20px افتراضي
+    const style = window.getComputedStyle(wrapper);
+    const gap = parseInt(style.getPropertyValue('gap')) || 20;
+
+    const slideWidth = Math.round(dish.getBoundingClientRect().width + gap);
+    wrapper.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+  }
+
+  function toggleDetails(btn) {
+      const details = btn.closest('.villa-banner').querySelector('.villa-details');
+      details.classList.toggle('show');
+      btn.textContent = details.classList.contains('show') ? "إخفاء التفاصيل" : "تفاصيل العرض";
+    }
+
+    document.querySelector('.language-btn').addEventListener('click', function() {
+  document.querySelector('.language-menu').classList.toggle('show');
+});
+
+// إغلاق القائمة إذا ضغطت برة
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.language-switcher')) {
+    document.querySelector('.language-menu').classList.remove('show');
+  }
+});
+  </script> <!-- ملف الجافاسكربت اللي فيه toggleDishes و slide -->
+</body>
+</html> 

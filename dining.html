@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شيبارة - تناول الطعام</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ---------- dining hero ---------- */
+header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: none; /* بدون خلفية */
+      box-shadow: none;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+    }
+
+    nav a {
+      color: #000;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary {
+      border: 1px solid #000;
+      background: none;
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #000;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+    /* مسافة تحت الهيدر */
+    .page-content {
+      padding-top: 200px;
+    }
+
+    .img-right {
+  margin-top: 40px;
+}
+
+.img-left {
+  margin-top: 20px;
+}
+
+
+    .dining-hero {
+      background: none;
+      padding: 30px 0;
+    }
+
+    .section-title h2 {
+  font-size: 40px;   /* كبّر الحجم (غير الرقم حسب ما بتحب) */
+  font-weight: bold; /* خليها أعرض وواضحة */
+  color: #000;       /* لون النص */
+  margin-bottom: 20px; /* مسافة تحت العنوان */
+  text-align: center; /* إذا بدك يكون بنص */
+}
+
+
+    .dining-hero .top-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+    .dining-hero .top-images .img-right { grid-column: 2; }
+    .dining-hero .top-images .img-left  { grid-column: 1; }
+
+    .dining-hero .hero-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .dining-hero .hero-text {
+      margin-top: 150px;
+      text-align: center;
+      padding: 0 18px;
+    }
+    .dining-hero .hero-text h1 {
+      font-size: 36px;
+      margin-bottom: 18px;
+      color: #000;
+    }
+    .dining-hero .hero-text p {
+      max-width: 900px;
+      margin: 0 auto;
+      color: #444;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .dining-hero .bottom-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .dining-hero .top-images,
+      .dining-hero .bottom-images {
+        grid-template-columns: 1fr;
+      }
+      .dining-hero .hero-img { height: 220px; }
+      .dining-hero .hero-text { margin-top: 40px; }
+      .dining-hero .hero-text h1 { font-size: 28px; }
+    }
+
+    /* ---------- offers / restaurants ---------- */
+    .dining-offer {
+      margin: 60px 0;
+    }
+
+    .offer-card {
+      max-width: 800px;
+      margin: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .offer-top {
+      position: relative;
+    }
+    .offer-top img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+    .offer-title {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+    .offer-title h3 {
+      color: #fff;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .offer-bottom {
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .offer-bottom .blur-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(12px) brightness(0.7);
+      z-index: 1;
+    }
+    .offer-info {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+    }
+    .offer-info p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .offer-info .btn {
+      background: #fff;
+      color: #000;
+      padding: 10px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* ---------- dishes section (يظهر/يختفي) ---------- */
+    .dishes-section {
+      display: none;
+      margin: 60px auto;
+      max-width: 1000px;
+      text-align: center;
+      margin-bottom: 100px;
+    }
+    .dishes-section h2 {
+      font-size: 26px;
+      margin-bottom: 30px;
+      color: #000;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      gap: 20px;
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;        /* يخلي التمرير أفقي */
+      overflow-y: hidden;      /* نلغي أي تمرير عامودي */
+      -webkit-overflow-scrolling: touch; /* يخلي السحب ناعم بالموبايل */
+      scrollbar-width: none;   /* يخفي السكرول بالفَيَرفُكس */
+    }
+    .slider-wrapper::-webkit-scrollbar {
+      display: none;           /* يخفي السكرول بكروم وسفاري */
+    }
+
+    .dish {
+      flex: 0 0 80%;              /* حجم كل عنصر: 80% من عرض الشاشة */
+      scroll-snap-align: center;  /* يخلي كل صورة تثبت بنص الشاشة */
+      text-align: center;
+    }
+
+    .dishes-slider {
+      margin: 40px auto;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      max-width: 100%;
+      border-radius: 12px;
+      position: relative; /* مهم للأزرار */
+    }
+
+    .dish img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .dish p {
+      font-size: 16px;
+      color: #333;
+      margin: 0;
+    }
+
+    /* ---------- slider buttons ---------- */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      font-size: 30px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+    }
+    .slider-btn.prev { left: 10px; }
+    .slider-btn.next { right: 10px; }
+
+    .slider-btn:hover {
+      background: rgba(0,0,0,0.7);
+    }
+
+    /* ---------- footer ---------- */
+    footer {
+      background: #0a0a0a;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+
+    .after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+
+.after-location .divider {
+  border: none;
+  border-top: 3px solid #000; /* سُمك الخط (كبرتو شوي) */
+  width: 100%;                /* يغطي العرض كامل */
+  margin: 50px 0;             /* مسافة فوق وتحت */
+}
+  </style>
+</head>
+<body>
+
+  <!-- الهيدر -->
+ <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">شيبارة</div>
+        <nav>
+          <ul>
+            <li><a href="villas.html">الفلل</a></li>
+            <li><a href="offers.html">العروض الخاصة</a></li>
+            <li><a href="dining.html">تناول الطعام</a></li>
+            <li><a href="activities.html">التجارب والنشاطات</a></li>
+            <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+            <li><a href="location.html">الموقع</a></li>
+            <li><a href="contact.html">للتواصل معنا</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+  <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+  <div class="language-switcher">
+    <button class="language-btn">
+      العربية <i class="fas fa-chevron-down"></i>
+    </button>
+    <ul class="language-menu">
+      <li><a href="index-ar.html">العربية</a></li>
+      <li><a href="index-en.html">English</a></li>
+    </ul>
+  </div>
+</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- بانر -->
+  <section class="dining-hero">
+    <div class="container">
+      <div class="top-images">
+        <img src="50.jpg" alt="صورة يمين" class="hero-img img-right">
+        <img src="51.jpg" alt="صورة يسار" class="hero-img img-left">
+      </div>
+
+      <div class="hero-text">
+        <h1>اكتشف فن تميز الطهي في شيبارة</h1>
+        <p>في شيبارة، نرتقي بمعنى الضيافة الفاخرة إلى آفاق جديدة. نجمع بين الابتكار الجريء والحرفية الاستثنائية لنقدم لك تجربة لا تُنسى. نواكب كرم الضيافة العربية الأصيلة مع تبني أحدث الابتكارات، لنضمن لك إقامة تتجاوز كل توقعاتك.</p>
+      </div>
+
+      <div class="bottom-images">
+        <img src="52.jpg" alt="صورة سفلية 1" class="hero-img">
+        <img src="53.jpg" alt="صورة سفلية 2" class="hero-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- مطعم ايكي.رو -->
+  <section class="dining-offer">
+    <div class="container">
+      <div class="section-title">
+        <h2>ايكي.رو</h2>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-top">
+          <img src="54.jpg" alt="مطعم">
+          <div class="offer-title">
+            <h3>ايكي.رو</h3>
+          </div>
+        </div>
+
+        <div class="offer-bottom">
+          <img class="blur-bg" src="54.jpg" alt="خلفية">
+          <div class="offer-info">
+            <p>اكتشف مطبخ نيكاي: تناغم نكهات نابض بالحياة.</p>
+            <p>استمتع بفنون الطهي الياباني الحديث في مطعم ايكي.رو، جوهرة منتجع شيبارة. حيث تلتقي النكهات اليابانية الأصيلة مع لمسة بيروفية مبتكرة لتخلق روائع فنية تذوب في فمك.</p>
+            <p>انغمس في تجربة لا تُنسى:</p>
+            <p>أجواء راقية: استمتع بتناول طعامك في أجواء أنيقة ومريحة تعكس روح الضيافة اليابانية.</p>
+            <p>مطبخ تفاعلي: شاهد أمهر الطهاة وهم يعدون أطباقك أمام عينيك بكل احترافية وإبداع. رحلة أوماكاسي: انطلق في رحلة تذوق استثنائية مع قائمة طعام أوماكاسي التي يختارها الشيف خصيصًا لك. بار سوليرا: اختتم أمسيتك بمشروبات غير كحولية مبتكرة تم إعدادها بخبرة في بار سوليرا. مفتوح من الساعة 6:30 مساءً حتى 11:00 مساءً (مغلق أيام الإثنين والأربعاء)</p>
+            <a href="javascript:void(0)" class="btn" onclick="toggleDishes('dishesSection', this)">عرض الأطباق المميزة</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- قسم الأطباق (يظهر/يختفي) -->
+  <div class="dishes-section" id="dishesSection">
+    <h2>الأطباق المميزة</h2>
+    <div class="dishes-slider">
+      <!-- الأزرار جوه السلايدر -->
+<button class="slider-btn prev" onclick="slide('dishesSection', -1)">❮</button>
+<button class="slider-btn next" onclick="slide('dishesSection', 1)">❯</button>
+
+      <div class="slider-wrapper">
+        <div class="dish">
+          <img src="55.jpg" alt="طبق 1">
+          <p>سمك القد الأسود بالميسو</p>
+          <p>استمتع بسمك القد الأسود المميز لدينا، وهو سمك طري متبل بشكل مثالي لتجربة طعام لا تُنسى.</p>
+        </div>
+        <div class="dish">
+          <img src="56.jpg" alt="طبق 2">
+          <p>تشكيلة من المشويات على طريقة روباتا التقليدية</p>
+          <p>استمتع باللحوم والمأكولات البحرية والخضروات المشوية على طريقة روباتا التقليدية للحصول على نكهات غنية ومدخنة تسعد حواسك.</p>
+        </div>
+        <div class="dish">
+          <img src="57.jpg" alt="طبق 3">
+          <p>السوشي والساشيمي</p>
+          <p>استمتع بتناول السوشي والساشيمي الرائع المصنوع باستخدام التقنيات والفنون التقليدية.</p>
+        </div>
+        <div class="dish">
+          <img src="58.jpg" alt="طبق 3">
+          <p>نيكاي سيفيشي</p>
+          <p>استمتع بمذاق السيفيشي المنعش الممزوج بمزيج من النكهات اليابانية والبيروفية.</p>
+        </div>
+        <div class="dish">
+          <img src="59.jpg" alt="طبق 3">
+          <p>كوكتيلات مميزة</p>
+          <p>دلل حواسك بمشروبات فريدة من نوعها، مصنوعة يدوياً بعناية فائقة ومستوحاة من مزيج النكهات اليابانية والبيروفية المميز. ستكمل هذه المشروبات الخالية من الكحول تجربة تناول الطعام الخاصة بك في مطعم ايكي.رو، لتضيف لمسة من الانتعاش والإبداع إلى كل طبق.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="dining-offer">
+    <div class="container">
+      <div class="section-title">
+        <h2>أريا ماري</h2>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-top">
+          <img src="60.jpg" alt="مطعم">
+          <div class="offer-title">
+            <h3>أريا ماري</h3>
+          </div>
+        </div>
+
+        <div class="offer-bottom">
+          <img class="blur-bg" src="60.jpg" alt="خلفية">
+          <div class="offer-info">
+            <p>رحلة طهي رائعة تحتفي بأفضل ما في البحر الأبيض المتوسط</p>
+            <p>حيث البساطة تلتقي بالرقي</p>
+            <p>ندعوكم إلى تجربة استثنائية في مطعمنا، حيث تروي كل طبق قصة غنية عن ثقافة البحر الأبيض المتوسط العريقة. نعتز هنا بوفرة الأرض والبحر، ونحتفي بالمواسم ونختار أجود المكونات الطازجة لنقدم لكم أطباقًا تعكس جوهر هذه الثقافة العريقة.</p>
+            <p>مختبر المعكرونة: عرض حي لإبداعات الشيف ماركو انضموا إلينا في رحلة شيقة إلى مختبر المعكرونة، حيث يقودكم الشيف ماركو جارفاجنيني، الحائز على نجمة ميشلان، في عرض حي لصناعة المعكرونة الطازجة. استمتعوا بمشاهدة إبداعاته من خلال نافذة زجاجية كبيرة، وشاهدوا كيف تتحول المكونات البسيطة إلى أطباق فنية تثير الحواس. مفتوح من الساعة6:30 مساءً حتى 11:00 مساءً (مغلق أيام الأحد والثلاثاء)</p>
+           <a href="javascript:void(0)" class="btn" onclick="toggleDishes('dishesSection1')">عرض الأطباق المميزة</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- قسم الأطباق (يظهر/يختفي) -->
+  <div class="dishes-section" id="dishesSection1">
+    <h2>الأطباق والمشروبات المميزة من القائمة</h2>
+    <div class="dishes-slider">
+      <!-- الأزرار جوه السلايدر -->
+      <button class="slider-btn prev" onclick="slide('dishesSection1', -1)">❮</button>
+<button class="slider-btn next" onclick="slide('dishesSection1', 1)">❯</button>
+
+      <div class="slider-wrapper">
+        <div class="dish">
+          <img src="61.jpg" alt="طبق 1">
+          <p>المأكولات البحرية المميزة</p>
+          <p>تذوق أشهى المأكولات البحرية المحضّرة من أجود أنواع المصيد المحلي، والمُتبلة ببهارات البحر الأبيض المتوسط العطرية التي ستأخذك في رحلة ساحرة إلى قلب هذا المطبخ الغني.</p>
+          <p>اكتشف روائع البحر في كل طبق</p>
+        </div>
+        <div class="dish">
+          <img src="62.jpg" alt="طبق 2">
+          <p>كرودو</p>
+          <p>استمتع بمجموعة رائعة من أطباق المأكولات البحرية النيئة مثل الساشيمي مع سمك التونة ذات الزعانف الصفراء ومختلف إبداعات الكرودو، مع التقاط جوهر النكهات المتوسطية الطازجة والرقيقة.</p>
+        </div>
+        <div class="dish">
+          <img src="63.jpg" alt="طبق 3">
+          <p>كوكتيلات غير كحولية مميزة</p>
+          <p>استمتع بمجموعة مختارة بعناية من المشروبات غير الكحولية المستوحاة من مكونات البحر الأبيض المتوسط، والمصممة لتعزيز وتكملة نكهات القائمة.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="dining-offer">
+    <div class="container">
+      <div class="section-title">
+        <h2>لونارا</h2>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-top">
+          <img src="64.jpg" alt="مطعم">
+          <div class="offer-title">
+            <h3>لونارا</h3>
+          </div>
+        </div>
+
+        <div class="offer-bottom">
+          <img class="blur-bg" src="64.jpg" alt="خلفية">
+          <div class="offer-info">
+            <p>مطعم براسيري</p>
+            <p>اكتشف لونارا، وهو مطعم براسيري متطور حيث يلتقي التصميم الأنيق بالنكهات العالمية. استمتع بوجبات إفطار شهية وخدمة شخصية، مما يخلق تجارب لا تُنسى للتجمعات والاستكشاف الطهوي.</p>
+            <p>الافطار: يوميا من الساعة 7:00 حتى 11:00 صباحًا</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dining-offer">
+    <div class="container">
+      <div class="section-title">
+        <h2>ساريا</h2>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-top">
+          <img src="65.jpg" alt="مطعم">
+          <div class="offer-title">
+            <h3>ساريا</h3>
+          </div>
+        </div>
+
+        <div class="offer-bottom">
+          <img class="blur-bg" src="65.jpg" alt="خلفية">
+          <div class="offer-info">
+            <p>بار ومطعم حمام السباحة العائلي</p>
+            <p>مرحبًا بكم في بار ومطعم ساريا، وهو ملاذ فاخر لتناول الطعام على شاطئ البحر. استمتع بالمأكولات الشامية الرائعة وسط مناظر ساحلية خلابة. استمتع بقائمة متنوعة من الأطباق الحديثة المصنوعة من أجود المكونات، كل ذلك في أجواء أنيقة تجمع بين العناصر الطبيعية لإضفاء أجواء مريحة. استمتع بالخدمة الشخصية ووسائل الراحة المناسبة للعائلة لرحلة طهي لا تُنسى في ساريا.</p>
+            <p>استمتعوا بتناول الطعام في الهواء الطلق، مع إطلالات خلابة على الساحل ونسمات البحر المنعشة. نحن نؤمن بأن كل وجبة يجب أن تكون احتفالية، ولذلك نقدم لكم قائمة SARIA التي تحتوي على مجموعة متميزة من الأطباق التي تعكس تراث المنطقة بطرق مبتكرة.</p>
+           <p>مفتوح من الساعة 10:30 صباحًا حتى الساعة 7:30 مساءًالغداء: الساعة 12:30 مساءً حتى 6:30 مساءً</p> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dining-offer">
+    <div class="container">
+      <div class="section-title">
+        <h2>سوليرا</h2>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-top">
+          <img src="66.jpg" alt="مطعم">
+          <div class="offer-title">
+            <h3>سوليرا</h3>
+          </div>
+        </div>
+
+        <div class="offer-bottom">
+          <img class="blur-bg" src="66.jpg" alt="خلفية">
+          <div class="offer-info">
+            <p>بار حمام السباحة للبالغين</p>
+            <p>استمتع بتجربة سوليرا، وهو بار متطور يمزج بين هدوء البحر ودفء الموقد. استمتع بقائمة صديقة للبيئة من المشروبات غير الكحولية المبتكرة المستوحاة من الطبيعة، إلى جانب الوجبات الخفيفة الصغيرة المستمدة من البحر الأحمر والصحراء المحلية. انغمس في أجواء سوليرا الأنيقة، التي تتميز بإضاءة ديناميكية ومناظر صوتية مختارة بعناية لتجربة طعام لا تُنسى ومستدامة. اختبر مزيجًا فريدًا من المشروبات المستوحاة من البحر والموقد في أجواء فاخرة تعدك بتجربة لا تُنسى وصديقة للبيئة. استمتع بالمشروبات المبتكرة غير الكحولية التي تستحضر جوهر البحر الخام وروح النار البدائية، بالإضافة إلى الوجبات الخفيفة المستوحاة منالبحر والموقد والتي يتم الحصول عليها من البحر الأحمر المحلي والمناطق الصحراوية المحيطة.</p>
+            <p>من الساعة 10:30 صباحًا حتى 7:00 مساءً وجبات خفيفة يوميًا من الساعة 1 حتى الساعة 5 مساءً</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="after-location">
+  <div class="after-container">
+    <h1 class="brand">شيبارة</h1>
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    </div>
+
+    <hr class="divider">
+    
+    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+  </div>
+</section>
+
+  <script>
+    function toggleDishes(sectionId, btnElem) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const isHidden = window.getComputedStyle(section).display === 'none';
+    if (isHidden) {
+      section.style.display = 'block';
+      if (btnElem) btnElem.textContent = 'إخفاء الأطباق المميزة';
+      // نزّل العرض للقسم بعد الفتح (اختياري)
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      section.style.display = 'none';
+      if (btnElem) btnElem.textContent = 'عرض الأطباق المميزة';
+    }
+  }
+
+  // تحريك السلايدر يمين/شمال لقسم معيّن
+  function slide(sectionId, direction) {
+    const wrapper = document.querySelector(`#${sectionId} .slider-wrapper`);
+    if (!wrapper) return;
+    const dish = wrapper.querySelector('.dish');
+    if (!dish) return;
+
+    // حساب الفراغ (gap) إذا معرف، وإلا 20px افتراضي
+    const style = window.getComputedStyle(wrapper);
+    const gap = parseInt(style.getPropertyValue('gap')) || 20;
+
+    const slideWidth = Math.round(dish.getBoundingClientRect().width + gap);
+    wrapper.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+  }
+
+  function toggleDetails(btn) {
+      const details = btn.closest('.villa-banner').querySelector('.villa-details');
+      details.classList.toggle('show');
+      btn.textContent = details.classList.contains('show') ? "إخفاء التفاصيل" : "تفاصيل العرض";
+    }
+
+    document.querySelector('.language-btn').addEventListener('click', function() {
+  document.querySelector('.language-menu').classList.toggle('show');
+});
+
+// إغلاق القائمة إذا ضغطت برة
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.language-switcher')) {
+    document.querySelector('.language-menu').classList.remove('show');
+  }
+});
+  </script>
+</body>
+</html>
+

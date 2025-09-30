@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>احجز إقامتك</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;700&display=swap" rel="stylesheet">
+  <style>
+     body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: #f9f9f9;
+      color: #111;
+    }
+
+      /* الهيدر */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: none;
+  box-shadow: none;
+}
+
+/* كونتينر للهيدر */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;               /* كله يصير صف */
+  align-items: center;         /* يضبط الطول العمودي */
+  justify-content: space-between; /* توزيع بين اليسار واليمين */
+  height: 70px;
+}
+
+/* الشعار */
+.logo {
+  font-size: 50px;
+  font-weight: 600;
+  color: #f8f6f6;
+}
+
+/* القوائم */
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #f9f3f3;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background: rgba(241, 239, 239, 0.886);
+}
+
+/* أزرار اليمين */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-primary {
+  border: 1px solid #f0ecec;
+  background: none;
+  color: #f3efef;
+  padding: 8px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #ebe4e4;
+    }
+
+    .btn-primary {
+      border: 1px solid #f1eeee;
+      background: none;
+      color: #ede7e7;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #fdfbfb;
+  color: #eee8e8;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+     .hero {
+      background: url('43.jpg') center/cover no-repeat;
+      padding: 80px 20px;
+      text-align: center;
+      color: #fff;
+      background-color: #0a6a4a; /* fallback */
+       margin-bottom: 100px
+
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f4efec;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .add-code {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      background: #000;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: #333;
+    }
+    .after-location .divider {
+  border: none;
+  border-top: 3px solid #000; /* سُمك الخط (كبرتو شوي) */
+  width: 100%;                /* يغطي العرض كامل */
+  margin: 50px 0;             /* مسافة فوق وتحت */
+}
+  </style>
+</head>
+<body>
+
+   <!-- الهيدر -->
+<header>
+  <div class="header-container">
+    <div class="logo">شيبارة</div>
+
+    <nav>
+      <ul>
+        <li><a href="villas.html">الفلل</a></li>
+        <li><a href="offers.html">العروض الخاصة</a></li>
+        <li><a href="dining.html">تناول الطعام</a></li>
+        <li><a href="activities.html">التجارب والنشاطات</a></li>
+        <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+        <li><a href="location.html">الموقع</a></li>
+        <li><a href="contact.html">للتواصل معنا</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+      <div class="language-switcher">
+        <button class="language-btn">
+          العربية <i class="fas fa-chevron-down"></i>
+        </button>
+        <ul class="language-menu">
+          <li><a href="index-ar.html">العربية</a></li>
+          <li><a href="index-en.html">English</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <section class="hero">
+    <h1>نحن هنا لمساعدتك </h1>
+  </section>
+
+  <div class="container">
+    <h2>احجز إقامة</h2>
+
+    <label for="checkin">تاريخ الحجز</label>
+  <input type="date" id="checkin" name="checkin">
+
+    <!-- عدد الفلل -->
+    <label for="villas">عدد الفلل</label>
+    <select id="villas" name="villas">
+      <option>1 فيلا</option>
+      <option>2 فيلات</option>
+      <option>3 فيلات</option>
+      <option>4 فيلات</option>
+    </select>
+
+    <!-- عدد البالغين -->
+    <label for="adults">الأفراد البالغون</label>
+    <select id="adults" name="adults">
+      <option>1 الفرد البالغ</option>
+      <option selected>2 الافراد البالغون</option>
+      <option>3 الافراد البالغون</option>
+      <option>4 الافراد البالغون</option>
+      <option>5 الافراد البالغون</option>
+      <option>6 الافراد البالغون</option>
+      <option>7 الافراد البالغون</option>
+      <option>8 الافراد البالغون</option>
+    </select>
+
+    <!-- عدد الأطفال -->
+    <label for="children">الأطفال</label>
+    <select id="children" name="children">
+      <option selected>0 الأطفال</option>
+      <option>1 الطفل</option>
+      <option>2 الأطفال</option>
+    </select>
+
+    <!-- إضافة رمز أو كود -->
+    <div class="add-code">
+      <span>+ إضافة الرمز أو الكود</span>
+    </div>
+
+    <!-- زر البحث -->
+    <button class="btn-submit" onclick="window.location.href='ar.html'">
+  البحث عن المتوفر
+</button>
+  </div>
+
+<script>
+  function toggleDetails(btn) {
+      const details = btn.closest('.villa-banner').querySelector('.villa-details');
+      details.classList.toggle('show');
+      btn.textContent = details.classList.contains('show') ? "إخفاء التفاصيل" : "تفاصيل العرض";
+    }
+
+    document.querySelector('.language-btn').addEventListener('click', function() {
+  document.querySelector('.language-menu').classList.toggle('show');
+});
+
+// إغلاق القائمة إذا ضغطت برة
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.language-switcher')) {
+    document.querySelector('.language-menu').classList.remove('show');
+  }
+});
+</script>
+
+</body>
+</html>

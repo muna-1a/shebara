@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عزز اقامتك</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Tahoma', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    /* ===== البانر ===== */
+    .hero {
+      position: relative;
+      height: 350px;
+      background: url("43.jpg") center/cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 90px;
+      background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
+    }
+
+    /* الشريط الشفاف فوق الصورة */
+    .booking-bar {
+      position: absolute;
+      bottom: 20px; 
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      width: 95%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+    }
+
+    /* الأزرار يمين */
+    .bar-right {
+      display: flex;
+      gap: 25px;
+    }
+
+    .bar-right button {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: 0.3s;
+      color: #fff;
+      display: flex;
+      gap: 6px;
+    }
+
+    .bar-right button:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .bar-right i {
+      font-size: 16px;
+      color: #fff;
+    }
+
+    /* العناصر يسار */
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      color: #fff;
+    }
+
+    .bar-left span {
+      font-size: 18px;
+    }
+
+    .search-btn {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 18px;
+    }
+
+    .search-btn:hover {
+      background: #444;
+    }
+
+    /* مربع التنبيه */
+    .notice {
+      background-color: #ffeaea;
+      color: #000;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 20px;
+      margin-top: 40px;
+      border-radius: 6px;
+      margin-bottom: 50px;
+    }
+
+    /* ====== قسم عزز اقامتك ====== */
+    .header-box {
+      display: flex;
+      align-items: center;   /* يخليهم على نفس الخط العمودي */
+      gap: 550px;             /* المسافة بين الكلمة والزر */
+      margin: 40px 20px;     /* مسافة من الجوانب وفوق وتحت */
+    }
+
+    .header-box h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .skip-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 13px 25px;
+      border-radius: 6px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .skip-btn:hover {
+      background: #333;
+    }
+
+    .price-container {
+      display: flex;
+      align-items: center;
+      gap: 15px; /* المسافة بين الزر والنص */
+      font-family: Tahoma, sans-serif;
+    }
+
+    .add-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .add-btn:hover {
+      background: #333;
+    }
+
+    .info-text {
+      font-size: 16px;
+      color: #333;
+      display: none; /* مخفية بالبداية */
+    }
+
+    /* الـ checkbox */
+input[type="checkbox"] {
+  accent-color: black; /* المربع أسود عند التفعيل */
+}
+
+.panel {
+  display: none;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 أعمدة */
+  gap: 12px; /* مسافة بين الخيارات */
+}
+.panel label {
+  font-size: 16px; /* كبرنا الخط */
+  cursor: pointer;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 50px 0; /* مسافة فوق وتحت */
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px solid #000; /* خليه 2px أو 3px بدل 1px */
+}
+
+.divider::before {
+  margin-left: 10px;
+}
+.divider::after {
+  margin-right: 10px;
+}
+
+.divider span {
+  font-size: 18px; /* حجم النص */
+  font-weight: bold;
+  color: #333; /* لون النص */
+  padding: 0 10px; /* مسافة حول النص */
+  white-space: nowrap;
+}
+
+.villa-card {
+  background: #f5f5f0; /* لون سكري */
+  border-radius: 10px;
+  padding: 20px;
+  margin: 40px auto;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin-bottom: 60px;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.slider img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: none;
+}
+
+.slider img.active {
+  display: block;
+}
+
+.slider button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.slider .prev { left: 10px; }
+.slider .next { right: 10px; }
+
+.villa-content {
+  margin-top: 20px;
+}
+
+.villa-content h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.villa-content p {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.villa-content .desc {
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.villa-content p.desc {
+  margin-bottom: 25px !important; /* هي بتجبر المتصفح يستخدم القيمة */
+}
+
+.more-btn { 
+  margin: 20px 0;
+  padding: 10px 20px;
+  border: 1px solid #000;
+  background: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 5px;
+  margin-right: auto; /* يخليه يروح يمين */
+  display: block; 
+}
+
+.price-section h3 {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-section p {
+  font-size: 14px;
+  color: #444;
+  margin: 5px 0 15px;
+}
+
+.price {
+  background: #000;
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 6px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: flex-start; /* خليهم ملزقين باليمين */
+  margin: 8px 0;
+  font-size: 15px;
+  gap: 30px; /* هون تتحكم بحجم المسافة بين الكلمتين */
+}
+
+.detail-row .label {
+  display: inline-block;
+  width: 80px;  /* جرب 60px - 100px حسب ما يعجبك */
+  font-weight: bold;
+}
+
+.detail-row .value {
+  color: #333;
+}
+
+/* مودال المزيد من المعلومات */
+#villaModal .modal-content {
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.spacer {
+  height: 20px; /* هون تتحكم بحجم المسافة */
+}
+
+.divider-line {
+  border: none;
+  border-top: 3px solid #000; /* خط أسود، سمك 3px */
+  margin: 0; /* بدون مسافات إضافية */
+}
+
+/* زر الكرت التاني فقط */
+.special-btn {
+  display: block;          /* يخليه مثل الكرت الأول */
+  margin: 30px 0;          /* يعمل مسافة فوق وتحت */
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  transition: 0.3s ease;
+   margin-right: auto;
+}
+
+/* تأثير hover */
+.special-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+.special-btn-1 {
+  display: block;          /* يخليه مثل الكرت الأول */
+  margin: 30px 0;          /* يعمل مسافة فوق وتحت */
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  transition: 0.3s ease;
+   margin-right: auto;
+}
+
+/* تأثير hover */
+.special-btn-1:hover {
+  background: #000;
+  color: #fff;
+}
+
+.special-btn-2 {
+  display: block;          /* يخليه مثل الكرت الأول */
+  margin: 30px 0;          /* يعمل مسافة فوق وتحت */
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  transition: 0.3s ease;
+   margin-right: auto;
+}
+
+/* تأثير hover */
+.special-btn-2 :hover {
+  background: #000;
+  color: #fff;
+}
+
+
+
+
+.modal {
+  display: none; /* مخفي افتراضياً */
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  overflow: auto;
+}
+
+.modal-content {
+  background: #fff;
+  margin: 60px auto;
+  padding: 25px;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 800px;   /* صار أعرض */
+  font-size: 18px;    /* كبرنا الخط داخل المربع */
+}
+
+/* الرأس */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.clear-btn, .result-btn, .close-btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clear-btn { background: #f1f1f1; }
+.result-btn { background: #222; color: #fff; }
+.close-btn { background: transparent; font-size: 18px; }
+
+/* الأقسام */
+.filter-block {
+  margin: 15px 0;
+}
+
+.accordion {
+  background: #f9f9f9;
+  border: none;
+  width: 100%;
+  text-align: right;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel {
+  display: none;
+  padding: 10px 0;
+}
+
+.panel label {
+  display: block;
+  margin: 6px 0;
+}
+
+.added {
+  background: #eef4ef !important; /* أخضر كمثال */
+  color: #080808 !important;
+}
+
+.toggle-btn {
+  font-size: 20px;     /* حجم الخط */
+  padding: 15px 30px;  /* حجم المربع (طول × عرض) */
+  border-radius: 8px;  /* زوايا مدورة أكتر */
+}
+.total-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* يخليهم على سطر واحد */
+  gap: 50px; /* مسافة بين كل عنصر */
+  margin: 30px 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.total-bar .icon {
+  font-size: 22px;
+}
+
+.continue-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.continue-btn:hover {
+  background: #333;
+}
+
+.after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+  </style>
+</head>
+<body>
+
+  <!-- البانر -->
+  <section class="hero">
+    <div class="booking-bar">
+      <div class="bar-right">
+        <button><i class="fas fa-circle-exclamation"></i> المنتجع</button>
+        <button><i class="fas fa-images"></i> معرض الصور</button>
+        <button><i class="fas fa-map-marker-alt"></i> الخريطة</button>
+      </div>
+
+      <div class="bar-left">
+        <span>غرفة</span>
+        <span>الضيوف: 2</span>
+        <span>29 سبتمبر 2025</span>
+        <button class="search-btn">بحث</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- قسم عزز اقامتك -->
+  <section>
+    <div class="header-box">
+      <h3>عزّز إقامتك</h3>
+      <button class="skip-btn">تخطي هذه الخطوة</button>
+    </div>
+  </section>
+
+  <!-- كرت فيلا -->
+<div class="villa-card">
+  <!-- سلايدر -->
+  <div class="slider">
+    <img src="105.jpg" alt="فيلا" class="active">
+    <img src="106.jpg" alt="فيلا">
+
+    <!-- أزرار تحكم -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <!-- التفاصيل -->
+  <div class="villa-content">
+    <h2>نقل بري وقارب سريع مشترك ذهابًا وإيابًا: من مطار البحر الأحمر الدولي إلى منتجع شبارة</h2>
+    <p>978.00 &#65020 لكل حجز</p>
+    <p>لنقل البري: سيكون نقلًا خاصًا.</p>
+    <p>نقل القارب السريع: سيكون نقلًا مشتركًا مع ضيوف آخرين وفقًا للجدول الزمني المحدد.</p>
+    <p>يرجى التأكد من إرسال التفاصيل التالية لجميع الضيوف المسافرين:</p>
+    <p>نسخة من جواز السفر أو الهوية</p>
+     <p>تفاصيل الرحلة</p>
+      <p>معلومات الاتصال</p>
+      <p>سياسة الأطفال:</p>
+      <p>الأطفال من 0 إلى 2 سنوات يمكنهم السفر مجانًا.</p>
+</div>
+
+    <!-- زر المزيد -->
+    <button class="more-btn">المزيد من المعلومات</button>
+
+    <!-- قسم السعر -->
+    <div class="price-section">
+     <div class="price-container">
+  <button class="toggle-btn" data-id="1" data-price="1956">الإضافة</button>
+<span class="info-text" data-id="1" style="display:none;">1 إضافة (﷼ 1,956.00)</span>
+  </div>
+</div>
+
+<!-- المودال الخاص بالمزيد من المعلومات -->
+ <div id="villaModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    
+    <!-- نفس محتوى الكرت -->
+    <div class="villa-card">
+      <!-- السلايدر -->
+      <div class="slider modal-slider">
+       <img src="105.jpg" alt="فيلا" class="active">
+       <img src="106.jpg" alt="فيلا">
+
+        <!-- أزرار تحكم -->
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+
+      <!-- التفاصيل -->
+      <div class="villa-content">
+        <h2>نقل بري وقارب سريع مشترك ذهابًا وإيابًا: من مطار البحر الأحمر الدولي إلى منتجع شبارة</h2>
+       <p>&#65020 978.00 لكل حجز &#65020;</p>
+       <p>تفاصيل النقل:</p>
+       <p>النقل البري: سيكون نقلًا خاصًا.</p>
+       <p>نقل القارب السريع: سيكون نقلًا مشتركًا مع ضيوف آخرين وفقًا للجدول الزمني المحدد.</p>
+       <p>يرجى التأكد من إرسال التفاصيل التالية لجميع الضيوف المسافرين:</p>
+       <p>نسخة من جواز السفر أو الهوية</p>
+       <p>تفاصيل الرحلة</p>
+       <p>معلومات الاتصال</p>
+       <p>سياسة الأطفال:</p>
+       <p>الأطفال من 0 إلى 2 سنوات يمكنهم السفر مجانًا.</p>
+       <p>سياسة الإلغاء:</p>
+       <p>النقل البري والبحري:</p>
+       <p>قبل 7 أيام أو أكثر من الوصول: بدون رسوم.</p>
+       <p>من 3 إلى 6 أيام قبل الوصول: خصم 30% من التكلفة.</p>
+       <p>من 0 إلى 2 أيام قبل الوصول: خصم 100% من التكلفة.</p>
+       <p>عدم الحضور: خصم 100% من التكلفة.</p>
+       <p>سياسة الأمتعة:</p>
+       <p>يُسمح لكل ضيف بما يلي:</p>
+       <p>الأمتعة المُسجّلة: حقيبة واحدة بحد أقصى وزن 23 كجم.</p>
+       <p>الأمتعة اليدوية: حقيبة صغيرة بحد أقصى وزن 7 كجم.</p>
+       <p>أشياء إضافية: حقيبة لاب توب أو حقيبة يد.</p>
+       <p>الأمتعة الزائدة أو غير المناسبة للحجم:</p>
+       <p>ي أمتعة إضافية أو كبيرة الحجم، وكذلك الأغراض التي تتجاوز حدود الوزن المحددة، لن يُسمح بها على متن المركب. سيتم نقل هذه الأغراض على مركب منفصل بعد وصول الضيف.</p>
+       <p>مقاسات الأمتعة:</p>
+       <p>الحقيبة الكبيرة: الطول: 79 سم، العرض: 51 سم، العمق: 32 سم.</p>
+       <p>الحقيبة الصغيرة ("حقيبة اليد"): الطول: 52 سم، العرض: 34 سم، العمق: 24 سم.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- كرت فيلا -->
+<div class="villa-card">
+  <!-- سلايدر -->
+  <div class="slider">
+    <img src="106.jpg" alt="فيلا" class="active">
+    <img src="107.jpg" alt="فيلا">
+
+    <!-- أزرار تحكم -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <!-- التفاصيل -->
+  <div class="villa-content">
+    <h2>عند الطلب - خاضع للتوافر- نقل مشترك بالطائرة البحرية - رحلات مجدولة ذهابًا وإيابًا من: مطار البحر الأحمر الدولي إلى: منتجع شيبارة</h2>
+    <p>3,335.00 &#65020 لكل شخص</p>
+    <p>مدة الرحلة:</p>
+    <p>30 دقيقة</p>
+    <p>المتطلبات اللازمة لتأكيد الحجز:</p>
+    <p>للمتابعة مع الحجز، يرجى تزويدنا بالتفاصيل التالية لجميع الضيوف المسافرين:</p>
+    <p>نسخة من جواز السفر أو الهوية</p>
+    <p>تفاصيل الرحلة</p>
+    <p>معلومات الاتصال</p>
+    <p>معلومات هامة:</p>
+    <p>جميع رحلات الطائرة البحرية تخضع لظروف الطقس ولقرار قائد الطائرة في يوم التشغيل بناءً على توقعات الطقس الجوية.</p>
+    <p>في حالة سوء الأحوال الجوية، سيتم استرداد الفرق بين تكلفة النقل البديل وسعر تذكرة الطائرة البحرية.</p>
+    <p>ويفضل أن يتم ذلك على شكل قسيمة خصم لاستخدامها في الزيارة القادمة للضيف.</p>
+    <p>يُطلب من الضيوف التوجه إلى مكاتب تسجيل الوصول للطائرة البحرية في مطار البحر الأحمر الدولي (RSIA) مع هوية شخصية (جواز سفر، هوية وطنية، إقامة). سيتم مرافقة الضيوف المسجلين وفقًا للإجراءات المتبعة.</p>
+    <p>سياسة الأمتعة:</p>
+    <p>الأمتعة المسجلة: حقيبة واحدة بوزن أقصى 23 كجم – يجب ألا تتجاوز الأبعاد الإجمالية 158 سم (70 سم + 38 سم + 50 سم).</p>
+    <p>الأمتعة المحمولة: حقيبة صغيرة بوزن أقصى 7 كجم + حقيبة لاب توب/حقيبة يد/محفظة.</p>
+    <p>سياسة الإلغاء:</p>
+    <p>قبل 8 أيام أو أكثر من الوصول: مجانًا</p>
+    <p>من 4 إلى 7 أيام قبل الوصول: سيتم خصم 50٪ من التكلفة</p>
+    <p>من 0 إلى 3 أيام قبل الوصول: سيتم خصم 100٪ من التكلفة</p>
+    <p>عدم الحضور: سيتم خصم 100٪ من التكلفة</p>
+
+    <!-- زر المزيد -->
+    <button class="more-btn-2 special-btn">المزيد من المعلومات</button>
+
+    <!-- قسم السعر -->
+      <div class="price-section">
+     <div class="price-container">
+   <button class="toggle-btn" data-id="2" data-price="2300">الإضافة</button>
+<span class="info-text" data-id="2" style="display:none;">1 إضافة (﷼ 2,300.00)</span>
+  </div>
+</div>
+
+<!-- المودال الخاص بالمزيد من المعلومات -->
+ <div id="villaModal2" class="modal">
+  <div class="modal-content">
+    <span class="close-modal-2">&times;</span>
+    
+    <!-- نفس محتوى الكرت -->
+    <div class="villa-card">
+      <!-- السلايدر -->
+      <div class="slider modal-slider modal-slider-2">
+       <img src="106.jpg" alt="فيلا" class="active">
+       <img src="107.jpg" alt="فيلا">
+
+        <!-- أزرار تحكم -->
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+
+      <!-- التفاصيل -->
+      <div class="villa-content">
+        <h2>عند الطلب - خاضع للتوافر- نقل مشترك بالطائرة البحرية - رحلات مجدولة ذهابًا وإيابًا من: مطار البحر الأحمر الدولي إلى: منتجع شيبارة</h2>
+       <p>3,335.00 &#65020 لكل حجز</p>
+       <p>مدة الرحلة:</p>
+       <p>30 دقيقة</p>
+       <p>المتطلبات اللازمة لتأكيد الحجز:</p>
+       <p>للمتابعة مع الحجز، يرجى تزويدنا بالتفاصيل التالية لجميع الضيوف المسافرين:</p>
+       <p>نسخة من جواز السفر أو الهوية</p>
+       <p>تفاصيل الرحلة</p>
+       <p>معلومات الاتصال</p>
+       <p>معلومات هامة:</p>
+       <p>جميع رحلات الطائرة البحرية تخضع لظروف الطقس ولقرار قائد الطائرة في يوم التشغيل بناءً على توقعات الطقس الجوية.</p>
+       <p>في حالة سوء الأحوال الجوية، سيتم استرداد الفرق بين تكلفة النقل البديل وسعر تذكرة الطائرة البحرية. ويفضل أن يتم ذلك على شكل قسيمة خصم لاستخدامها في الزيارة القادمة للضيف.</p>
+       <p>يُطلب من الضيوف التوجه إلى مكاتب تسجيل الوصول للطائرة البحرية في مطار البحر الأحمر الدولي (RSIA) مع هوية شخصية (جواز سفر، هوية وطنية، إقامة). سيتم مرافقة الضيوف المسجلين وفقًا للإجراءات المتبعة.</p>
+       <p>سياسة الأمتعة:</p>
+       <p>الأمتعة المسجلة: حقيبة واحدة بوزن أقصى 23 كجم – يجب ألا تتجاوز الأبعاد الإجمالية 158 سم (70 سم + 38 سم + 50 سم).</p>
+       <p>الأمتعة المحمولة: حقيبة صغيرة بوزن أقصى 7 كجم + حقيبة لاب توب/حقيبة يد/محفظة.</p>
+       <p>سياسة الإلغاء:</p>
+       <p>قبل 8 أيام أو أكثر من الوصول: مجانًا</p>
+       <p>من 4 إلى 7 أيام قبل الوصول: سيتم خصم 50٪ من التكلفة</p>
+       <p>من 0 إلى 3 أيام قبل الوصول: سيتم خصم 100٪ من التكلفة</p>
+       <p>عدم الحضور: سيتم خصم 100٪ من التكلفة</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div> <!-- نهاية الكرت التاني -->
+
+
+<div class="total-bar">
+  <span class="icon">المجموع المضاف</span>
+  <span id="totalAmount">0.00</span>
+  <span>﷼</span>
+  <button class="continue-btn">تابع</button>
+</div>
+
+
+<section class="after-location">
+  <div class="container">
+    <h1 class="brand">شيبارة</h1>
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+  </div>
+</section>
+
+
+<script>
+   const toggleButtons = document.querySelectorAll(".toggle-btn");
+
+toggleButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.getAttribute("data-id");
+    const relatedText = document.querySelector(`.info-text[data-id="${id}"]`);
+
+    if (btn.textContent === "الإضافة") {
+      btn.textContent = "إزالة";
+      relatedText.style.display = "inline";
+      btn.classList.add("added");   // يغير لون الزر
+    } else {
+      btn.textContent = "الإضافة";
+      relatedText.style.display = "none";
+      btn.classList.remove("added"); // يرجع اللون الأصلي
+    }
+  });
+});
+
+
+
+
+
+
+    // === السلايدر الأساسي (الكرت) ===
+  const mainSlider = document.querySelector(".villa-card .slider");
+  const mainSlides = mainSlider.querySelectorAll("img");
+  const mainPrev = mainSlider.querySelector(".prev");
+  const mainNext = mainSlider.querySelector(".next");
+  let mainIndex = 0;
+
+  function showMainSlide(i) {
+    mainSlides.forEach(slide => slide.classList.remove("active"));
+    mainSlides[i].classList.add("active");
+  }
+  mainPrev.addEventListener("click", () => {
+    mainIndex = (mainIndex - 1 + mainSlides.length) % mainSlides.length;
+    showMainSlide(mainIndex);
+  });
+  mainNext.addEventListener("click", () => {
+    mainIndex = (mainIndex + 1) % mainSlides.length;
+    showMainSlide(mainIndex);
+  });
+  showMainSlide(mainIndex);
+
+  // ==== سلايدر لكل الكروت ====
+document.querySelectorAll(".villa-card").forEach((card) => {
+  const slider = card.querySelector(".slider");
+  const slides = slider.querySelectorAll("img");
+  const prev = slider.querySelector(".prev");
+  const next = slider.querySelector(".next");
+  let index = 0;
+
+  function showSlide(i) {
+    slides.forEach((slide) => slide.classList.remove("active"));
+    slides[i].classList.add("active");
+  }
+
+  prev.addEventListener("click", () => {
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide(index);
+  });
+
+  next.addEventListener("click", () => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  });
+
+  showSlide(index); // عرض أول صورة
+});
+
+  // === السلايدر تبع المودال ===
+  const modalSlider = document.querySelector(".modal-slider");
+  if (modalSlider) {
+    const modalSlides = modalSlider.querySelectorAll("img");
+    const modalPrev = modalSlider.querySelector(".prev");
+    const modalNext = modalSlider.querySelector(".next");
+    let modalIndex = 0;
+
+    function showModalSlide(i) {
+      modalSlides.forEach(slide => slide.classList.remove("active"));
+      modalSlides[i].classList.add("active");
+    }
+    modalPrev.addEventListener("click", () => {
+      modalIndex = (modalIndex - 1 + modalSlides.length) % modalSlides.length;
+      showModalSlide(modalIndex);
+    });
+    modalNext.addEventListener("click", () => {
+      modalIndex = (modalIndex + 1) % modalSlides.length;
+      showModalSlide(modalIndex);
+    });
+    showModalSlide(modalIndex);
+  }
+
+  // === المودال تبع "المزيد من المعلومات" ===
+  const villaModal = document.getElementById("villaModal");
+  const moreBtn = document.querySelector(".more-btn");
+  const closeModal = document.querySelector(".close-modal");
+
+  moreBtn.onclick = () => {
+    villaModal.style.display = "block";
+  };
+
+  closeModal.onclick = () => {
+    villaModal.style.display = "none";
+  };
+
+  window.onclick = (e) => {
+    if (e.target == villaModal) {
+      villaModal.style.display = "none";
+    }
+  };
+
+   // ==== المودال الثاني ====
+const villaModal2 = document.getElementById("villaModal2");
+const moreBtn2 = document.querySelector(".more-btn-2");
+const closeModal2 = document.querySelector(".close-modal-2");
+
+// افتح المودال عند الضغط
+moreBtn2.onclick = () => {
+  villaModal2.style.display = "block";
+};
+
+// سكّر عند الضغط على X
+closeModal2.onclick = () => {
+  villaModal2.style.display = "none";
+};
+
+// سكّر عند الضغط برة
+window.addEventListener("click", (e) => {
+  if (e.target == villaModal2) {
+    villaModal2.style.display = "none";
+  }
+});
+
+// ==== سلايدر المودال الثاني ====
+const modalSlider2 = document.querySelector(".modal-slider-2");
+const modalSlides2 = modalSlider2.querySelectorAll("img");
+const modalPrev2 = modalSlider2.querySelector(".prev");
+const modalNext2 = modalSlider2.querySelector(".next");
+let modalIndex2 = 0;
+
+function showModalSlide2(i) {
+  modalSlides2.forEach(slide => slide.classList.remove("active"));
+  modalSlides2[i].classList.add("active");
+}
+modalPrev2.addEventListener("click", () => {
+  modalIndex2 = (modalIndex2 - 1 + modalSlides2.length) % modalSlides2.length;
+  showModalSlide2(modalIndex2);
+});
+modalNext2.addEventListener("click", () => {
+  modalIndex2 = (modalIndex2 + 1) % modalSlides2.length;
+  showModalSlide2(modalIndex2);
+});
+showModalSlide2(modalIndex2);
+
+let total = 0;
+const totalAmount = document.getElementById("totalAmount");
+
+document.querySelectorAll(".toggle-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.getAttribute("data-id");
+    const price = parseFloat(btn.getAttribute("data-price"));
+    const relatedText = document.querySelector(`.info-text[data-id="${id}"]`);
+
+    // إذا الزر مضاف مسبقاً (نشيط)
+    if (btn.classList.contains("active")) {
+      btn.classList.remove("active");
+      btn.textContent = "الإضافة";
+      relatedText.style.display = "none";
+      total -= price; // اطرح السعر
+    } else {
+      btn.classList.add("active");
+      btn.textContent = "إزالة";
+      relatedText.style.display = "inline";
+      total += price; // أضف السعر
+    }
+
+    // تحديث المجموع
+    totalAmount.textContent = total.toFixed(2);
+  });
+});
+
+
+  </script>
+</body>
+</html>

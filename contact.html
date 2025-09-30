@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>احجز إقامتك</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;700&display=swap" rel="stylesheet">
+  <style>
+     body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: none;
+      color: #111;
+    }
+
+   /* الهيدر */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: none;
+  box-shadow: none;
+}
+
+/* كونتينر للهيدر */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;               /* كله يصير صف */
+  align-items: center;         /* يضبط الطول العمودي */
+  justify-content: space-between; /* توزيع بين اليسار واليمين */
+  height: 70px;
+}
+
+/* الشعار */
+.logo {
+  font-size: 50px;
+  font-weight: 600;
+  color: #f8f6f6;
+}
+
+/* القوائم */
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #f9f3f3;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background: rgba(241, 239, 239, 0.886);
+}
+
+/* أزرار اليمين */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-primary {
+  border: 1px solid #f0ecec;
+  background: none;
+  color: #f3efef;
+  padding: 8px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #ebe4e4;
+    }
+
+    .btn-primary {
+      border: 1px solid #f1eeee;
+      background: none;
+      color: #ede7e7;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #fdfbfb;
+  color: #eee8e8;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+
+     .hero {
+      background: url('43.jpg') center/cover no-repeat;
+      padding: 80px 20px;
+      text-align: center;
+      color: #fff;
+      background-color: #0a6a4a; /* fallback */
+       margin-bottom: 100px
+
+    }
+
+    .hero h1 {
+      font-size: 65px;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f4efec;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      font-family: 'Cairo', sans-serif;
+    }
+
+.inquiry-form {
+  max-width: 600px;
+  margin: 50px auto;
+  direction: rtl;
+  font-family: Tahoma, sans-serif;
+}
+
+.inquiry-form form {
+  border: 2px solid #000;   /* إطار خارجي واحد */
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field {
+  border-bottom: 2px solid #000;  /* الخطوط الداخلية */
+}
+
+.form-field:last-of-type {
+  border-bottom: none; /* ما نرسم خط تحت الرسالة */
+}
+
+.inquiry-form input,
+.inquiry-form select,
+.inquiry-form textarea {
+  border: none;   /* نشيل البوردر تبع كل حقل */
+  padding: 14px;
+  font-size: 16px;
+  width: 100%;
+  background: transparent;
+  outline: none;
+}
+
+.inquiry-form textarea {
+  resize: vertical;
+}
+
+/* زر الإرسال */
+.submit-btn {
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;   /* بنفس عرض المستطيلات */
+}
+
+.submit-btn:hover {
+  background: #333;
+}
+
+
+.after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+
+.after-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+.after-location .divider {
+  border: none;
+  border-top: 3px solid #000; /* سُمك الخط (كبرتو شوي) */
+  width: 100%;                /* يغطي العرض كامل */
+  margin: 50px 0;             /* مسافة فوق وتحت */
+}
+
+</style>
+</head>
+<body>
+
+  <!-- الهيدر -->
+<header>
+  <div class="header-container">
+    <div class="logo">شيبارة</div>
+
+    <nav>
+      <ul>
+        <li><a href="villas.html">الفلل</a></li>
+        <li><a href="offers.html">العروض الخاصة</a></li>
+        <li><a href="dining.html">تناول الطعام</a></li>
+        <li><a href="activities.html">التجارب والنشاطات</a></li>
+        <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+        <li><a href="location.html">الموقع</a></li>
+        <li><a href="contact.html">للتواصل معنا</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+      <div class="language-switcher">
+        <button class="language-btn">
+          العربية <i class="fas fa-chevron-down"></i>
+        </button>
+        <ul class="language-menu">
+          <li><a href="index-ar.html">العربية</a></li>
+          <li><a href="index-en.html">English</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Hero -->
+    <section class="hero">
+    <h1>نحن هنا لمساعدتك قبل رحلتك إلى شيبارة</h1>
+  </section>
+
+  <div class="hero-text">
+        <h1>فريق الحجز لدينا متعدد اللغات جاهز دائمًا لتقديم المساعدة لك في التخطيط لرحلتك المثالية إلى البحر الأحمر.</h1>
+        <p> سواء كنت ترغب في حجز ليلة واحدة أو برنامج رحلة متكامل يجمع بين تجارب متعددة في المنتجعات المختلفة، نحن هنا لنساعدك في كل خطوة.</p>
+        <p>يتميز فريقنا بالخبرة والمعرفة الواسعة بالمنطقة والمنتجعات المتاحة، مما يضمن لك الحصول على أفضل الخيارات التي تناسب تفضيلاتك وميزانيتك. لا تتردد في التواصل مع فريق الحجز لدينا عبر الهاتف أو البريد الإلكتروني أو الدردشة المباشرة على موقعنا الإلكتروني. نحن نتطلع إلى مساعدتك في تحقيق حلمك بزيارة البحر الأحمر.</p>
+
+      </div>
+
+  <section class="inquiry-form">
+  <form>
+    <div class="form-field">
+      <select id="inquiry-type" name="inquiry-type">
+        <option value="" disabled selected>نوع الاستفسار</option>
+        <option value="booking">الحجز</option>
+        <option value="offers">العروض</option>
+        <option value="spa">السبا والعلاجات</option>
+        <option value="restaurant">المطاعم</option>
+        <option value="transport">النقل</option>
+        <option value="other">أخرى</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <input type="text" id="first-name" name="first-name" placeholder="الاسم الأول">
+    </div>
+
+    <div class="form-field">
+      <input type="text" id="last-name" name="last-name" placeholder="اسم العائلة">
+    </div>
+
+    <div class="form-field">
+      <input type="email" id="email" name="email" placeholder="البريد الإلكتروني">
+    </div>
+
+    <div class="form-field">
+      <input type="tel" id="phone" name="phone" placeholder="رقم الهاتف">
+    </div>
+
+    <div class="form-field">
+      <textarea id="message" name="message" rows="5" placeholder="الرسالة"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">إرسال</button>
+  </form>
+</section>
+
+ <section class="after-location">
+  <div class="after-container">
+    <h1 class="brand">شيبارة</h1>
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    </div>
+
+    <hr class="divider">
+    
+    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+  </div>
+</section>
+
+<script>
+    function toggleDetails(btn) {
+      const details = btn.closest('.villa-banner').querySelector('.villa-details');
+      details.classList.toggle('show');
+      btn.textContent = details.classList.contains('show') ? "إخفاء التفاصيل" : "تفاصيل العرض";
+    }
+
+    document.querySelector('.language-btn').addEventListener('click', function() {
+  document.querySelector('.language-menu').classList.toggle('show');
+});
+
+// إغلاق القائمة إذا ضغطت برة
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.language-switcher')) {
+    document.querySelector('.language-menu').classList.remove('show');
+  }
+});
+</script>

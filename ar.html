@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الحجز</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Tahoma', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    /* ===== البانر ===== */
+    .hero {
+      position: relative;
+      height: 350px;
+      background: url("43.jpg") center/cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 90px;
+      background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
+    }
+
+    /* الشريط الشفاف فوق الصورة */
+    .booking-bar {
+      position: absolute;
+      bottom: 20px;  /* ينزل شوي داخل البانر */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      width: 95%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      background: transparent; /* شفاف */
+      box-shadow: none;        /* بدون ظل */
+      border-radius: 0;        /* بدون أطراف */
+      padding: 0;              /* بدون حشوة */
+    }
+
+    /* الأزرار يمين */
+    .bar-right {
+      display: flex;
+      gap: 25px;
+    }
+
+    .bar-right button {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: 0.3s;
+      color: #fff; /* أبيض فوق الصورة */
+      display: flex;
+      gap: 6px;
+    }
+
+    .bar-right button:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .bar-right i {
+  font-size: 16px;
+  color: #fff; /* لون الأيقونات أبيض */
+}
+
+    /* العناصر يسار */
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      color: #fff; /* أبيض فوق الصورة */
+    }
+
+    .bar-left span {
+      font-size: 18px;
+    }
+
+    .search-btn {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 18px;
+    }
+
+    .search-btn:hover {
+      background: #444;
+    }
+
+    /* مربع التنبيه */
+    .notice {
+      background-color: #ffeaea; /* أحمر فاتح جداً */
+      color: #000; /* النص أسود */
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 20px;
+      margin-top: 40px;   /* مسافة أكبر */
+      border-radius: 6px; /* حواف ناعمة */
+      margin-bottom: 50px;
+    }
+
+    /* الفلترة */
+    .filter-section {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 1000px;
+    }
+
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .filter-header h3 {
+      margin: 0;
+      font-size: 35px;
+      font-weight: bold; /* يخليها عريضة */
+      color: #222;
+    } 
+
+    .filter-controls {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .filter-controls button {
+      background: transparent;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .filter-controls select {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 18px;
+    }
+
+    /* المربع الأساسي */
+.modal {
+  display: none; /* مخفي افتراضياً */
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  overflow: auto;
+}
+
+.modal-content {
+  background: #fff;
+  margin: 60px auto;
+  padding: 25px;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 800px;   /* صار أعرض */
+  font-size: 18px;    /* كبرنا الخط داخل المربع */
+}
+
+/* الرأس */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.clear-btn, .result-btn, .close-btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clear-btn { background: #f1f1f1; }
+.result-btn { background: #222; color: #fff; }
+.close-btn { background: transparent; font-size: 18px; }
+
+/* الأقسام */
+.filter-block {
+  margin: 15px 0;
+}
+
+.accordion {
+  background: #f9f9f9;
+  border: none;
+  width: 100%;
+  text-align: right;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel {
+  display: none;
+  padding: 10px 0;
+}
+
+.panel label {
+  display: block;
+  margin: 6px 0;
+}
+
+/* الـ checkbox */
+input[type="checkbox"] {
+  accent-color: black; /* المربع أسود عند التفعيل */
+}
+
+.panel {
+  display: none;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 أعمدة */
+  gap: 12px; /* مسافة بين الخيارات */
+}
+.panel label {
+  font-size: 16px; /* كبرنا الخط */
+  cursor: pointer;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 50px 0; /* مسافة فوق وتحت */
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px solid #000; /* خليه 2px أو 3px بدل 1px */
+}
+
+.divider::before {
+  margin-left: 10px;
+}
+.divider::after {
+  margin-right: 10px;
+}
+
+.divider span {
+  font-size: 18px; /* حجم النص */
+  font-weight: bold;
+  color: #333; /* لون النص */
+  padding: 0 10px; /* مسافة حول النص */
+  white-space: nowrap;
+}
+
+.villa-card {
+  background: #f5f5f0; /* لون سكري */
+  border-radius: 10px;
+  padding: 20px;
+  margin: 40px auto;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin-bottom: 60px;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.slider img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: none;
+}
+
+.slider img.active {
+  display: block;
+}
+
+.slider button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.slider .prev { left: 10px; }
+.slider .next { right: 10px; }
+
+.villa-content {
+  margin-top: 20px;
+}
+
+.villa-content h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.villa-content p {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+.villa-content .desc {
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.villa-content p.desc {
+  margin-bottom: 25px !important; /* هي بتجبر المتصفح يستخدم القيمة */
+}
+
+.more-btn { 
+  margin: 20px 0;
+  padding: 10px 20px;
+  border: 1px solid #000;
+  background: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 5px;
+  margin-right: auto; /* يخليه يروح يمين */
+  display: block; 
+}
+
+.price-section h3 {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-section p {
+  font-size: 14px;
+  color: #444;
+  margin: 5px 0 15px;
+}
+
+.price {
+  background: #000;
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 6px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: flex-start; /* خليهم ملزقين باليمين */
+  margin: 8px 0;
+  font-size: 15px;
+  gap: 30px; /* هون تتحكم بحجم المسافة بين الكلمتين */
+}
+
+.detail-row .label {
+  display: inline-block;
+  width: 80px;  /* جرب 60px - 100px حسب ما يعجبك */
+  font-weight: bold;
+}
+
+.detail-row .value {
+  color: #333;
+}
+
+/* مودال المزيد من المعلومات */
+#villaModal .modal-content {
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.spacer {
+  height: 20px; /* هون تتحكم بحجم المسافة */
+}
+
+.divider-line {
+  border: none;
+  border-top: 3px solid #000; /* خط أسود، سمك 3px */
+  margin: 0; /* بدون مسافات إضافية */
+}
+
+/* زر الكرت التاني فقط */
+.special-btn {
+  display: block;          /* يخليه مثل الكرت الأول */
+  margin: 30px 0;          /* يعمل مسافة فوق وتحت */
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  transition: 0.3s ease;
+   margin-right: auto;
+}
+
+/* تأثير hover */
+.special-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+.special-btn-1 {
+  display: block;          /* يخليه مثل الكرت الأول */
+  margin: 30px 0;          /* يعمل مسافة فوق وتحت */
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  transition: 0.3s ease;
+   margin-right: auto;
+}
+
+/* تأثير hover */
+.special-btn-1:hover {
+  background: #000;
+  color: #fff;
+}
+
+.special-btn-2 {
+  display: block;          /* يخليه مثل الكرت الأول */
+  margin: 30px 0;          /* يعمل مسافة فوق وتحت */
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  transition: 0.3s ease;
+   margin-right: auto;
+}
+
+/* تأثير hover */
+.special-btn-2 :hover {
+  background: #000;
+  color: #fff;
+}
+
+.after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+  </style>
+</head>
+<body>
+
+  <!-- البانر -->
+  <section class="hero">
+    <!-- الشريط فوق الصورة -->
+    <div class="booking-bar">
+      <!-- يمين -->
+    <div class="bar-right">
+  <button><i class="fas fa-circle-exclamation"></i> المنتجع</button>
+  <button><i class="fas fa-images"></i> معرض الصور</button>
+  <button><i class="fas fa-map-marker-alt"></i> الخريطة</button>
+</div>
+
+      <!-- يسار -->
+      <div class="bar-left">
+        <span>غرفة</span>
+        <span>الضيوف: 2</span>
+        <span>29 سبتمبر 2025</span>
+        <button class="search-btn">بحث</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- مربع التنبيه -->
+  <div class="notice">
+    تخضع جميع أسعار الفلل لرسوم البلدية بنسبة 5% وضريبة القيمة المضافة بنسبة 15%
+  </div>
+
+  <!-- قسم الفلترة -->
+  <div class="filter-section">
+    <div class="filter-header">
+      <h3>اختر</h3>
+      <div class="filter-controls">
+        <button>⚙ تصفية</button>
+        <select>
+          <option>السعر من الأقل إلى الأعلى</option>
+          <option>السعر من الأعلى إلى الأقل</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div id="filterModal" class="modal">
+  <div class="modal-content">
+
+    <!-- رأس المربع -->
+    <div class="modal-header">
+      <h3>تصفية النتائج</h3>
+      <div class="header-actions">
+        <button class="clear-btn">مسح</button>
+        <button class="close-btn"><i class="fas fa-times"></i></button>
+        <button class="result-btn">نتيجة</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- نوع الإقامة -->
+    <div class="filter-block">
+      <button class="accordion">نوع الإقامة <span class="arrow">▼</span></button>
+      <div class="panel">
+        <label><input type="checkbox"> فلل شاطئية</label>
+        <label><input type="checkbox"> فلل فوق الماء</label>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ميزات الغرفة -->
+    <div class="filter-block">
+      <button class="accordion">ميزات الغرفة <span class="arrow">▼</span></button>
+      <div class="panel">
+        <label><input type="checkbox"> سرير بحجم كينج</label>
+        <label><input type="checkbox"> شخصين بالغين، طفل، ورضيع</label>
+        <label><input type="checkbox">248 متر مربع</label>
+        <label><input type="checkbox">سرير كينغ في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</label>
+        <label><input type="checkbox"> 4 أشخاص بالغين وطفلين و رضيع</label>
+        <label><input type="checkbox">367 متر مربع</label>
+        <label><input type="checkbox">188 متر مربع</label>
+        <label><input type="checkbox">4 أشخاص بالغين، طفلين، و رضيع</label>
+         <label><input type="checkbox">288 متر مربع</label>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- الأزرار الأخيرة -->
+    <div class="modal-footer">
+      <button class="clear-btn">مسح الكل</button>
+      <button class="result-btn">نتيجة</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider">
+  <span>فلل شاطئية</span>
+</div>
+
+<!-- كرت فيلا -->
+<div class="villa-card">
+  <!-- سلايدر -->
+  <div class="slider">
+    <img src="13.jpg" alt="فيلا" class="active">
+    <img src="14.jpg" alt="فيلا">
+    <img src="31.jpg" alt="فيلا">
+    <img src="101.jpg" alt="فيلا">
+
+    <!-- أزرار تحكم -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <!-- التفاصيل -->
+  <div class="villa-content">
+    <h2>ڤيلا غرفة نوم واحدة على الشاطئ</h2>
+    <div class="detail-row">
+  <span class="label">أسرة</span>
+  <span class="value">سرير بحجم كينج</span>
+</div>
+    <div class="detail-row">
+  <span class="label">الإشغال</span>
+  <span class="value">شخصين بالغين، طفل، ورضيع</span>
+</div>
+     <div class="detail-row">
+  <span class="label">الحجم</span>
+  <span class="value">248 متر مربع</span>
+</div>
+
+    <p class="desc">
+      تقدم فيلا من غرفة نوم واحدة على شاطئ البحر ملاذاً مثالياً حيث تقع على بُعد خطوات من الرمال الناعمة للبحر الأحمر. 
+      استمتع بإطلالات خلابة وأصوات الأمواج المهدئة من تراس خاص بك. 
+      مصممة بشكل أنيق لتحقيق الراحة، تعد هذه الفيلا الخيار...
+    </p>
+
+    <!-- زر المزيد -->
+    <button class="more-btn">المزيد من المعلومات</button>
+
+    <!-- قسم السعر -->
+    <div class="price-section">
+      <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+      <p>سعر الفيلا شامل الإفطار</p>
+      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  9,000 ﷼
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- المودال الخاص بالمزيد من المعلومات -->
+ <div id="villaModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    
+    <!-- نفس محتوى الكرت -->
+    <div class="villa-card">
+      <!-- السلايدر -->
+      <div class="slider modal-slider">
+        <img src="13.jpg" alt="فيلا" class="active">
+        <img src="14.jpg" alt="فيلا">
+        <img src="31.jpg" alt="فيلا">
+        <img src="101.jpg" alt="فيلا">
+
+        <!-- أزرار تحكم -->
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+
+      <!-- التفاصيل -->
+      <div class="villa-content">
+        <h2>ڤيلا غرفة نوم واحدة على الشاطئ</h2>
+        <div class="detail-row">
+          <span class="label">أسرة</span>
+          <span class="value">سرير بحجم كينج</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الإشغال</span>
+          <span class="value">شخصين بالغين، طفل، ورضيع</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الحجم</span>
+          <span class="value">248 متر مربع</span>
+        </div>
+
+        <p class="desc">
+          تقدم فيلا من غرفة نوم واحدة على شاطئ البحر ملاذًا ساحليًا مثاليًا، حيث تقع على بُعد خطوات من الرمال الناعمة للبحر الأحمر. استمتع بإطلالات خلابة وأصوات الأمواج المهدئة من تراس خاص بك. مُصممة بشكل أنيق لتحقيق الراحة، تُعد هذه الفيلا الخيار المثالي لقضاء عطلة رومانسية أو هروب هادئ، حيث يمكنك الاسترخاء في أجواء من الفخامة والاستمتاع بأشعة الشمس.
+        </p>
+      <p class="details">المساحة: 248 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 145 متر مربع).</p>
+      <p class="details">الغرفة: سرير بحجم كينج</p>
+      <p class="details">الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع</p>
+      <p class="details">مميزات الڤيلا</p>
+      <p class="details">منطقة المعيشة: طاولة طعام، صالة، وحدة بار،مطبخ صغير</p>
+      <p class="details">غرفة النوم: سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، منضدة زينة مزدوجة، تواليت مغلق وبيديه، حوض استحمام</p>
+      <p class="details">الميزات الخارجية: حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دُش خارجي</p>
+
+<div class="spacer"></div>
+<hr class="divider-line">
+<div class="spacer"></div>
+
+        <!-- زر الدفع -->
+        <div class="price-section">
+          <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+          <p>سعر الفيلا شامل الإفطار</p>
+          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  9,000 ﷼
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- كرت فيلا -->
+<div class="villa-card">
+  <!-- سلايدر -->
+  <div class="slider">
+    <img src="20.jpg" alt="فيلا" class="active">
+    <img src="102.jpg" alt="فيلا">
+    <img src="26.jpg" alt="فيلا">
+    <img src="103.jpg" alt="فيلا">
+    <img src="10.jpg" alt="فيلا">
+    <img src="104.jpg" alt="فيلا">
+
+    <!-- أزرار تحكم -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <!-- التفاصيل -->
+  <div class="villa-content">
+    <h2>ڤيلا بغرفتي نوم على الشاطئ</h2>
+    <div class="detail-row">
+  <span class="label">أسرة</span>
+  <span class="value">سرير كينغ في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</span>
+</div>
+    <div class="detail-row">
+  <span class="label">الإشغال</span>
+  <span class="value">4 أشخاص بالغين وطفلين و رضيع</span>
+</div>
+     <div class="detail-row">
+  <span class="label">الحجم</span>
+  <span class="value">367 متر مربع</span>
+</div>
+
+    <p class="desc">ملاذ فاخر يضم غرفتي نوم واسعتيْن مع حمامات خاصة، منطقة معيشة مريحة، وتراس خاص يطل على البحر الاحمر. مثالية للعائلات أو المجموعات، حيث يوفر وصولًا...</p>
+
+    <!-- زر المزيد -->
+    <button class="more-btn-2 special-btn">المزيد من المعلومات</button>
+
+    <!-- قسم السعر -->
+    <div class="price-section">
+      <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+      <p>سعر الفيلا شامل الإفطار</p>
+      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  17,000 ﷼
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- المودال الخاص بالمزيد من المعلومات -->
+ <div id="villaModal2" class="modal">
+  <div class="modal-content">
+    <span class="close-modal-2">&times;</span>
+    
+    <!-- نفس محتوى الكرت -->
+    <div class="villa-card">
+      <!-- السلايدر -->
+      <div class="slider modal-slider modal-slider-2">
+        <img src="20.jpg" alt="فيلا" class="active">
+        <img src="102.jpg" alt="فيلا">
+        <img src="26.jpg" alt="فيلا">
+        <img src="103.jpg" alt="فيلا">
+        <img src="10.jpg" alt="فيلا">
+        <img src="104.jpg" alt="فيلا">
+
+        <!-- أزرار تحكم -->
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+
+      <!-- التفاصيل -->
+      <div class="villa-content">
+        <h2>ڤيلا بغرفتي نوم على الشاطئ</h2>
+        <div class="detail-row">
+          <span class="label">أسرة</span>
+          <span class="value">سرير كينغ في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الإشغال</span>
+          <span class="value">4 أشخاص بالغين وطفلين و رضيع</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الحجم</span>
+          <span class="value">367 متر مربع</span>
+        </div>
+
+        <p class="desc">ملاذ فاخر يضم غرفتي نوم واسعتيْن مع حمامات خاصة، منطقة معيشة مريحة، وتراس خاص يطل على البحر الاحمر. مثالية للعائلات أو المجموعات، حيث يوفر وصولًا مباشرًا إلى الشاطئ ووسائل الراحة الحديثة لقضاء عطلة مريحة.
+        </p>
+      <p class="details">المساحة: 367 متر مربع (المساحة الداخلية: 196 متر مربع، المساحة الخارجية: 171 متر مربع)</p>
+      <p class="details">غرف النوم: سرير كينغ في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</p>
+      <p class="details">الحد الأقصى للإشغال: 4 أشخاص بالغين وطفلين و رضيع</p>
+      <p class="details">مميزات الڤيلا</p>
+      <p class="details">منطقة المعيشة: صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف، مطبخ صغير</p>
+      <p class="details">غرفة النوم الرئيسية: سرير كينج، خزانة الملابس، منضدة الزينة المزدوجة، تواليت وبيديه، حوض استحمام، دش، طاولة الزينة</p>
+      <p class="details">غرفة النوم الثانية: سريرين حجم كوين، خزانة الملابس، منطقة الدش، تواليت وبيديه، حوض استحمام</p>
+      <p class="details">الميزات الخارجية: حمام سباحة لا متناهي، منصة حمام السباحة، سرير نهاري، كراسي حمام السباحة، صالة جلوس خارجية، دش خارجي</p>
+
+<div class="spacer"></div>
+<hr class="divider-line">
+<div class="spacer"></div>
+
+        <!-- زر الدفع -->
+        <div class="price-section">
+          <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+          <p>سعر الفيلا شامل الإفطار</p>
+          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  17,000 ﷼
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider">
+  <span>ڤلل فوق الماء</span>
+</div>
+
+<!-- كرت فيلا -->
+<div class="villa-card">
+  <!-- سلايدر -->
+  <div class="slider">
+    <img src="3.jpg" alt="فيلا" class="active">
+    <img src="4.jpg" alt="فيلا">
+    <img src="1.jpg" alt="فيلا">
+    <img src="5.jpg" alt="فيلا">
+
+    <!-- أزرار تحكم -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <!-- التفاصيل -->
+  <div class="villa-content">
+    <h2>ڤيلا فوق الماء بغرفة نوم واحدة</h2>
+    <div class="detail-row">
+  <span class="label">أسرة</span>
+  <span class="value">سرير بحجم كينج</span>
+</div>
+    <div class="detail-row">
+  <span class="label">الإشغال</span>
+  <span class="value">شخصين بالغين، طفل، ورضيع</span>
+</div>
+     <div class="detail-row">
+  <span class="label">الحجم</span>
+  <span class="value">188 متر مربع</span>
+</div>
+
+    <p class="desc">مستقرة فوق مياه البحر الأحمر المتلألئة، تقدم فيلا من غرفة نوم واحدة فوق الماء ملاذًا هادئًا حيث يتداخل الجمال الطبيعي مع الطمأنينة. محاطة بأصوات الطبيعة الرقيقة،..
+    </p>
+
+    <!-- زر المزيد -->
+     <button class="more-btn-2 special-btn-1">المزيد من المعلومات</button>
+
+    <!-- قسم السعر -->
+    <div class="price-section">
+      <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+      <p>سعر الفيلا شامل الإفطار</p>
+      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  10,000 ﷼
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- المودال الخاص بالمزيد من المعلومات -->
+ <div id="villaModal3" class="modal">
+  <div class="modal-content">
+    <span class="close-modal-3">&times;</span>
+    
+    <!-- نفس محتوى الكرت -->
+    <div class="villa-card">
+      <!-- السلايدر -->
+      <div class="slider modal-slider modal-slider-3">
+       <img src="3.jpg" alt="فيلا" class="active">
+       <img src="4.jpg" alt="فيلا">
+       <img src="1.jpg" alt="فيلا">
+       <img src="5.jpg" alt="فيلا">
+
+        <!-- أزرار تحكم -->
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+
+      <!-- التفاصيل -->
+      <div class="villa-content">
+        <h2>ڤيلا فوق الماء بغرفة نوم واحدة</h2>
+        <div class="detail-row">
+          <span class="label">أسرة</span>
+          <span class="value">سرير بحجم كينج</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الإشغال</span>
+          <span class="value">شخصين بالغين، طفل، ورضيع</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الحجم</span>
+          <span class="value">188 متر مربع</span>
+        </div>
+
+        <p class="desc">
+      مستقرة فوق مياه البحر الأحمر المتلألئة، تقدم فيلا من غرفة نوم واحدة فوق الماء ملاذًا هادئًا حيث يتداخل الجمال الطبيعي مع الطمأنينة. محاطة بأصوات الطبيعة الرقيقة، تدعوك هذه الملاذ الساحر للاسترخاء في أجواء سلميّة. استمتع بشروق الشمس وغروبها الرائعين اللذين يزينان الأفق، مما يخلق خلفية سحرية للحظات الثمينة. هذه ليست مجرد ملاذ، بل هي ملاذ خالد للاتصال والانعكاس والتجديد وسط جمال الطبيعة.
+        </p>
+      <p class="details">المساحة: 188 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 85 متر مربع)</p>
+      <p class="details">الغرفة: سرير بحجم كينج</p>
+      <p class="details">الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع</p>
+      <p class="details">مميزات الڤيلا</p>
+      <p class="details">منطقة المعيشة: صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف، مطبخ صغير</p>
+      <p class="details">غرفة النوم الرئيسية: سرير كينج، خزانة الملابس، منضدة الزينة المزدوجة، تواليت وبيديه، حوض استحمام، دش، طاولة الزينة</p>
+      <p class="details">غرفة النوم الثانية: سريرين حجم كوين، خزانة الملابس، منطقة الدش، تواليت وبيديه، حوض استحمام</p>
+      <p class="details">الميزات الخارجية: حمام سباحة لا متناهي، منصة حمام السباحة، سرير نهاري، كراسي حمام السباحة، صالة جلوس خارجية، دش خارجي</p>
+
+<div class="spacer"></div>
+<hr class="divider-line">
+<div class="spacer"></div>
+
+        <!-- زر الدفع -->
+        <div class="price-section">
+          <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+          <p>سعر الفيلا شامل الإفطار</p>
+          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  10,000 ﷼
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- كرت فيلا -->
+<div class="villa-card">
+  <!-- سلايدر -->
+  <div class="slider">
+    <img src="5.jpg" alt="فيلا" class="active">
+    <img src="103.jpg" alt="فيلا">
+    <img src="9.jpg" alt="فيلا">
+    <img src="13.jpg" alt="فيلا">
+     <img src="6.jpg" alt="فيلا">
+      <img src="21.jpg" alt="فيلا">
+
+    <!-- أزرار تحكم -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <!-- التفاصيل -->
+  <div class="villa-content">
+    <h2>ڤيلا فوق الماء بغرفتي نوم</h2>
+    <div class="detail-row">
+  <span class="label">أسرة</span>
+  <span class="value">سرير كينغ في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</span>
+</div>
+    <div class="detail-row">
+  <span class="label">الإشغال</span>
+  <span class="value">4 أشخاص بالغين، طفلين، و رضيع</span>
+</div>
+     <div class="detail-row">
+  <span class="label">الحجم</span>
+  <span class="value">288 متر مربع</span>
+</div>
+
+    <p class="desc">      
+   تتميز الفيلا ذات غرفتي نوم على الماء بتصميم أنيق يجمع بين الفخامة والراحة. تقع فوق مياه زرقاء صافية، وتوفر إطلالات خلابة على المحيط. تحتوي الفيلا على غرف نوم
+    </p>
+
+    <!-- زر المزيد -->
+     <button class="more-btn-2 special-btn-2">المزيد من المعلومات</button>
+
+    <!-- قسم السعر -->
+    <div class="price-section">
+      <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+      <p>سعر الفيلا شامل الإفطار</p>
+      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  18,000 ﷼
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- المودال الخاص بالمزيد من المعلومات -->
+ <div id="villaModal4" class="modal">
+  <div class="modal-content">
+    <span class="close-modal-4">&times;</span>
+    
+    <!-- نفس محتوى الكرت -->
+    <div class="villa-card">
+      <!-- السلايدر -->
+      <div class="slider modal-slider modal-slider-4">
+       <img src="5.jpg" alt="فيلا" class="active">
+       <img src="103.jpg" alt="فيلا">
+       <img src="9.jpg" alt="فيلا">
+       <img src="13.jpg" alt="فيلا">
+       <img src="6.jpg" alt="فيلا">
+       <img src="21.jpg" alt="فيلا">
+
+        <!-- أزرار تحكم -->
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+
+      <!-- التفاصيل -->
+      <div class="villa-content">
+        <h2>ڤيلا فوق الماء بغرفتي نوم</h2>
+        <div class="detail-row">
+          <span class="label">أسرة</span>
+          <span class="value">سرير كينغ في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الإشغال</span>
+          <span class="value">4 أشخاص بالغين، طفلين، و رضيع</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">الحجم</span>
+          <span class="value">288 متر مربع</span>
+        </div>
+
+        <p class="desc">
+    تتميز الفيلا ذات غرفتي نوم على الماء بتصميم أنيق يجمع بين الفخامة والراحة. تقع فوق مياه زرقاء صافية، وتوفر إطلالات خلابة على المحيط. تحتوي الفيلا على غرف نوم واسعة مع حمامات داخلية، بالإضافة إلى منطقة معيشة فسيحة. يتميز الجزء الخارجي بمسبح خاص ومنطقة للاسترخاء، مما يجعلها مثالية للعائلات أو الأصدقاء الذين يبحثون عن ملاذ فاخر وهادئ.
+        </p>
+      <p class="details">المساحة: 288 متر مربع (المساحة الداخلية: 189 متر مربع، المساحة الخارجية: 99 متر مربع)</p>
+      <p class="details">غرف النوم: سرير كينغ في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</p>
+      <p class="details">الحد الأقصى للإشغال: 4 أشخاص بالغين، طفلين، و رضيع</p>
+      <p class="details">مميزات الڤيلا</p>
+      <p class="details">منطقة المعيشة: صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف، مطبخ صغير</p>
+      <p class="details">غرفة النوم الرئيسية: سرير كينج، خزانة الملابس، منضدة الزينة المزدوجة، تواليت وبيديه، حوض استحمام، دش، طاولة الزينة</p>
+      <p class="details">غرفة النوم الثانية: سريرين حجم كوين، خزانة الملابس، منطقة الدش، تواليت وبيديه، حوض استحمام</p>
+      <p class="details">الميزات الخارجية: حمام سباحة لا متناهي، منصة حمام السباحة، سرير نهاري، كراسي حمام السباحة، صالة جلوس خارجية، دش خارجي</p>
+
+<div class="spacer"></div>
+<hr class="divider-line">
+<div class="spacer"></div>
+
+        <!-- زر الدفع -->
+        <div class="price-section">
+          <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
+          <p>سعر الفيلا شامل الإفطار</p>
+          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
+  18,000 ﷼
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section class="after-location">
+  <div class="container">
+    
+    <!-- كلمة شيبارة كبيرة -->
+    <h1 class="brand">شيبارة</h1>
+    
+    <!-- عنوان حيث المستقبل -->
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    
+    <!-- وصف قصير -->
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    
+    <!-- زر الاستفسارات -->
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    
+    <!-- سطر الحقوق -->
+   <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    
+    <!-- زر الرجوع للأعلى -->
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+    
+  </div>
+</section>
+
+
+<script>
+  // === زر التصفية ===
+  const filterBtn = document.querySelector(".filter-controls button");
+  const modal = document.getElementById("filterModal");
+  const closeBtn = document.querySelector(".close-btn");
+
+  filterBtn.onclick = () => modal.style.display = "block";
+  closeBtn.onclick = () => modal.style.display = "none";
+  window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+
+  // === فتح/إغلاق الأقسام ===
+  document.querySelectorAll(".accordion").forEach(acc => {
+    acc.addEventListener("click", () => {
+      const panel = acc.nextElementSibling;
+      panel.style.display = (panel.style.display === "grid") ? "none" : "grid";
+      const arrow = acc.querySelector(".arrow");
+      arrow.textContent = (panel.style.display === "grid") ? "▲" : "▼";
+    });
+  });
+
+  // === زر المسح ===
+  document.querySelectorAll(".clear-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".panel input[type='checkbox']").forEach(chk => {
+        chk.checked = false;
+      });
+    });
+  });
+
+  // === السلايدر الأساسي (الكرت) ===
+  const mainSlider = document.querySelector(".villa-card .slider");
+  const mainSlides = mainSlider.querySelectorAll("img");
+  const mainPrev = mainSlider.querySelector(".prev");
+  const mainNext = mainSlider.querySelector(".next");
+  let mainIndex = 0;
+
+  function showMainSlide(i) {
+    mainSlides.forEach(slide => slide.classList.remove("active"));
+    mainSlides[i].classList.add("active");
+  }
+  mainPrev.addEventListener("click", () => {
+    mainIndex = (mainIndex - 1 + mainSlides.length) % mainSlides.length;
+    showMainSlide(mainIndex);
+  });
+  mainNext.addEventListener("click", () => {
+    mainIndex = (mainIndex + 1) % mainSlides.length;
+    showMainSlide(mainIndex);
+  });
+  showMainSlide(mainIndex);
+
+  // ==== سلايدر لكل الكروت ====
+document.querySelectorAll(".villa-card").forEach((card) => {
+  const slider = card.querySelector(".slider");
+  const slides = slider.querySelectorAll("img");
+  const prev = slider.querySelector(".prev");
+  const next = slider.querySelector(".next");
+  let index = 0;
+
+  function showSlide(i) {
+    slides.forEach((slide) => slide.classList.remove("active"));
+    slides[i].classList.add("active");
+  }
+
+  prev.addEventListener("click", () => {
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide(index);
+  });
+
+  next.addEventListener("click", () => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  });
+
+  showSlide(index); // عرض أول صورة
+});
+
+  // === السلايدر تبع المودال ===
+  const modalSlider = document.querySelector(".modal-slider");
+  if (modalSlider) {
+    const modalSlides = modalSlider.querySelectorAll("img");
+    const modalPrev = modalSlider.querySelector(".prev");
+    const modalNext = modalSlider.querySelector(".next");
+    let modalIndex = 0;
+
+    function showModalSlide(i) {
+      modalSlides.forEach(slide => slide.classList.remove("active"));
+      modalSlides[i].classList.add("active");
+    }
+    modalPrev.addEventListener("click", () => {
+      modalIndex = (modalIndex - 1 + modalSlides.length) % modalSlides.length;
+      showModalSlide(modalIndex);
+    });
+    modalNext.addEventListener("click", () => {
+      modalIndex = (modalIndex + 1) % modalSlides.length;
+      showModalSlide(modalIndex);
+    });
+    showModalSlide(modalIndex);
+  }
+
+  // === المودال تبع "المزيد من المعلومات" ===
+  const villaModal = document.getElementById("villaModal");
+  const moreBtn = document.querySelector(".more-btn");
+  const closeModal = document.querySelector(".close-modal");
+
+  moreBtn.onclick = () => {
+    villaModal.style.display = "block";
+  };
+
+  closeModal.onclick = () => {
+    villaModal.style.display = "none";
+  };
+
+  window.onclick = (e) => {
+    if (e.target == villaModal) {
+      villaModal.style.display = "none";
+    }
+  };
+
+  // ==== المودال الثاني ====
+const villaModal2 = document.getElementById("villaModal2");
+const moreBtn2 = document.querySelector(".more-btn-2");
+const closeModal2 = document.querySelector(".close-modal-2");
+
+// افتح المودال عند الضغط
+moreBtn2.onclick = () => {
+  villaModal2.style.display = "block";
+};
+
+// سكّر عند الضغط على X
+closeModal2.onclick = () => {
+  villaModal2.style.display = "none";
+};
+
+// سكّر عند الضغط برة
+window.addEventListener("click", (e) => {
+  if (e.target == villaModal2) {
+    villaModal2.style.display = "none";
+  }
+});
+
+// ==== سلايدر المودال الثاني ====
+const modalSlider2 = document.querySelector(".modal-slider-2");
+const modalSlides2 = modalSlider2.querySelectorAll("img");
+const modalPrev2 = modalSlider2.querySelector(".prev");
+const modalNext2 = modalSlider2.querySelector(".next");
+let modalIndex2 = 0;
+
+function showModalSlide2(i) {
+  modalSlides2.forEach(slide => slide.classList.remove("active"));
+  modalSlides2[i].classList.add("active");
+}
+modalPrev2.addEventListener("click", () => {
+  modalIndex2 = (modalIndex2 - 1 + modalSlides2.length) % modalSlides2.length;
+  showModalSlide2(modalIndex2);
+});
+modalNext2.addEventListener("click", () => {
+  modalIndex2 = (modalIndex2 + 1) % modalSlides2.length;
+  showModalSlide2(modalIndex2);
+});
+showModalSlide2(modalIndex2);
+
+// ==== المودال الثالث ====
+const villaModal3 = document.getElementById("villaModal3");
+const moreBtn3 = document.querySelector(".special-btn-1"); // الزر تبع الكرت الثالث
+const closeModal3 = document.querySelector(".close-modal-3");
+
+// افتح المودال عند الضغط
+moreBtn3.onclick = () => {
+  villaModal3.style.display = "block";
+};
+
+// سكّر عند الضغط على X
+closeModal3.onclick = () => {
+  villaModal3.style.display = "none";
+};
+
+// سكّر عند الضغط برة
+window.addEventListener("click", (e) => {
+  if (e.target == villaModal3) {
+    villaModal3.style.display = "none";
+  }
+});
+
+// ==== سلايدر المودال الثالث ====
+const modalSlider3 = document.querySelector(".modal-slider-3");
+const modalSlides3 = modalSlider3.querySelectorAll("img");
+const modalPrev3 = modalSlider3.querySelector(".prev");
+const modalNext3 = modalSlider3.querySelector(".next");
+let modalIndex3 = 0;
+
+function showModalSlide3(i) {
+  modalSlides3.forEach(slide => slide.classList.remove("active"));
+  modalSlides3[i].classList.add("active");
+}
+modalPrev3.addEventListener("click", () => {
+  modalIndex3 = (modalIndex3 - 1 + modalSlides3.length) % modalSlides3.length;
+  showModalSlide3(modalIndex3);
+});
+modalNext3.addEventListener("click", () => {
+  modalIndex3 = (modalIndex3 + 1) % modalSlides3.length;
+  showModalSlide3(modalIndex3);
+});
+showModalSlide3(modalIndex3);
+
+// ==== المودال الرابع ====
+const villaModal4 = document.getElementById("villaModal4");
+const moreBtn4 = document.querySelector(".special-btn-2"); // الزر تبع الكرت الرابع
+const closeModal4 = document.querySelector(".close-modal-4");
+
+// افتح المودال عند الضغط
+moreBtn4.onclick = () => {
+  villaModal4.style.display = "block";
+};
+
+// سكّر عند الضغط على X
+closeModal4.onclick = () => {
+  villaModal4.style.display = "none";
+};
+
+// سكّر عند الضغط برة
+window.addEventListener("click", (e) => {
+  if (e.target == villaModal4) {
+    villaModal4.style.display = "none";
+  }
+});
+
+// ==== سلايدر المودال الرابع ====
+const modalSlider4 = document.querySelector(".modal-slider-4");
+const modalSlides4 = modalSlider4.querySelectorAll("img");
+const modalPrev4 = modalSlider4.querySelector(".prev");
+const modalNext4 = modalSlider4.querySelector(".next");
+let modalIndex4 = 0;
+
+function showModalSlide4(i) {
+  modalSlides4.forEach(slide => slide.classList.remove("active"));
+  modalSlides4[i].classList.add("active");
+}
+modalPrev4.addEventListener("click", () => {
+  modalIndex4 = (modalIndex4 - 1 + modalSlides4.length) % modalSlides4.length;
+  showModalSlide4(modalIndex4);
+});
+modalNext4.addEventListener("click", () => {
+  modalIndex4 = (modalIndex4 + 1) % modalSlides4.length;
+  showModalSlide4(modalIndex4);
+});
+showModalSlide4(modalIndex4);
+
+
+
+</script>
+</body>
+</html>
