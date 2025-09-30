@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شيبارة - الواجهة الرئيسية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* إعدادات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            background: #fff;
+            color: #111;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header معدل */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 999;
+            border-bottom: none;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* القائمة الرئيسية - في سطر واحد */
+        nav ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: static;
+            background: none;
+            width: auto;
+            flex-direction: row;
+            box-shadow: none;
+        }
+
+        nav ul li {
+            margin: 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: color 0.3s, background 0.3s;
+            display: block;
+        }
+
+        nav a.active, nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            background: transparent;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .language-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+        }
+
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            list-style: none;
+            padding: 5px 0;
+            margin: 5px 0 0 0;
+            min-width: 120px;
+        }
+
+        .language-dropdown.show {
+            display: block;
+        }
+
+        .language-dropdown li button {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            text-align: left;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .language-dropdown li button:hover {
+            background: #f5f5f5;
+        }
+
+        .logo {
+            font-size: 28px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* تنسيق زر القائمة في الهواتف */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* قسم الهيرو مع الفيديو */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            text-align: right;
+            max-width: 500px;
+            padding-right: 50px;
+            z-index: 1;
+            position: absolute;
+            top: 50%;
+            right: 50px;
+            transform: translateY(-50%);
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        } 
+
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .hero-buttons .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+        }
+
+        .underline {
+            border-bottom: 2px solid #fff;
+            display: inline-block;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .video-controls button {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .video-controls button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* قسم الميزات */
+        .features {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #1a5f7a;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* قسم الغرف والفلل */
+        .villa-slider {
+            max-width: 900px;
+            margin: 40px auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .villa-slider .caption {
+            margin-bottom: 20px;
+        }
+
+        .villa-slider .caption h2 {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #000;
+        }
+
+        .villa-slider .caption p {
+            font-size: 16px;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .villa-slider .slides-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .villa-slider .slide {
+            display: none;
+        }
+
+        .villa-slider .slide.active {
+            display: block;
+        }
+
+        .villa-slider img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* أزرار */
+        .villa-slider button.prev,
+        .villa-slider button.next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.4);
+            border: none;
+            color: #fff;
+            font-size: 26px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .villa-slider button.prev { right: 12px; }
+        .villa-slider button.next { left: 12px; }
+
+        .villa-slider button.prev:hover,
+        .villa-slider button.next:hover {
+            background: rgba(0,0,0,0.7);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* قسم العروض الخاصة */
+        .offers {
+            padding: 60px 20px;
+            background: #f8f9fa;
+            position: relative;
+            text-align: center;
+        }
+
+        .offers .section-title {
+            margin-bottom: 40px;
+        }
+
+        .offers-slider {
+            position: relative;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .offer-slide {
+            display: none;
+            animation: fadeIn .6s ease;
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            width: 100%;
+        }
+
+        .offer-slide.active {
+            display: block;
+        }
+
+        /* الصورة العلوية */
+        .offer-top img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+        }
+
+        /* القسم السفلي */
+        .offer-bottom {
+            position: relative;
+            height: 260px;
+        }
+
+        .offer-bottom .blur-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(6px) brightness(0.7);
+            transform: scale(1.1);
+        }
+
+        .offer-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 30px 20px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .offer-info h3 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .offer-info p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .offer-info .btn {
+            display: inline-block;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            cursor: pointer;
+            transition: color .3s ease;
+        }
+
+        .offer-info .btn:hover {
+            color: #ddd;
+        }
+
+        /* أزرار التنقل */
+        .offer-prev,
+        .offer-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.4);
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .offer-prev { left: 20px; }
+        .offer-next { right: 20px; }
+
+        .offer-prev:hover,
+        .offer-next:hover {
+            background: rgba(0,0,0,0.7);
+        }
+
+        /* قسم الموقع */
+        .location {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .location-content {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .location-map {
+            flex: 1;
+            height: 400px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .location-info {
+            flex: 1;
+        }
+        
+        .location-info h2 {
+            font-size: 36px;
+            color: #0a0a0a;
+            margin-bottom: 20px;
+        }
+        
+        .location-info p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .location-info .btn {
+            background: #fff;
+            color: #0a0808;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            transition: 0.3s;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .location-info .btn:hover {
+            color: #ddd;
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-item i {
+            width: 30px;
+            color: #2d9cdb;
+            font-size: 18px;
+        }
+
+        .location-map img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .after-location {
+            text-align: center;
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .after-location .intro-text {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .after-location .brand {
+            font-size: 60px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #000;
+        }
+
+        .after-location .subtitle {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        .after-location .desc {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .after-location .btn-inquiry {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #000;
+            color: #fff;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 60px;
+            transition: 0.3s;
+        }
+
+        .after-location .btn-inquiry:hover {
+            background: #333;
+        }
+
+        .after-location .rights {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .after-location .back-to-top {
+            font-size: 14px;
+            color: #000;
+            text-decoration: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .after-location .back-to-top:hover {
+            text-decoration: underline;
+        }
+
+        .after-location .divider {
+            border: none;
+            border-top: 3px solid #000;
+            width: 100%;
+            margin: 50px 0;
+        }
+
+        /* التجاوب مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: rgba(0, 0, 0, 0.9);
+                width: 100%;
+                flex-direction: column;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                padding: 20px;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .header-content {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 10px 16px;
+            }
+            
+            .header-actions {
+                order: 2;
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+            }
+            
+            .menu-toggle {
+                order: 1;
+            }
+            
+            .logo {
+                order: 0;
+            }
+
+            .hero-content {
+                position: static;
+                transform: none;
+                text-align: center;
+                max-width: 90%;
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .language-dropdown {
+                left: auto;
+                right: 0;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .villa-slider img { height: 380px; }
+        }
+
+        @media (max-width: 480px) {
+            .villa-slider img { height: 260px; }
+            .villa-slider button.prev, .villa-slider button.next { width: 38px; height: 38px; font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- الشريط العلوي -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" data-translate="logo">شيبارة</div>
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul>
+                        <li><a href="villass.html" data-translate="nav_villas">الفلل</a></li>
+                        <li><a href="offers.html" data-translate="nav_offers">العروض الخاصة</a></li>
+                        <li><a href="dining.html" data-translate="nav_dining">تناول الطعام</a></li>
+                        <li><a href="activities.html" data-translate="nav_activities">التجارب والنشاطات</a></li>
+                        <li><a href="mas.html" data-translate="nav_wellness">المنتج الصحي والعافية</a></li>
+                        <li><a href="location.html" data-translate="nav_location">الموقع</a></li>
+                        <li><a href="contact.html" data-translate="nav_contact">للتواصل معنا</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="booking.html" class="btn btn-primary" data-translate="btn_book_main">احجز اقامتك</a>
+                    <div class="language-switcher">
+                        <button class="language-btn">
+                            <span id="current-lang-text">العربية</span> <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="language-dropdown" id="lang-dropdown">
+                            <li><button data-lang="ar">العربية</button></li>
+                            <li><button data-lang="en">English</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم الهيرو مع الفيديو -->
+    <section class="hero">
+        <video id="bg-video" autoplay muted loop playsinline webkit-playsinline class="video-background">
+    <source src="she.mp4" type="video/mp4">
+    <span data-translate="video_not_supported">متصفحك لا يدعم تشغيل الفيديو.</span>
+</video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+               <h1 data-translate="hero_title_p1">حيث المستقبل المستدام</h1>
+            <p data-translate="hero_desc">انغمس في قلب البحر الأحمر.. حيث يلتقي الحاضر بالمستقبل المستدام واكتشاف الجمال الأخاذ.</p>
+            <div class="hero-buttons">
+                <a href="booking.html" class="btn btn-primary" data-translate="btn_book_now">احجز الآن</a>
+            </div>
+        </div>
+
+        <div class="video-controls">
+            <button id="play-pause">⏯</button>
+            <button id="mute-unmute">🔇</button>
+        </div>
+    </section>
+
+    <!-- قسم الميزات -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-translate="features_title">____</h2>
+                <p data-translate="features_desc">نعمل على خلق تجارب خالدة لضيوفنا، من خلال تحقيق التوازن بين التصميم الحديث والتركيز على الحاضر، مع الحفاظ على القيم الأساسية للضيافة من الكرم والدفء لتشكيل ذكريات دائمة. نعمل على خلق تجارب خالدة لضيوفنا، من خلال تحقيق التوازن بين التصميم الحديث والتركيز على الحاضر، مع الحفاظ على القيم الأساسية للضيافة من الكرم والدفء لتشكيل ذكريات دائمة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الفلل -->
+    <section class="villa-slider">
+        <!-- النصوص -->
+        <div class="caption">
+            <h2 id="slide-title" data-translate="slide_title_1">تصميم أثيري</h2>
+            <p id="slide-desc" data-translate="slide_desc_1">تم تصميمه لتحويل الانغماس الحقيقي في الطبيعة، فقاعات الهواء تعكس السماء والبحر</p>
+        </div>
+
+        <!-- الصور -->
+        <div class="slides-wrapper">
+            <div class="slide active"
+                 data-title-ar="تصميم أثيري"
+                 data-desc-ar="تم تصميمه لتحويل الانغماس الحقيقي في الطبيعة، فقاعات الهواء تعكس السماء والبحر"
+                 data-title-en="Ethereal Design"
+                 data-desc-en="Designed to transform true immersion in nature, air bubbles reflect the sky and sea">
+                <img src="111.jpg" alt="تصميم أثيري">
+            </div>
+
+            <div class="slide"
+                 data-title-ar="التواصل الخالص مع الطبيعة"
+                 data-desc-ar="تجربة فريدة تجمع بين الرفاهية والاستدامة وسط الشعب المرجانية"
+                 data-title-en="Pure Connection with Nature"
+                 data-desc-en="A unique experience combining luxury and sustainability amidst coral reefs">
+                <img src="121.jpg" alt="التواصل مع الطبيعة">
+            </div>
+
+            <div class="slide"
+                 data-title-ar="تجارب استثنائية"
+                 data-desc-ar="خلق لحظات لا تُنسى، حيث يتحول الخيال إلى واقع ملموس"
+                 data-title-en="Exceptional Experiences"
+                 data-desc-en="Creating unforgettable moments where imagination becomes tangible reality">
+                <img src="131.jpg" alt="تجارب استثنائية">
+            </div>
+        </div>
+
+        <!-- أزرار -->
+        <button class="prev">❮</button>
+        <button class="next">❯</button>
+    </section>
+
+    <!-- قسم العروض الخاصة -->
+    <section class="offers" id="offers">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-translate="offers_title">تجارب مثالية مستدامة</h2>
+            </div>
+
+            <div class="offers-slider">
+                <!-- السلايد الأول -->
+                <div class="offer-slide active">
+                    <div class="offer-top">
+                        <img src="141.jpg">
+                    </div>
+                    <div class="offer-bottom">
+                        <img class="blur-bg" src="141.jpg">
+                        <div class="offer-info">
+                            <h3 data-translate="offer_villas_title">الفلل</h3>
+                            <p data-translate="offer_villas_desc">رحلة من التطور والرقي اكتشف جوهرة البحر الأحمر، حيث تتحول الفخامة إلى فن، وتتجسد الأناقة في كل تفصيلة، لتستمتع بإقامة لا تُنسى.</p>
+                            <a href="villas.html" class="btn" data-translate="offer_villas_btn">اكتشف الفلل</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- السلايد الثاني -->
+                <div class="offer-slide">
+                    <div class="offer-top">
+                        <img src="151.jpg">
+                    </div>
+                    <div class="offer-bottom">
+                        <img class="blur-bg" src="151.jpg">
+                        <div class="offer-info">
+                            <h3 data-translate="offer_special_title">العرض المميز</h3>
+                            <p data-translate="offer_special_desc">احتفل باليوم الوطني السعودي، أقم ثلاث ليالٍ أو أكثر واستمتع بخصم ٢٠٪ على سعر الفيلا احجز ثلاث ليالٍ أو أكثر واستمتع بخصم ٢٠٪ على سعر الفيلا، لتحتفل بالمملكة بينما تنعم بجمال البحر الأحمر.</p>
+                            <a href="aoff.html" class="btn" data-translate="offer_special_btn1">اكتشف المزيد من العروض</a> 
+                            <a href="booking.html" class="btn" data-translate="offer_special_btn2">إحجز إقامتك</a> 
+                        </div>
+                    </div>
+                </div>
+
+                <!-- السلايد الثالث -->
+                <div class="offer-slide">
+                    <div class="offer-top">
+                        <img src="161.jpg">
+                    </div>
+                    <div class="offer-bottom">
+                        <img class="blur-bg" src="161.jpg">
+                        <div class="offer-info">
+                            <h3 data-translate="offer_dining_title">تناول الطعام</h3>
+                            <p data-translate="offer_dining_desc">انطلق في رحلة استثنائية إلى عالم الذوق الرفيع والإبداع، حيث تتلاقى الحرفية والفن في تجربة لا تُنسى يعيد شيبارة تعريف تجربة تناول الطعام الفاخرة للغاية، من خلال الجمع بين الابتكار والإبداع والتقاليد لتوفير تجارب لا تُنسى للضيوف.</p>
+                            <a href="dining.html" class="btn" data-translate="offer_dining_btn">اكتشف مطاعمنا</a>  
+                        </div>
+                    </div>
+                </div>
+
+                <!-- السلايد الرابع -->
+                <div class="offer-slide">
+                    <div class="offer-top">
+                        <img src="171.jpg">
+                    </div>
+                    <div class="offer-bottom">
+                        <img class="blur-bg" src="171.jpg">
+                        <div class="offer-info">
+                            <h3 data-translate="offer_experience_title">تجربة مميزة</h3>
+                            <p data-translate="offer_experience_desc">الإبحار بالقوارب الشراعية اكتشف عالم الإبحار الساحر، وطوّر مهاراتك مع برامجنا المتنوعة لتستمتع بمغامرات لا تُنسى. أبحر معنا اليوم.</p>
+                            <a href="activities.html" class="btn" data-translate="offer_experience_btn">استكشف المزيد من التجارب</a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أزرار -->
+            <button class="offer-prev">❮</button>
+            <button class="offer-next">❯</button>
+        </div>
+    </section>
+
+    <!-- قسم الموقع -->
+    <section class="location" id="location">
+        <div class="container">
+            <div class="location-content">
+                <div class="location-map">
+                    <img src="181.jpg" alt="خريطة الموقع">
+                </div>
+                <div class="location-info">
+                    <h2 data-translate="location_title">موقعنا وطريقة الوصول</h2>
+                    <p data-translate="location_desc">يقع مقصد البحر الأحمر على بعد 500 كيلومتر شمال جدة، بين مدينتي الوجه وأملج السعوديتين. وبفضل مطار البحر الاحمر الدولي، يمكن للزوار من جميع أنحاء العالم الوصول إلى هذه الوجهة بسهولة. منتجع شيبارة: يقع منتجع شيبارة على بعد 30-40 دقيقة فقط بالقارب من صالة الوصول في فندق Turtle Bay، أو 30 دقيقة بالطائرة المائية من مطار البحر الأحمر الدولي، ويكشف عن واحة هادئة، وملاذ هادئ من صخب الحياة اليومية.</p>
+                    <a href="location.html" class="btn" data-translate="location_btn">الوصول إلى المنتجع</a> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم خاص بعد الموقع -->
+    <section class="after-location">
+        <div class="container">
+            <!-- سطر أول -->
+            <p class="intro-text" data-translate="footer_location">جزيرة شيبارة - البحر الأحمر - المملكة العربية السعودية</p>
+            
+            <!-- كلمة شيبارة كبيرة -->
+            <h1 class="brand" data-translate="footer_brand">شيبارة</h1>
+            
+            <!-- عنوان حيث المستقبل -->
+            <h2 class="subtitle" data-translate="footer_subtitle">حيث المستقبل المستدام</h2>
+            
+            <!-- وصف قصير -->
+            <p class="desc" data-translate="footer_desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+            
+            <!-- زر الاستفسارات -->
+            <a href="inquiries.html" class="btn-inquiry" data-translate="footer_inquiry">للاستفسارات</a>
+            
+            <hr class="divider">
+            
+            <!-- سطر الحقوق -->
+            <p class="rights" data-translate="footer_rights">البحر الأحمر 2024 © جميع الحقوق محفوظة</p>
+            
+            <!-- زر الرجوع للأعلى -->
+            <a href="#top" class="back-to-top" data-translate="footer_back_top">الرجوع إلى الأعلى ↑</a>
+        </div>
+    </section>
+
+    <!-- ملفات الترجمة -->
+    <script>
+        // ملف الترجمات
+        const translations = {
+            ar: {
+                // الشريط العلوي
+                "logo": "شيبارة",
+                "nav_villas": "الفلل",
+                "nav_offers": "العروض الخاصة",
+                "nav_dining": "تناول الطعام",
+                "nav_activities": "التجارب والنشاطات",
+                "nav_wellness": "المنتج الصحي والعافية",
+                "nav_location": "الموقع",
+                "nav_contact": "للتواصل معنا",
+                "btn_book_main": "احجز اقامتك",
+                
+                // قسم الهيرو
+                "hero_title_p1": "حيث المستقبل المستدام",
+                "hero_desc": "انغمس في قلب البحر الأحمر.. حيث يلتقي الحاضر بالمستقبل المستدام واكتشاف الجمال الأخاذ.",
+                "btn_book_now": "احجز الآن",
+                "video_not_supported": "متصفحك لا يدعم تشغيل الفيديو.",
+                
+                // قسم الميزات
+                "features_title": "____",
+                "features_desc": "نعمل على خلق تجارب خالدة لضيوفنا، من خلال تحقيق التوازن بين التصميم الحديث والتركيز على الحاضر، مع الحفاظ على القيم الأساسية للضيافة من الكرم والدفء لتشكيل ذكريات دائمة. نعمل على خلق تجارب خالدة لضيوفنا، من خلال تحقيق التوازن بين التصميم الحديث والتركيز على الحاضر، مع الحفاظ على القيم الأساسية للضيافة من الكرم والدفء لتشكيل ذكريات دائمة.",
+                
+                // قسم الفلل (السلايدر)
+                "slide_title_1": "تصميم أثيري",
+                "slide_desc_1": "تم تصميمه لتحويل الانغماس الحقيقي في الطبيعة، فقاعات الهواء تعكس السماء والبحر",
+                "slide_title_2": "التواصل الخالص مع الطبيعة",
+                "slide_desc_2": "تجربة فريدة تجمع بين الرفاهية والاستدامة وسط الشعب المرجانية",
+                "slide_title_3": "تجارب استثنائية",
+                "slide_desc_3": "خلق لحظات لا تُنسى، حيث يتحول الخيال إلى واقع ملموس",
+                
+                // قسم العروض الخاصة
+                "offers_title": "تجارب مثالية مستدامة",
+                "offer_villas_title": "الفلل",
+                "offer_villas_desc": "رحلة من التطور والرقي اكتشف جوهرة البحر الأحمر، حيث تتحول الفخامة إلى فن، وتتجسد الأناقة في كل تفصيلة، لتستمتع بإقامة لا تُنسى.",
+                "offer_villas_btn": "اكتشف الفلل",
+                "offer_special_title": "العرض المميز",
+                "offer_special_desc": "احتفل باليوم الوطني السعودي، أقم ثلاث ليالٍ أو أكثر واستمتع بخصم ٢٠٪ على سعر الفيلا احجز ثلاث ليالٍ أو أكثر واستمتع بخصم ٢٠٪ على سعر الفيلا، لتحتفل بالمملكة بينما تنعم بجمال البحر الأحمر.",
+                "offer_special_btn1": "اكتشف المزيد من العروض",
+                "offer_special_btn2": "إحجز إقامتك",
+                "offer_dining_title": "تناول الطعام",
+                "offer_dining_desc": "انطلق في رحلة استثنائية إلى عالم الذوق الرفيع والإبداع، حيث تتلاقى الحرفية والفن في تجربة لا تُنسى يعيد شيبارة تعريف تجربة تناول الطعام الفاخرة للغاية، من خلال الجمع بين الابتكار والإبداع والتقاليد لتوفير تجارب لا تُنسى للضيوف.",
+                "offer_dining_btn": "اكتشف مطاعمنا",
+                "offer_experience_title": "تجربة مميزة",
+                "offer_experience_desc": "الإبحار بالقوارب الشراعية اكتشف عالم الإبحار الساحر، وطوّر مهاراتك مع برامجنا المتنوعة لتستمتع بمغامرات لا تُنسى. أبحر معنا اليوم.",
+                "offer_experience_btn": "استكشف المزيد من التجارب",
+                
+                // قسم الموقع
+                "location_title": "موقعنا وطريقة الوصول",
+                "location_desc": "يقع مقصد البحر الأحمر على بعد 500 كيلومتر شمال جدة، بين مدينتي الوجه وأملج السعوديتين. وبفضل مطار البحر الاحمر الدولي، يمكن للزوار من جميع أنحاء العالم الوصول إلى هذه الوجهة بسهولة. منتجع شيبارة: يقع منتجع شيبارة على بعد 30-40 دقيقة فقط بالقارب من صالة الوصول في فندق Turtle Bay، أو 30 دقيقة بالطائرة المائية من مطار البحر الأحمر الدولي، ويكشف عن واحة هادئة، وملاذ هادئ من صخب الحياة اليومية.",
+                "location_btn": "الوصول إلى المنتجع",
+                 "hero_title_part1": "حيث",
+        "hero_title_part2": "المستقبل", 
+        "hero_title_part3": "المستدام",
+                
+                // قسم بعد الموقع
+                "footer_location": "جزيرة شيبارة - البحر الأحمر - المملكة العربية السعودية",
+                "footer_brand": "شيبارة",
+                "footer_subtitle": "حيث المستقبل المستدام",
+                "footer_desc": "نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها",
+                "footer_inquiry": "للاستفسارات",
+                "footer_rights": "البحر الأحمر 2024 © جميع الحقوق محفوظة",
+                "footer_back_top": "الرجوع إلى الأعلى ↑"
+            },
+            
+            en: {
+                // الشريط العلوي
+                "logo": "Shebara",
+                "nav_villas": "Villas",
+                "nav_offers": "Special Offers",
+                "nav_dining": "Dining",
+                "nav_activities": "Experiences & Activities",
+                "nav_wellness": "Spa & Wellness",
+                "nav_location": "Location",
+                "nav_contact": "Contact Us",
+                "btn_book_main": "Book Your Stay",
+                
+                // قسم الهيرو
+                "hero_title_p1": "Where Sustainable Future Begins",
+                "hero_desc": "Immerse yourself in the heart of the Red Sea.. where the present meets sustainable future and breathtaking beauty.",
+                "btn_book_now": "Book Now",
+                "video_not_supported": "Your browser does not support the video tag.",
+                
+                // قسم الميزات
+                "features_title": "____",
+                "features_desc": "We work to create lasting experiences for our guests, by balancing modern design with focus on the present, while maintaining the core values of hospitality from generosity and warmth to form lasting memories. We work to create lasting experiences for our guests, by balancing modern design with focus on the present, while maintaining the core values of hospitality from generosity and warmth to form lasting memories.",
+                
+                // قسم الفلل (السلايدر)
+                "slide_title_1": "Ethereal Design",
+                "slide_desc_1": "Designed to transform true immersion in nature, air bubbles reflect the sky and sea",
+                "slide_title_2": "Pure Connection with Nature",
+                "slide_desc_2": "A unique experience combining luxury and sustainability amidst coral reefs",
+                "slide_title_3": "Exceptional Experiences",
+                "slide_desc_3": "Creating unforgettable moments where imagination becomes tangible reality",
+                "hero_title_part1": "Where",
+        "hero_title_part2": "Sustainable",
+        "hero_title_part3": "Future Begins",
+                
+                // قسم العروض الخاصة
+                "offers_title": "Perfect Sustainable Experiences",
+                "offer_villas_title": "Villas",
+                "offer_villas_desc": "A journey of evolution and sophistication. Discover the jewel of the Red Sea, where luxury transforms into art, and elegance manifests in every detail, for an unforgettable stay.",
+                "offer_villas_btn": "Discover Villas",
+                "offer_special_title": "Special Offer",
+                "offer_special_desc": "Celebrate Saudi National Day, stay three nights or more and enjoy 20% discount on villa rates. Book three nights or more and enjoy 20% discount on villa rates, celebrating the Kingdom while enjoying the beauty of the Red Sea.",
+                "offer_special_btn1": "Discover More Offers",
+                "offer_special_btn2": "Book Your Stay",
+                "offer_dining_title": "Dining",
+                "offer_dining_desc": "Embark on an exceptional journey to the world of refined taste and creativity, where craftsmanship and art meet in an unforgettable experience. Shebara redefines the ultimate luxury dining experience by combining innovation, creativity and traditions to provide unforgettable experiences for guests.",
+                "offer_dining_btn": "Discover Our Restaurants",
+                "offer_experience_title": "Unique Experience",
+                "offer_experience_desc": "Sailing with Sailboats Discover the enchanting world of sailing, and develop your skills with our diverse programs to enjoy unforgettable adventures. Sail with us today.",
+                "offer_experience_btn": "Explore More Experiences",
+                
+                // قسم الموقع
+                "location_title": "Our Location & How to Get Here",
+                "location_desc": "The Red Sea destination is located 500 kilometers north of Jeddah, between the Saudi cities of Al Wajh and Umluj. Thanks to the Red Sea International Airport, visitors from around the world can easily access this destination. Shebara Resort: Located just 30-40 minutes by boat from the arrival lounge at Turtle Bay Hotel, or 30 minutes by seaplane from Red Sea International Airport, Shebara reveals a tranquil oasis, a peaceful haven from the hustle and bustle of daily life.",
+                "location_btn": "Get to the Resort",
+                
+                // قسم بعد الموقع
+                "footer_location": "Shebara Island - Red Sea - Kingdom of Saudi Arabia",
+                "footer_brand": "Shebara",
+                "footer_subtitle": "Where Sustainable Future Begins",
+                "footer_desc": "We are happy to assist with any inquiry or information you need",
+                "footer_inquiry": "For Inquiries",
+                "footer_rights": "Red Sea 2024 © All Rights Reserved",
+                "footer_back_top": "Back to Top ↑"
+            }
+        };
+
+        // نظام الترجمة
+        class TranslationSystem {
+            constructor() {
+                this.currentLang = this.getSavedLanguage() || 'ar';
+                this.init();
+            }
+            
+            getSavedLanguage() {
+                return localStorage.getItem('site-language');
+            }
+            
+            saveLanguage(lang) {
+                localStorage.setItem('site-language', lang);
+                this.currentLang = lang;
+            }
+            
+            setLanguage(lang) {
+                if (translations[lang]) {
+                    this.saveLanguage(lang);
+                    this.translatePage();
+                    this.updateDirection(lang);
+                    this.updateLanguageButton(lang);
+                }
+            }
+            
+            updateDirection(lang) {
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+            }
+            
+            updateLanguageButton(lang) {
+                const langBtn = document.getElementById('current-lang-text');
+                if (langBtn) {
+                    langBtn.textContent = lang === 'ar' ? 'العربية' : 'English';
+                }
+            }
+            
+            translatePage() {
+                // ترجمة العناصر مع data-translate
+                const elements = document.querySelectorAll('[data-translate]');
+                
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    const translation = translations[this.currentLang][key];
+                    
+                    if (translation) {
+                        if (element.hasAttribute('data-html')) {
+                            element.innerHTML = translation;
+                        } else {
+                            element.textContent = translation;
+                        }
+                    }
+                });
+                
+                // تحديث النصوص الخاصة بالسلايدر
+                this.updateSliderTexts();
+            }
+            
+            updateSliderTexts() {
+                const slides = document.querySelectorAll('.villa-slider .slide');
+                const title = document.getElementById('slide-title');
+                const desc = document.getElementById('slide-desc');
+                
+                slides.forEach((slide, index) => {
+                    const titleKey = `slide_title_${index + 1}`;
+                    const descKey = `slide_desc_${index + 1}`;
+                    
+                    if (translations[this.currentLang][titleKey]) {
+                        slide.setAttribute(`data-title-${this.currentLang}`, translations[this.currentLang][titleKey]);
+                    }
+                    
+                    if (translations[this.currentLang][descKey]) {
+                        slide.setAttribute(`data-desc-${this.currentLang}`, translations[this.currentLang][descKey]);
+                    }
+                });
+                
+                // تحديث النص المعروض حالياً إذا كان هناك سلايد نشط
+                const activeSlide = document.querySelector('.villa-slider .slide.active');
+                if (activeSlide && title && desc) {
+                    title.textContent = activeSlide.getAttribute(`data-title-${this.currentLang}`) || activeSlide.getAttribute('data-title');
+                    desc.textContent = activeSlide.getAttribute(`data-desc-${this.currentLang}`) || activeSlide.getAttribute('data-desc');
+                }
+            }
+            
+            init() {
+                this.updateDirection(this.currentLang);
+                this.translatePage();
+                this.setupLanguageSwitcher();
+            }
+            
+            setupLanguageSwitcher() {
+                const langDropdown = document.getElementById('lang-dropdown');
+                const languageBtn = document.querySelector('.language-btn');
+                
+                if (langDropdown && languageBtn) {
+                    languageBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        langDropdown.classList.toggle('show');
+                    });
+                    
+                    const langButtons = langDropdown.querySelectorAll('button[data-lang]');
+                    langButtons.forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const lang = button.getAttribute('data-lang');
+                            this.setLanguage(lang);
+                            langDropdown.classList.remove('show');
+                        });
+                    });
+                    
+                    document.addEventListener('click', () => {
+                        langDropdown.classList.remove('show');
+                    });
+                }
+            }
+        }
+
+        // إنشاء نسخة من نظام الترجمة
+        const translator = new TranslationSystem();
+    </script>
+
+    <script>
+        // إضافة تأثير التمرير السلس للروابط
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // إضافة تأثير التمرير للشريط العلوي
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // تبديل القائمة في الهواتف
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
+        
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('show');
+            });
+            
+            // إغلاق القائمة عند النقر على رابط
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('show');
+                });
+            });
+        }
+
+        // تحكم بالفيديو
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("bg-video");
+            const playPauseBtn = document.getElementById("play-pause");
+            const muteUnmuteBtn = document.getElementById("mute-unmute");
+
+            if (video && playPauseBtn) {
+                playPauseBtn.addEventListener("click", () => {
+                    if(video.paused) video.play();
+                    else video.pause();
+                });
+            }
+
+            if (video && muteUnmuteBtn) {
+                muteUnmuteBtn.addEventListener("click", () => {
+                    video.muted = !video.muted;
+                });
+            }
+        });
+
+        // سلايدر الفلل
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.querySelectorAll(".villa-slider .slide");
+            const title = document.getElementById("slide-title");
+            const desc = document.getElementById("slide-desc");
+            const prevBtn = document.querySelector(".villa-slider .prev");
+            const nextBtn = document.querySelector(".villa-slider .next");
+
+            if (slides.length > 0 && title && desc && prevBtn && nextBtn) {
+                let current = 0;
+
+                function showSlide(index) {
+                    slides.forEach(s => s.classList.remove("active"));
+                    slides[index].classList.add("active");
+
+                    // تحديث النصوص بناءً على اللغة الحالية
+                    const currentLang = translator.currentLang;
+                    title.textContent = slides[index].getAttribute(`data-title-${currentLang}`) || slides[index].getAttribute('data-title');
+                    desc.textContent = slides[index].getAttribute(`data-desc-${currentLang}`) || slides[index].getAttribute('data-desc');
+
+                    current = index;
+                }
+
+                prevBtn.addEventListener("click", () => {
+                    let newIndex = (current - 1 + slides.length) % slides.length;
+                    showSlide(newIndex);
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    let newIndex = (current + 1) % slides.length;
+                    showSlide(newIndex);
+                });
+
+                // أول عرض
+                showSlide(current);
+            }
+        });
+
+        // سلايدر العروض
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.querySelectorAll(".offer-slide");
+            const prevBtn = document.querySelector(".offer-prev");
+            const nextBtn = document.querySelector(".offer-next");
+            
+            if (slides.length > 0 && prevBtn && nextBtn) {
+                let current = 0;
+
+                function showSlide(index) {
+                    slides.forEach(s => s.classList.remove("active"));
+                    slides[index].classList.add("active");
+                    current = index;
+                }
+
+                prevBtn.addEventListener("click", () => {
+                    let newIndex = (current - 1 + slides.length) % slides.length;
+                    showSlide(newIndex);
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    let newIndex = (current + 1) % slides.length;
+                    showSlide(newIndex);
+                });
+
+                // عرض أول سلايد
+                showSlide(current);
+            }
+        });
+
+        if (translation) {
+  if (element.hasAttribute("data-html")) {
+    element.innerHTML = translation;
+  } else {
+    element.textContent = translation;
+  }
+}
+
+    </script>
+</body>
+</html>
