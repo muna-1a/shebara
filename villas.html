@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>شيبارة — الفلل</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <style>
+    :root{--green:#1a8b5a;
+        --muted:#666
+    
+}
+
+    *{box-sizing:border-box;
+        font-family:'Cairo',sans-serif
+    }
+
+    body{
+        margin:0;background:#fff;
+        color:#111;direction:rtl
+    }
+
+    .container{
+        max-width:1200px;
+        margin:0 auto;
+        padding:0 16px
+    }
+
+    /* header بسيط مطابق */
+   /* ===== header فوق الفيديو ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: transparent; /* شفاف فوق الفيديو */
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+/* بعد التمرير نغير الخلفية للنمط العادي */
+header.scrolled {
+  background: rgba(255,255,255,0.98);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* داخل الهيدر */
+.header-content {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:70px;
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 16px;
+}
+
+/* ألوان الروابط بينما الهيدر فوق الفيديو */
+header:not(.scrolled) .logo,
+header:not(.scrolled) nav a,
+header:not(.scrolled) .btn-primary,
+header:not(.scrolled) .language-btn {
+  color: #fff;
+  border-color: rgba(255,255,255,0.6);
+}
+
+/* عندما يصبح الهيدر scrolled (خلي النص غامق) */
+header.scrolled .logo,
+header.scrolled nav a,
+header.scrolled .btn-primary,
+header.scrolled .language-btn {
+  color: #111;
+  border-color: rgba(0,0,0,0.12);
+}
+
+/* nav */
+nav ul{ display:flex; gap:18px; list-style:none; margin:0; padding:0; }
+nav a{ text-decoration:none; padding:6px 10px; border-radius:6px; transition:0.2s; }
+
+/* زر الحجز */
+.btn-primary {
+  background: transparent;              /* شفاف */
+  border: 1px solid rgba(255, 255, 255, 0.7); /* خط أبيض خفيف */
+  color: #fff;                          /* نص أبيض */
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+header.scrolled .btn-primary {
+  border: 1px solid rgba(0,0,0,0.3); /* بعد التمرير يصير غامق */
+  color: #111;                        /* النص يصير أسود */
+}
+
+
+/* language switcher (بسيط) */
+.language-switcher{ position:relative; }
+.language-btn{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.5);
+  padding:6px 10px;
+  border-radius:6px;
+  color:inherit;
+  cursor:pointer;
+}
+
+.logo {
+  font-size: 28px;     /* كبر الحجم (غيّر الرقم حسب ما بتحب) */
+  font-weight: 700;    /* غامق */
+}
+
+/* ===== Hero + فيديو ===== */
+.hero{
+  position: relative;
+  height: 100vh; /* يغطي كامل الشاشة */
+  overflow: hidden;
+  display:block;
+}
+
+/* الفيديو يغطي الحاوية بالكامل */
+.video-background{
+  position: absolute;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;   /* يغطي بدون تشويه */
+  z-index: 0;
+}
+
+/* تراكب داكن فوق الفيديو للتباين */
+.hero-overlay{
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.35);
+  z-index: 1;
+}
+
+/* محتوى الهيرو فوق التراكب */
+.hero-content{
+  position: absolute;
+  top:50%;
+  right: 60px;               /* مسافة من الحافة اليمنى */
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #fff;
+  max-width: 620px;          /* طول النص */
+  text-align: right;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  margin-bottom: 1px; /* نزّل الفقرة أكثر تحت العنوان */
+}
+
+.hero-content p {
+  margin-top: 100px;   /* إذا بدك ترفعها شوي لفوق */
+}
+
+
+
+/* عناوين ونص */
+.hero h1{ font-size: 34px; margin-bottom:12px; font-weight:700; text-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+.hero p{ font-size:16px; margin-bottom:10px; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+
+/* أزرار الهيرو */
+.hero-buttons{ display:flex; gap:12px; margin-top:14px; justify-content:flex-start; }
+.hero-buttons .btn{ padding:12px 26px; border-radius:8px; background:transparent; border:1px solid #fff; color:#fff; text-decoration:none; }
+
+/* أزرار التحكم بالفيديو */
+.video-controls{
+  position:absolute;
+  bottom:18px;
+  left:18px;  /* إخليهم يسار حتى لا يتعارضوا مع المحتوى اليمني */
+  display:flex;
+  gap:10px;
+  z-index:3;
+}
+.video-controls button{
+  background: rgba(0,0,0,0.45);
+  border:none; color:#fff; font-size:18px;
+  width:42px; height:42px; border-radius:50%; cursor:pointer;
+}
+
+/* تجاوب */
+@media (max-width:900px){
+  .hero-content{ right:20px; max-width:420px; padding:16px; }
+  .hero h1{ font-size:28px; }
+}
+@media (max-width:560px){
+  .hero-content{ right:14px; max-width:320px; }
+  .hero h1{ font-size:22px; }
+}
+
+   .villa-banner {
+  max-width: 1000px;
+  margin: 48px auto;
+  text-align: right;
+   margin-bottom: 150px
+}
+
+.villa-banner .caption {
+  margin-bottom: 18px;
+}
+
+.villa-banner .caption h2 {
+  font-size: 28px;
+  color: #000;
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+
+.villa-banner .caption p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.villa-banner .villa-image {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.villa-banner .villa-image img {
+  width: 100%;
+  height: 320px;   /* 👈 هنا قصرت الطول بدل 480px */
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+
+    /* Gallery / بطاقات */
+   /* ----- villa-banner: فصل النص عن الصورة + أزرار ----- */
+.villa-banner .caption {
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  text-align: right; /* لأن الصفحة RTL */
+}
+
+.villa-banner .caption h2 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  color: #111010;
+  font-weight: 700;
+}
+
+.villa-banner .caption p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* الصورة بلوك مستقل */
+.villa-banner .villa-image {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  margin-bottom: 18px;
+}
+
+.villa-banner .villa-image img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+/* تنسيقات السلايدر داخل villa-image */
+.villa-image.swiper {
+  max-width: 1000px;
+  margin: 18px auto;
+  border-radius: 12px;
+  overflow: visible; /* لأن أزرار التنقل خارجه */
+}
+
+/* صورة كل سلايد */
+.villa-image.swiper .swiper-slide img {
+  width: 100%;
+  height: 320px;         /* غيّر الطول حسب رغبتك */
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* لون أسهم التنقل */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000;           /* أسود */
+}
+
+/* نقاط pagination */
+.swiper-pagination-bullet {
+  background: rgba(0,0,0,0.7);
+}
+
+.mySwiper { 
+    overflow: hidden;
+ }
+
+    .mySwiper .swiper-wrapper {
+         display: flex; 
+        }
+
+    .mySwiper .swiper-slide {
+         flex: 0 0 100%;
+          max-width:100%; 
+        }
+
+    .mySwiper .swiper-slide img {
+         width:100%;
+          height:320px; 
+          object-fit:cover; 
+          display:block; 
+          border-radius:12px; 
+        }
+
+    /* تحكم بموقع وأسلوب أزرار التنقل فوق الصورة */
+    .villa-image.swiper {
+         position: relative;
+          margin-bottom:18px; 
+        }
+
+    .villa-image.swiper .swiper-button-prev,
+    .villa-image.swiper .swiper-button-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      border:2px solid #000;
+      background: rgba(255,255,255,0.95);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index: 30;
+    }
+    .villa-image.swiper .swiper-button-prev {
+         right: 12px; 
+        }
+         /* في RTL: السابق على اليمين */
+    .villa-image.swiper .swiper-button-next 
+    { left: 12px; 
+    }  /* التالي على اليسار */
+
+    /* أيقونات داخل الأزرار */
+    .villa-image.swiper .swiper-button-prev i,
+    .villa-image.swiper .swiper-button-next i {
+      font-size: 14px;
+      color: #000;
+    }
+
+    /* pagination (النقاط) */
+    .mySwiper .swiper-pagination-bullet { background: rgba(0,0,0,0.7); }
+
+
+/* الأزرار تحت الصورة */
+.villa-banner .villa-actions {
+  text-align: center;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+.villa-banner .btn-toggle,
+.villa-banner .btn-book {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 10px auto;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+  background: transparent;    /* 🔹 خلفية شفافة */
+  border: 2px solid #000;     /* 🔹 إطار أسود */
+  color: #000;                /* 🔹 النص أسود */
+  transition: all 0.3s ease;  /* 🔹 حركة ناعمة عند الهوفر */
+}
+
+/* تأثير عند التمرير */
+.villa-banner .btn-toggle:hover,
+.villa-banner .btn-book:hover {
+  background: #000;  /* الخلفية تصير سوداء عند الهوفر */
+  color: #fff;       /* والنص أبيض */
+  margin-bottom: 150px
+}
+
+/* المحتوى المخفي */
+.villa-banner .villa-details {
+  display: none; /* مخفي افتراضياً */
+  padding: 18px 20px;
+  border-top: 1px solid #eee;
+  margin-top: 8px;
+  background: transparent; /* 🔹 بدون مربع أبيض */
+  box-shadow: none;        /* 🔹 بدون ظل */
+  text-align: right;
+  color: #000;             /* 🔹 النص بالأسود */
+}
+
+/* عندما يفتح */
+.villa-banner .villa-details.open {
+  display: block;
+}
+
+.btn {
+  background: #fff;                  /* الخلفية بيضاء */
+  color: #0a0808;                    /* النص أسود غامق */
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: bold;
+  transition: 0.3s;
+  text-decoration: underline;        /* خط تحت النص */
+  text-underline-offset: 4px;        /* مسافة بين النص والخط */
+}
+
+.btn:hover {
+  background: #000;   /* عند التمرير يصير خلفية سوداء */
+  color: #fff;        /* النص أبيض */
+}
+
+/* عنوان المميزات */
+.villa-banner .villa-details h3 {
+  margin-top: 0;
+  font-size: 20px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #000; /* 🔹 خط أسود تحت العنوان */
+  margin-bottom: 12px;
+  color: #000;
+}
+
+/* تنسيق كل جملة (p) */
+.villa-banner .villa-details p {
+  margin: 0 0 16px;                /* 🔹 فراغ بين الجمل */
+  padding-bottom: 8px;             /* 🔹 مسافة قبل الخط */
+  border-bottom: 1px solid #000;   /* 🔹 خط أسود تحت كل جملة */
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* صندوق سياسة الحجوزات */
+.policy-box {
+  border: 2px solid #000;   /* إطار أسود */
+  padding: 14px 20px;
+  border-radius: 10px;
+  background: transparent;  
+  display: flex;            /* يخلي المحتوى بمحاذاة وسط */
+  justify-content: center;  /* بالنصف أفقياً */
+  margin: 40px auto;        /* مسافة فوق وتحت + بالنصف */
+  max-width: 800px;         /* أقصى عرض */
+  text-align: center;
+}
+
+.policy-box p {
+  margin: 0;
+  font-size: 20px;          /* خط أكبر */
+  font-weight: 700;         /* عريض */
+  color: #000;
+  display: flex;
+  flex-wrap: wrap;          /* إذا الجملة طويلة تنزل تحت */
+  align-items: center;
+  gap: 16px;                /* فراغ بين النص والزر */
+}
+
+/* زر قراءة المزيد */
+.policy-box .btn-read {
+  padding: 8px 16px;
+  border: 2px solid #000;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.policy-box .btn-read:hover {
+  background: #000;
+  color: #fff;
+}
+
+.policy-details {
+  display: none;
+  text-align: right;
+  margin-top: 20px;
+  line-height: 1.7;
+  font-size: 16px;
+  color: #000;
+}
+
+.policy-details h3 {
+  font-size: 20px;
+  margin: 20px 0 10px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 6px;
+}
+
+.after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+
+.after-location .divider {
+  border: none;
+  border-top: 3px solid #000; /* سُمك الخط (كبرتو شوي) */
+  width: 100%;                /* يغطي العرض كامل */
+  margin: 50px 0;             /* مسافة فوق وتحت */
+}
+
+    /* Footer صغير */
+    footer{
+        padding:40px 0;
+        text-align:center;
+        color:var(--muted);
+        border-top:1px solid rgba(0,0,0,0.04)
+    }
+
+    footer .rights{
+        margin-bottom:8px
+    }
+
+    /* تجاوب */
+    @media (max-width:900px){.slide img{height:360px}}
+    @media (max-width:480px){.slide img{height:220px}.hero-banner h1{font-size:22px}}
+  </style>
+</head>
+<body>
+  <!-- هيدر -->
+   <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" data-translate="brand">شيبارة</div>
+                <nav>
+                    <ul>
+                         <li><a href="#" data-page="villas" data-translate="nav-villas">الفلل</a></li>
+          <li><a href="#" data-page="offers" data-translate="nav-offers">العروض الخاصة</a></li>
+          <li><a href="#" data-page="dining" data-translate="nav-dining">تناول الطعام</a></li>
+          <li><a href="#" data-page="activities" data-translate="nav-activities">التجارب والنشاطات</a></li>
+          <li><a href="#" data-page="spa" data-translate="nav-spa">المنتجع الصحي والعافية</a></li>
+          <li><a href="#" data-page="location" data-translate="nav-location">الموقع</a></li>
+          <li><a href="#" data-page="contact" data-translate="nav-contact">للتواصل معنا</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="booking.html" class="btn-primary" data-translate="book">احجز إقامتك</a>
+                    <div class="language-switcher">
+                        <button class="language-btn">
+                   <span id="current-lang">العربية</span> <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="language-menu" style="display:none;position:absolute;background:#fff;border:1px solid #ddd;padding:10px;list-style:none;min-width:120px;box-shadow:0 2px 10px rgba(0,0,0,0.1);">
+            <li><a href="#" onclick="setLanguage('ar'); document.getElementById('current-lang').innerText='العربية'">العربية</a></li>
+            <li><a href="#" onclick="setLanguage('en'); document.getElementById('current-lang').innerText='English'">English</a></li> 
+          </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<section class="hero">
+  <!-- فيديو الخلفية -->
+  <video id="bg-video" class="video-background" autoplay muted loop playsinline>
+    <source src="she.mp4" type="video/mp4">
+    <span data-translate="video-not-supported">متصفحك لا يدعم تشغيل الفيديو.</span>
+  </video>
+
+  <!-- تراكب داكن لتحسين قراءة النص -->
+  <div class="hero-overlay"></div>
+
+  <!-- محتوى النص على يمين الفيديو -->
+  <div class="hero-content">
+    <h1 data-translate="hero-title">استمتع بتجربة التناغم المطلق</h1>
+    <p data-translate="hero-description">تم استلهام كل ركن من أركان الجزيرة بعناية ليعكس جمال المكان وسحره. استمتع بتجربة مكانية فريدة حيث تتداخل العمارة مع الطبيعة في تناغم تام.</p>
+  </div>
+
+  <!-- أزرار التحكم (تشغيل/إيقاف، كتم) -->
+  <div class="video-controls">
+    <button id="play-pause" aria-label="تشغيل/ايقاف" data-translate="play-pause">⏯</button>
+    <button id="mute-unmute" aria-label="كتم/إلغاء الكتم" data-translate="mute-unmute">🔇</button>
+  </div>
+</section>
+
+  <main>
+
+   <section class="villa-banner container">
+  <!-- النصوص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="water-villas-title">فلل فوق الماء</h2>
+    <p data-translate="water-villas-description">سلسلة مهيبة من اللآلئ، تندمج بسلاسة مع هدوء الطبيعة لتتجسد كوجهة متجددة للأجيال القادمة.</p>
+  </div>
+
+  <!-- صورة وحدة -->
+  <div class="villa-image">
+    <img src="120.jpg" alt="فلل فوق الماء" data-translate-alt="water-villas-image-alt">
+  </div>
+</section>
+
+    <!-- شبكة بطاقات الفلل -->
+     <section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="water-villa-1-title">فيلا فوق الماء - غرفة نوم واحدة</h2>
+    <p data-translate="water-villa-1-area">المساحة: 188 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 85 متر مربع)</p>
+    <p data-translate="water-villa-1-bedroom">الغرفة: سرير بحجم كينج</p>
+    <p data-translate="water-villa-1-occupancy">الحد الأقصى للإشغال: شخصين بالغين، طفل، ورضيع</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="1.jpg" alt="فيلا 1" data-translate-alt="water-villa-1-image-1"></div>
+      <div class="swiper-slide"><img src="2.jpg" alt="فيلا 2" data-translate-alt="water-villa-1-image-2"></div>
+      <div class="swiper-slide"><img src="3.jpg" alt="فيلا 3" data-translate-alt="water-villa-1-image-3"></div>
+      <div class="swiper-slide"><img src="4.jpg" alt="فيلا 4" data-translate-alt="water-villa-1-image-4"></div>
+      <div class="swiper-slide"><img src="5.jpg" alt="فيلا 5" data-translate-alt="water-villa-1-image-5"></div>
+    </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز إقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-area">منطقة المعيشة:</strong>
+    <p data-translate="water-villa-1-living">طاولة طعام، صالة، وحدة بار، مطبخ صغير</p>
+
+    <strong data-translate="bedroom">غرفة النوم:</strong>
+    <p data-translate="water-villa-1-bedroom-details">سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، تواليت مغلق وبيديه، حوض استحمام</p>
+
+    <strong data-translate="external-features">المميزات الخارجية:</strong>
+    <p data-translate="water-villa-1-external">حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دش خارجي</p>
+  </div>
+</section>
+
+ <section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="water-villa-2-title">فيلا فوق الماء - غرفتي نوم</h2>
+    <p data-translate="water-villa-2-area">المساحة: 288 متر مربع (المساحة الداخلية: 189 متر مربع، المساحة الخارجية: 99 متر مربع)</p>
+    <p data-translate="water-villa-2-bedrooms">غرف النوم: سرير كبير الحجم في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</p>
+    <p data-translate="water-villa-2-occupancy">الحد الأقصى للإشغال: 4 أشخاص بالغين، طفلين، و رضيع</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="6.jpg" alt="فيلا 1" data-translate-alt="water-villa-2-image-1"></div>
+      <div class="swiper-slide"><img src="7.jpg" alt="فيلا 2" data-translate-alt="water-villa-2-image-2"></div>
+      <div class="swiper-slide"><img src="8.jpg" alt="فيلا 3" data-translate-alt="water-villa-2-image-3"></div>
+      <div class="swiper-slide"><img src="9.jpg" alt="فيلا 4" data-translate-alt="water-villa-2-image-4"></div>
+      <div class="swiper-slide"><img src="10.jpg" alt="فيلا 5" data-translate-alt="water-villa-2-image-5"></div>
+    </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز إقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-area">منطقة المعيشة:</strong>
+    <p data-translate="water-villa-2-living">صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف، مطبخ صغير</p>
+
+    <strong data-translate="main-bedroom">غرفة النوم الرئيسية</strong>
+    <p data-translate="water-villa-2-main-bedroom">سرير كينج، خزانة الملابس، منضدة الزينة المزدوجة، تواليت وبيديه، حوض استحمام، دش، طاولة الزينة</p>
+
+    <strong data-translate="second-bedroom">غرفة النوم الثانية</strong>
+    <p data-translate="water-villa-2-second-bedroom">سريرين حجم كوين، خزانة الملابس، منطقة الدش، تواليت وبيديه، حوض استحمام</p>
+
+     <strong data-translate="external-features">المميزات الخارجية</strong>
+    <p data-translate="water-villa-2-external">حمام سباحة لا متناهي، منصة حمام السباحة، سرير نهاري، كراسي حمام السباحة، صالة جلوس خارجية، دش خارجي</p>
+  </div>
+</section>
+
+<!-- Hero / بانر قصير -->
+   <section class="villa-banner container">
+  <!-- النصوص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="beach-villas-title">فلل شاطئية</h2>
+    <p data-translate="beach-villas-description">مرحبًا بكم في ڤللنا الشاطئية الرائعة، الواقعة على طول شواطئ البحر الأحمر البكر، حيث تلتقي المياه الزرقاء الصافية بالرمال البيضاء الناعمة في تناغم مثالي.</p>
+  </div>
+
+  <!-- صورة وحدة -->
+  <div class="villa-image">
+    <img src="11.jpg" alt="فلل شاطئية" data-translate-alt="beach-villas-image-alt">
+  </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="beach-villa-1-title">فيلا غرفة نوم واحدة على الشاطئ</h2>
+    <p data-translate="beach-villa-1-area">المساحة: 248 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 145 متر مربع)</p>
+    <p data-translate="beach-villa-1-bedroom">الغرفة: سرير بحجم كينج</p>
+    <p data-translate="beach-villa-1-occupancy">الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="12.jpg" alt="فيلا 1" data-translate-alt="beach-villa-1-image-1"></div>
+      <div class="swiper-slide"><img src="13.jpg" alt="فيلا 2" data-translate-alt="beach-villa-1-image-2"></div>
+      <div class="swiper-slide"><img src="14.jpg" alt="فيلا 3" data-translate-alt="beach-villa-1-image-3"></div>
+      <div class="swiper-slide"><img src="15.jpg" alt="فيلا 4" data-translate-alt="beach-villa-1-image-4"></div>
+      <div class="swiper-slide"><img src="16.jpg" alt="فيلا 5" data-translate-alt="beach-villa-1-image-5"></div>
+    </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز إقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-area">منطقة المعيشة:</strong>
+    <p data-translate="beach-villa-1-living">طاولة طعام، صالة، وحدة بار،مطبخ صغير</p>
+
+    <strong data-translate="bedroom">غرفة النوم </strong>
+    <p data-translate="beach-villa-1-bedroom-details">سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، منضدة زينة مزدوجة، تواليت مغلق وبيديه، حوض استحمام</p>
+
+     <strong data-translate="external-features">المميزات الخارجية</strong>
+    <p data-translate="beach-villa-1-external">حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دُش خارجي</p>
+  </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="beach-villa-2-title">فيلا غرفتي نوم على الشاطئ</h2>
+    <p data-translate="beach-villa-2-area">المساحة: 367 متر مربع (المساحة الداخلية: 196 متر مربع، المساحة الخارجية: 171 متر مربع)</p>
+    <p data-translate="beach-villa-2-bedrooms">غرف النوم: سرير كبير الحجم في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية</p>
+    <p data-translate="beach-villa-2-occupancy">الحد الأقصى للإشغال: 4 أشخاص بالغين وطفلين</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="17.jpg" alt="فيلا 1" data-translate-alt="beach-villa-2-image-1"></div>
+      <div class="swiper-slide"><img src="18.jpg" alt="فيلa 2" data-translate-alt="beach-villa-2-image-2"></div>
+      <div class="swiper-slide"><img src="19.jpg" alt="فيلا 3" data-translate-alt="beach-villa-2-image-3"></div>
+      <div class="swiper-slide"><img src="10.jpg" alt="فيلا 4" data-translate-alt="beach-villa-2-image-4"></div>
+      <div class="swiper-slide"><img src="9.jpg" alt="فيلا 5" data-translate-alt="beach-villa-2-image-5"></div>
+      <div class="swiper-slide"><img src="20.jpg" alt="فيلا 6" data-translate-alt="beach-villa-2-image-6"></div>
+      <div class="swiper-slide"><img src="21.jpg" alt="فيلا 7" data-translate-alt="beach-villa-2-image-7"></div>
+    </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز إقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-area">منطقة المعيشة:</strong>
+    <p data-translate="beach-villa-2-living">صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف، مطبخ صغير</p>
+
+    <strong data-translate="main-bedroom">غرفة النوم الرئيسية</strong>
+    <p data-translate="beach-villa-2-main-bedroom">سرير كينج، خزانة الملابس، منضدة الزينة المزدوجة، تواليت وبيديه، حوض استحمام، دش، طاولة الزينة</p>
+
+    <strong data-translate="second-bedroom">غرفة النوم الثانية</strong>
+    <p data-translate="beach-villa-2-second-bedroom">سريرين حجم كوين، خزانة الملابس، منطقة الدش، تواليت وبيديه، حوض استحمام</p>
+
+     <strong data-translate="external-features">المميزات الخارجية</strong>
+    <p data-translate="beach-villa-2-external">حمام سباحة لا متناهي، منصة حمام السباحة، سرير نهاري، كراسي حمام السباحة، صالة جلوس خارجية، دش خارجي</p>
+  </div>
+</section>
+
+<!-- Hero / بانر قصير -->
+   <section class="villa-banner container">
+  <!-- النصوص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="beach-villas-title">فلل شاطئية</h2>
+    <p data-translate="beach-villas-description">مرحبًا بكم في ڤللنا الشاطئية الرائعة، الواقعة على طول شواطئ البحر الأحمر البكر، حيث تلتقي المياه الزرقاء الصافية بالرمال البيضاء الناعمة في تناغم مثالي.</p>
+  </div>
+
+  <!-- صورة وحدة -->
+  <div class="villa-image">
+    <img src="11.jpg" alt="فلل شاطئية" data-translate-alt="beach-villas-image-alt">
+  </div>
+</section>
+
+<section class="villa-banner container">
+  <!-- النصوص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="crown-villas-title">مجموعة فلل كراون المطلة على الشاطئ</h2>
+    <p data-translate="crown-villas-description">استمتع برفاهية لا مثيل لها في مجموعة ڤلل كراون المطلة على الشاطئ على جزيرة خاصة في جزيرة شيبارة. اختر من بين ڤيلا جميلة بثلاث غرف نوم أو ثلاث ڤلل ساحرة بغرفة نوم واحدة، كل منها مصممة لتكون ملاذًا مثاليًا للجزيرة. مثالية للرحلات الرومانسية أو التجمعات العائلية أو اللحظات التي لا تُنسى مع الأصدقاء، يمكنك حجز ڤلل فردية لقضاء إجازة مريحة أو حجز المجموعة بأكملها لتجربة فريدة وحصرية.</p>
+    <a href="booking.html" class="btn" data-translate="book-your-stay">إحجز اقامتك</a> 
+  </div>
+
+  <!-- صورة وحدة -->
+  <div class="villa-image">
+    <img src="22.jpg" alt="مجموعة فلل كراون" data-translate-alt="crown-villas-image-alt">
+  </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="crown-villa-3-title">فيلا كراون على الشاطئ - ثلاث غرف نوم</h2>
+    <p data-translate="crown-villa-3-area">المساحة: 692 متر مربع (المساحة الداخلية: 317 متر مربع، المساحة الخارجية: 375 متر مربع)</p>
+    <p data-translate="crown-villa-3-bedrooms">غرف النوم: سرير بحجم كينج في كل غرفة نوم رئيسية، وسريرين بحجم كوين في غرفة النوم الثالثة</p>
+    <p data-translate="crown-villa-3-occupancy">الحد الأقصى للإشغال: 6 أشخاص بالغين و 3 أطفال</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="23.jpg" alt="فيلا 1" data-translate-alt="crown-villa-3-image-1"></div>
+      <div class="swiper-slide"><img src="24.jpg" alt="فيلا 2" data-translate-alt="crown-villa-3-image-2"></div>
+      <div class="swiper-slide"><img src="25.jpg" alt="فيلا 3" data-translate-alt="crown-villa-3-image-3"></div>
+      <div class="swiper-slide"><img src="26.jpg" alt="فيلا 4" data-translate-alt="crown-villa-3-image-4"></div>
+      <div class="swiper-slide"><img src="27.jpg" alt="فيلا 5" data-translate-alt="crown-villa-3-image-5"></div>
+      <div class="swiper-slide"><img src="28.jpg" alt="فيلا 6" data-translate-alt="crown-villa-3-image-6"></div>
+      <div class="swiper-slide"><img src="29.jpg" alt="فيلا 7" data-translate-alt="crown-villa-3-image-7"></div>
+      <div class="swiper-slide"><img src="30.jpg" alt="فيلا 8" data-translate-alt="crown-villa-3-image-8"></div>
+    </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز إقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-areas">مناطق المعيشة:</strong>
+    <p data-translate="crown-villa-3-living">مطبخ رئيسي، صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف</p>
+
+    <strong data-translate="main-bedrooms">غرفتا النوم الرئيسيتان الأولى والثانية</strong>
+    <p data-translate="crown-villa-3-main-bedrooms">سرير كبنج، خزانة الملابس، دش مزدوج، تواليت منفصل وبيديه، حوض الاستحمام، طاولة الزينة</p>
+
+    <strong data-translate="third-bedroom">غرفة النوم الثالثة</strong>
+    <p data-translate="crown-villa-3-third-bedroom">سريرين بحجم كوين، خزانة الملابس، تواليت وبيديه، حوض الاستحمام والدش</p>
+
+     <strong data-translate="external-features">المميزات الخارجية</strong>
+    <p data-translate="crown-villa-3-external">مسبح لا متناهي، كراسي الاستلقاء بجانب المسبح، تناول الطعام في الهواء الطل، صالة خارجية، منطقة الشواء، بار خارجي، دش خارجي مزدوج</p>
+
+    <strong data-translate="additional-features">الميزات الإضافية</strong>
+    <p data-translate="crown-villa-3-additional">غرفة الموظفين</p>
+
+  </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="crown-villa-1-title">فيلا كراون على الشاطئ - غرفة نوم واحدة</h2>
+    <p data-translate="crown-villa-1-area">المساحة: 248 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 145 متر مربع)</p>
+      <p data-translate="crown-villa-1-bedroom">غرفة النوم: سرير بحجم كينج</p>
+    <p data-translate="crown-villa-1-occupancy">الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="31.jpg" alt="فيلا 1" data-translate-alt="crown-villa-1-image-1"></div>
+      <div class="swiper-slide"><img src="32.jpg" alt="فيلا 2" data-translate-alt="crown-villa-1-image-2"></div>
+      <div class="swiper-slide"><img src="5.jpg" alt="فيلا 3" data-translate-alt="crown-villa-1-image-3"></div>
+      <div class="swiper-slide"><img src="33.jpg" alt="فيلا 4" data-translate-alt="crown-villa-1-image-4"></div>
+      </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز إقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-area">منطقة المعيشة:</strong>
+    <p data-translate="crown-villa-1-living">طاولة طعام، صالة، وحدة بار،مطبخ صغير</p>
+
+    <strong data-translate="bedroom">غرفة النوم </strong>
+    <p data-translate="crown-villa-1-bedroom-details">سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، منضدة زينة مزدوجة، تواليت مغلق وبيديه، حوض استحمام</p>
+
+     <strong data-translate="external-features">المميزات الخارجية</strong>
+    <p data-translate="crown-villa-1-external">حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دُش خارجي</p>
+
+  </div>
+</section>
+
+<section class="villa-banner container">
+  <!-- النصوص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="royal-villas-title">مجموعة الفلل الملكية المطلة على الشاطئ</h2>
+    <p data-translate="royal-villas-description">اكتشف فخامة مجموعة الڤلل الملكية المطلة على الشاطئ في جزيرة شيبارة المنعزلة، والتي تضم رصيفًا خاصًا لليخت الخاص بك. اختر من بين ڤيلا مذهلة مكونة من أربع غرف نوم وثلاث ڤلل رائعة مكونة من غرفة نوم واحدة، وكلها مصممة لتكون ملاذًا استثنائيًا على الجزيرة. مثالية للهروب الرومانسي أو لم شمل الأسرة أو التجمعات مع الأصدقاء، يمكنك حجز كل ڤيلا على حدة لقضاء عطلة حميمة أو حجز المجموعة بأكملها للاحتفال بذكرى لا تُنسى.</p>
+    <a href="inquiries.html" class="btn" data-translate="contact-for-inquiries">اتصل بنا للاستفسارات حول الحجوزات</a> 
+  </div>
+
+  <!-- صورة وحدة -->
+  <div class="villa-image">
+    <img src="34.jpg" alt="مجموعة الفلل الملكية" data-translate-alt="royal-villas-image-alt">
+  </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="royal-villa-4-title">فيلا ملكية على الشاطئ - أربع غرف نوم</h2>
+    <p data-translate="royal-villa-4-area">المساحة: 900 متر مربع (المساحة الأولى: 451 متر مربع المساحة الثانية: 449 متر مربع)</p>
+    <p data-translate="royal-villa-4-bedrooms">غرف النوم: غرفة نوم رئيسية وغرفة نوم ثانية: سرير بحجم كينج غرفتا نوم ثالثة ورابعة: سرير بحجم كينج وسريرين بحجم كوين.</p>
+    <p data-translate="royal-villa-4-occupancy">الحد الأقصى للإشغال: 8 أشخاص بالغين و 4 أطفال</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="35.jpg" alt="فيلا 1" data-translate-alt="royal-villa-4-image-1"></div>
+      <div class="swiper-slide"><img src="36.jpg" alt="فيلا 2" data-translate-alt="royal-villa-4-image-2"></div>
+      <div class="swiper-slide"><img src="37.jpg" alt="فيلا 3" data-translate-alt="royal-villa-4-image-3"></div>
+      <div class="swiper-slide"><img src="38.jpg" alt="فيلا 4" data-translate-alt="royal-villa-4-image-4"></div>
+      <div class="swiper-slide"><img src="39.jpg" alt="فيلا 5" data-translate-alt="royal-villa-4-image-5"></div>
+      <div class="swiper-slide"><img src="40.jpg" alt="فيلا 6" data-translate-alt="royal-villa-4-image-6"></div>
+      <div class="swiper-slide"><img src="41.jpg" alt="فيلا 7" data-translate-alt="royal-villa-4-image-7"></div>
+    </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز اقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-areas">مناطق المعيشة:</strong>
+    <p data-translate="royal-villa-4-living">صالة الاستقبال، غرفة الطعام، غرفة المكتب، غرفة الترفيه، وحدة البار، تواليت الضيوف</p>
+
+    <strong data-translate="main-bedrooms">غرفتا النوم الرئيسية</strong>
+    <p data-translate="royal-villa-4-main-bedrooms">سرير بحجم كينج، خزانة ملابس، دش مزدوج، طاولة زينة مزدوجة، مرحاض منفصل وبيديه، حوض استحمام، طاولة زينة</p>
+
+    <strong data-translate="second-bedroom">غرفة النوم الثانية</strong>
+    <p data-translate="royal-villa-4-second-bedroom">سرير بحجم كينج، خزانة الملابس، دش، طاولة زينة، تواليت منفصل وبيديه، حوض استحمام، طاولة زينة</p>
+
+    <strong data-translate="third-bedroom">غرفة النوم الثالثة</strong>
+    <p data-translate="royal-villa-4-third-bedroom">سرير بحجم كينج، خزانة الملابس، طاولة زينة، تواليت وبيديه، حوض استحمام ودش</p>
+
+    <strong data-translate="fourth-bedroom">غرفة النوم الرابعة</strong>
+        <p data-translate="royal-villa-4-fourth-bedroom">سريرين بحجم كوين، خزانة الملابس، طاولة زينة، تواليت وبيديه، حوض استحمام ودش </p>
+
+     <strong data-translate="external-features">المميزات الخارجية</strong>
+    <p data-translate="royal-villa-4-external">مسبح لا متناهي، كراسي الاستلقاء بجانب المسبح، تراس خارجي، تناول الطعام في الهواء الطلق، صالة استقبال خارجية، منطقة الشواء، بار خارجي، دش خارجي مزدوج</p>
+
+    <strong data-translate="additional-features">الميزات الإضافية</strong>
+    <p data-translate="royal-villa-4-additional">غرفة الموظفين</p>
+
+  </div>
+</section>
+
+<section class="villa-banner container" aria-label="تفاصيل الفيلا — سلايدر">
+  <!-- النص فوق الصورة -->
+  <div class="caption">
+    <h2 data-translate="royal-villa-1-title">فيلا ملكية على الشاطئ - غرفة نوم واحدة</h2>
+    <p data-translate="royal-villa-1-area">المساحة: 248 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 145 متر مربع)</p>
+    <p data-translate="royal-villa-1-bedroom">غرفة النوم: سرير بحجم كينج</p>
+    <p data-translate="royal-villa-1-occupancy">الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع</p>
+  </div>
+
+  <!-- السلايدر: صورة واحدة تظهر في كل مرة -->
+  <div class="villa-image swiper mySwiper" aria-label="معرض صور الفيلا">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="42.jpg" alt="فيلا 1" data-translate-alt="royal-villa-1-image-1"></div>
+      <div class="swiper-slide"><img src="32.jpg" alt="فيلا 2" data-translate-alt="royal-villa-1-image-2"></div>
+      <div class="swiper-slide"><img src="33.jpg" alt="فيلا 3" data-translate-alt="royal-villa-1-image-3"></div>
+      <div class="swiper-slide"><img src="28.jpg" alt="فيلا 4" data-translate-alt="royal-villa-1-image-4"></div>
+      </div>
+
+    <!-- أزرار التنقل (تعمل على تبديل الصورة بالضغط) -->
+    <button class="swiper-button-prev" aria-label="السابق" data-translate="previous"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="swiper-button-next" aria-label="التالي" data-translate="next"><i class="fa-solid fa-chevron-left"></i></button>
+
+    <!-- نقاط (اختياري) -->
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <!-- الأزرار تحت الصورة -->
+  <div class="villa-actions">
+    <button class="btn-toggle" onclick="toggleDetails(this)" data-translate="explore-more">اسكتشف لمزيد</button>
+    <a href="booking.html" class="btn-book" data-translate="book-your-stay">احجز إقامتك</a>
+  </div>
+
+  <!-- المحتوى المخفي الذي يظهر/يختفي -->
+  <div class="villa-details" aria-hidden="true">
+    <h3 data-translate="villa-features">مميزات الفيلا</h3>
+
+    <strong data-translate="living-area">منطقة المعيشة:</strong>
+    <p data-translate="royal-villa-1-living">طاولة طعام، صالة، وحدة بار،مطبخ صغير</p>
+
+    <strong data-translate="bedroom">غرفة النوم </strong>
+    <p data-translate="royal-villa-1-bedroom-details">سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، منضدة زينة مزدوجة، تواليت مغلق وبيديه، حوض استحمام</p>
+
+     <strong data-translate="external-features">المميزات الخارجية</strong>
+    <p data-translate="royal-villa-1-external">حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دُش خارجي</p>
+
+  </div>
+</section>
+
+<!-- قسم سياسة الحجوزات -->
+<section class="policy-box container">
+  <div class="policy-header">
+    <span data-translate="reservation-policy">سياسة الحجوزات</span>
+    <button class="btn-read" onclick="togglePolicy(this)" data-translate="read-more">قراءة المزيد</button>
+  </div>
+
+  <!-- المحتوى المخفي -->
+  <div class="policy-details" aria-hidden="true">
+    <h3 data-translate="check-in-out-times">مواعيد تسجيل الوصول والمغادرة</h3>
+    <p data-translate="check-in-time">موعد تسجيل الوصول: 3:00 ظهرًا</p>
+    <p data-translate="check-out-time">موعد تسجيل المغادرة: 12:00 ظهرًا</p>
+
+    <h3 data-translate="prices">الأسعار</h3>
+    <p data-translate="prices-description">جميع أسعار الغرف والرسوم والرسوم الإضافية هي بالريال السعودي (SAR) وتخضع لضريبة البلدية بنسبة 5% (MT) وضريبة القيمة المضافة بنسبة 15% (VAT). يتم تطبيق ضريبة القيمة المضافة على السعر وضريبة البلدية</p>
+
+    <h3 data-translate="early-late">الوصول المبكر والمغادرة المتأخرة</h3>
+    <p data-translate="early-late-description">لكي نضمن راحتك وتجربة سفر سلسة، ننصح بحجز الغرفة لليلة السابقة لضمان توفرها عند وصولك المبكر للمغادرين في وقت متأخر، يمكنك حجز ليلة إضافية للاستمتاع بالغرفة حتى موعد مغادرتك في حال عدم الحجز الإضافي نقدم خدمة تخزين الأمتعة مجانًا، بالإضافة إلى مرافق غرفة تغيير الملابس لتستعد لرحلتك القادمة براحة تامة</p>
+
+     <h3 data-translate="guest-fees">رسوم الضيوف الإضافيين والأطفال</h3>
+    <p data-translate="guest-fees-description">وفقًا للحد الأقصى للإشغال المعمول به في الڤيلا، ينطبق ما يلي على الضيوف الاضافيين: لللأطفال دون سن 12 عامًا, الإقامة مجانية عند مشاركة الغرفة مع والديهم أو الأوصياء عليهم في حدود المساحة المتاحة للضيوف من سن 12 عامًا فأكثر يتوجب عليهم دفع رسوم إضافية قدرها ريال 1500 سعودي + ضريبة القيمة المضافة</p>
+
+     <h3 data-translate="accommodation">الإقامة</h3>
+    <p data-translate="accommodation-description">لا يفرض منتجع شيبارة أي رسوم إضافية على الأطفال دون سن 12 عامًا الذين يشغلون نفس غرفة الضيوف مع والديهم أو الأوصياء عليهم (إذا سمحت المساحة) الضيوف الذين تبلغ أعمارهم 12 عامًا فأكثر، سيتم فرض رسوم قدرها 1500 ريال سعودي + ضريبة القيمة المضافة وضريبة البلدية لكل ليلة</p>
+
+     <h3 data-translate="children-meals">خطة وجبات الأطفال</h3>
+    <p data-translate="children-meals-description">الأطفال دون سن 6 سنوات يتناولون الطعام مجانًا عند تناول الطعام مع شخص بالغ باستثناء تناول الطعام في الڤيلا: الأطفال من سن 6 إلى 12 عامًا يحصلون على خصم 50% على جميع الأطعمة والمشروبات في قائمة أسعار البالغين يتم تطبيق السعر العادي على قائمة الأطفال. الضيوف من سن 12 عامًا فأكثر يتوجب عليهم دفع الرسوم الكاملة للاطعمة والمشروبات
+ خلال إقامتكم في يوليو، أغسطس، أو سبتمبر:
+الأطفال أقل من 12 سنوات: مجانًا عند تناول الطعام مع شخص بالغ (باستثناء خدمة الطعام داخل الفلل).
+الأطفال بعمر 12 سنة فما فوق: يتم تطبيق السعر الكامل على الأطعمة والمشروبات.</p>
+
+    <h3 data-translate="cancellation-policy">سياسة إلغاء الحجز</h3>
+    <p data-translate="cancellation-policy-description">متطلبات الحجز: بطاقة ائتمان صالحة يجب تقديم بطاقة ائتمان صالحة عند الحجز عدم تقديمها سيؤدي إلى إلغاء الحجز تلقائي سياسة الإلغاء والتعديل: الإلغاءات والتغييرات يجب إجراؤها قبل الساعة 6 مساءً بتوقيت المملكة العربية السعودية وقبل 14 يومًا على الأقل من تاريخ الوصول المحدد رسوم الإلغاء المتأخر أو عدم الحضور: في حالة الإلغاء أو التعديل بعد الموعد المحدد، أو في حالة عدم الحضور، سيتم تطبيق رسوم تعادل التكلفة الإجمالية للإقامة شاملةً ضريبة القيمة المضافة ورسوم البلدية التغييرات الجوهرية: أي تغييرات جوهرية على الحجز خلال فترة الإلغاء تتطلب موافقة مسبقة من إدارة المنتجع يرجى التأكد من قراءة وفهم سياسة الحجز والإلغاء بالكامل قبل إتمام الحجز في حال وجود أي استفسارات، لا تتردد في التواصل معنا</p>
+
+    <h3 data-translate="guarantee-policy">سياسة ضمان الحجز</h3>
+    <p data-translate="guarantee-policy-description">الوديعة: تعادل التكلفة الإجمالية للإقامة، بما في ذلك ضريبة القيمة المضافة ورسوم البلدية طريقة الدفع: يتم خصمها من بطاقة الائتمان المقدمة عند الحجز موعد الخصم: قبل 14 يومًا من تاريخ الوصول المتوقع في حالة عدم توفر بطاقة ائتمان: يمكن إجراء تحويل بنكي بدلاً من ذلك ملاحظات هامة: قد تخضع سياسة الضمان للتغيير بناءً على الموسم والعروض الترويجية المتاحة ، يرجى التأكد من مراجعة الشروط والأحكام الخاصة بحجزك</p>
+
+    <h3 data-translate="accessibility-info">معلومات عن إمكانية الوصول</h3>
+    <h3 data-translate="accommodations">أماكن الإقامة</h3>
+    <p data-translate="accommodations-description">- يحتوي المنتجع على أربع فيلات مجهزة بحوض سباحة خاص بمرافق ذوي الاحتياجات الخاصة مكونة من غرفتي نوم، وكل منها مجهز بحوض سباحة خاص.
+
+o يتم الوصول إلى الفيلات عبر منحدرات ذات منحدر مريح، مع درابزينات ودرابزينات.
+
+o أحواض السباحة متوافقة مع متطلبات ذوي الاحتياجات الخاصة ومجهزة بمصاعد محمولة لحمامات السباحة.
+
+- o جميع الفلل لها مدخل مباشر إلى الشاطئ.
+
+ميزات غرفة النوم الرئيسية
+
+- غرفة نوم ADA في الفيلا المكونة من غرفتي نوم.
+
+- مجهزة بدُش قابل للطي.
+
+- مرحاض يسهل الوصول إليه.
+
+ميزات إمكانية الوصول
+
+- الغرور على ارتفاع يسهل الوصول إليه.
+
+- مناظر يسهل الوصول إليها.
+
+- تم تركيب مقابض للإمساك من أجل السلامة.
+
+دورات المياه والمطاعم
+
+- تتوفر دورات مياه لذوي الاحتياجات الخاصة في جميع أنحاء المنتجع.
+
+- خيارات طعام يمكن الوصول إليها في مواقع مختلفة.
+
+إمكانية الوصول إلى أحواض السباحة
+
+- تتميز أحواض السباحة المخصصة للعائلات والكبار بمداخل يمكن الوصول إليها.
+
+المرافق الأخرى
+
+- سبا ومركز لياقة بدنية مع مداخل يسهل الوصول إليها.
+
+- يمكن أيضاً الوصول إلى منطقة مشاهدة ملاعب التجديف والتنس.                                                                                                         وسائل الراحة العامة
+
+- يتم الترحيب بالنزلاء من خلال ممر فسيح يسهل الوصول إليه يؤدي من المدخل إلى ردهة الفندق والعديد من وسائل الراحة، بما في ذلك مسبح الكبار والمطاعم المتخصصة.
+
+- توجد العديد من دورات المياه المخصصة للجنسين والمتوافقة مع متطلبات ذوي الاحتياجات الخاصة في مواقع استراتيجية في جميع أنحاء المنتجع لسهولة الوصول إليها.
+
+o تشمل المواقع الرئيسية ردهة الوصول، وبار ومطعم الشواء العائلي في حوض السباحة العائلي، والمنتجع الصحي، ومركز الغوص.
+
+o كل دورة مياه مجهزة بميزات لاستيعاب النزلاء ذوي الاحتياجات الخاصة، مما يضمن الخصوصية والراحة.
+
+المواصلات والمسارات
+
+- تتوفر عربات غولف يسهل الوصول إليها لاستخدام الضيوف.
+
+- يمكن الوصول إلى مسارات العربات.
+
+- منطقة الوصول الرئيسية والأرصفة البحرية بها مداخل يسهل الوصول إليها.
+
+المراكز الطبية ومراكز الأنشطة
+
+- يتوفر مركز طبي يسهل الوصول إليه.
+
+- يمكن الوصول إلى مداخل مركز الغوص والرياضات المائية.
+
+معدات تيسير الوصول
+
+- 1 كرسي متحرك
+
+- مصعد المسبح
+
+- 1 كرسي متحرك للشاطئ
+ننصح بالتحقق من التفاصيل للحصول على أحدث المعلومات حول سياسة الضمان، يرجى التواصل معنا أو زيارة موقعنا الإلكتروني
+هدفنا هو ضمان حجز إقامتك بكل سهولة ويسر، مع توفير المرونة اللازمة لتلبية احتياجاتك</p>
+  </div>
+</section>
+
+<section class="after-location">
+  <div class="container">
+    
+    <!-- كلمة شيبارة كبيرة -->
+    <h1 class="brand" data-translate="brand">شيبارة</h1>
+    
+    <!-- عنوان حيث المستقبل -->
+    <h2 class="subtitle" data-translate="sustainable-future">حيث المستقبل المستدام</h2>
+    
+    <!-- وصف قصير -->
+    <p class="desc" data-translate="help-description">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    
+    <!-- زر الاستفسارات -->
+    <a href="inquiries.html" class="btn-inquiry" data-translate="for-inquiries">للاستفسارات</a>
+    </div>
+
+ <hr class="divider">
+    
+    <!-- سطر الحقوق -->
+   <p class="rights" data-translate="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    
+    <!-- زر الرجوع للأعلى -->
+    <a href="#top" class="back-to-top" data-translate="back-to-top">الرجوع إلى الأعلى ↑</a>
+    
+  </div>
+</section>
+
+  </main>
+
+  <script>
+    // ترجمة النصوص
+    const translations = {
+      ar: {
+        // الهيدر
+        "brand": "شيبارة",
+        "nav-villas": "الفلل",
+        "nav-offers": "العروض الخاصة",
+        "nav-dining": "تناول الطعام",
+        "nav-activities": "التجارب والنشاطات",
+        "nav-spa": "المنتجع الصحي والعافية",
+        "nav-location": "الموقع",
+        "nav-contact": "للتواصل معنا",
+        "book": "احجز إقامتك",
+        
+        // الهيرو
+        "hero-title": "استمتع بتجربة التناغم المطلق",
+        "hero-description": "تم استلهام كل ركن من أركان الجزيرة بعناية ليعكس جمال المكان وسحره. استمتع بتجربة مكانية فريدة حيث تتداخل العمارة مع الطبيعة في تناغم تام.",
+        "play-pause": "⏯",
+        "mute-unmute": "🔇",
+        "video-not-supported": "متصفحك لا يدعم تشغيل الفيديو.",
+        
+        // فلل فوق الماء
+        "water-villas-title": "فلل فوق الماء",
+        "water-villas-description": "سلسلة مهيبة من اللآلئ، تندمج بسلاسة مع هدوء الطبيعة لتتجسد كوجهة متجددة للأجيال القادمة.",
+        "water-villas-image-alt": "فلل فوق الماء",
+        
+        // فيلا فوق الماء - غرفة نوم واحدة
+        "water-villa-1-title": "فيلا فوق الماء - غرفة نوم واحدة",
+        "water-villa-1-area": "المساحة: 188 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 85 متر مربع)",
+        "water-villa-1-bedroom": "الغرفة: سرير بحجم كينج",
+        "water-villa-1-occupancy": "الحد الأقصى للإشغال: شخصين بالغين، طفل، ورضيع",
+        "water-villa-1-image-1": "فيلا 1",
+        "water-villa-1-image-2": "فيلا 2",
+        "water-villa-1-image-3": "فيلا 3",
+        "water-villa-1-image-4": "فيلا 4",
+        "water-villa-1-image-5": "فيلا 5",
+        "previous": "السابق",
+        "next": "التالي",
+        "explore-more": "اسكتشف لمزيد",
+        "book-your-stay": "احجز إقامتك",
+        "villa-features": "مميزات الفيلا",
+        "living-area": "منطقة المعيشة:",
+        "water-villa-1-living": "طاولة طعام، صالة، وحدة بار، مطبخ صغير",
+        "bedroom": "غرفة النوم:",
+        "water-villa-1-bedroom-details": "سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، تواليت مغلق وبيديه، حوض استحمام",
+        "external-features": "المميزات الخارجية:",
+        "water-villa-1-external": "حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دش خارجي",
+        
+        // فيلا فوق الماء - غرفتي نوم
+        "water-villa-2-title": "فيلا فوق الماء - غرفتي نوم",
+        "water-villa-2-area": "المساحة: 288 متر مربع (المساحة الداخلية: 189 متر مربع، المساحة الخارجية: 99 متر مربع)",
+        "water-villa-2-bedrooms": "غرف النوم: سرير كبير الحجم في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية",
+        "water-villa-2-occupancy": "الحد الأقصى للإشغال: 4 أشخاص بالغين، طفلين، و رضيع",
+        "water-villa-2-image-1": "فيلا 1",
+        "water-villa-2-image-2": "فيلا 2",
+        "water-villa-2-image-3": "فيلا 3",
+        "water-villa-2-image-4": "فيلا 4",
+        "water-villa-2-image-5": "فيلا 5",
+        "water-villa-2-living": "صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف، مطبخ صغير",
+        "main-bedroom": "غرفة النوم الرئيسية",
+        "water-villa-2-main-bedroom": "سرير كينج، خزانة الملابس، منضدة الزينة المزدوجة، تواليت وبيديه، حوض استحمام، دش، طاولة الزينة",
+        "second-bedroom": "غرفة النوم الثانية",
+        "water-villa-2-second-bedroom": "سريرين حجم كوين، خزانة الملابس، منطقة الدش، تواليت وبيديه، حوض استحمام",
+        "water-villa-2-external": "حمام سباحة لا متناهي، منصة حمام السباحة، سرير نهاري، كراسي حمام السباحة، صالة جلوس خارجية، دش خارجي",
+        
+        // فلل شاطئية
+        "beach-villas-title": "فلل شاطئية",
+        "beach-villas-description": "مرحبًا بكم في ڤللنا الشاطئية الرائعة، الواقعة على طول شواطئ البحر الأحمر البكر، حيث تلتقي المياه الزرقاء الصافية بالرمال البيضاء الناعمة في تناغم مثالي.",
+        "beach-villas-image-alt": "فلل شاطئية",
+        
+        // فيلا شاطئية - غرفة نوم واحدة
+        "beach-villa-1-title": "فيلا غرفة نوم واحدة على الشاطئ",
+        "beach-villa-1-area": "المساحة: 248 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 145 متر مربع)",
+        "beach-villa-1-bedroom": "الغرفة: سرير بحجم كينج",
+        "beach-villa-1-occupancy": "الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع",
+        "beach-villa-1-image-1": "فيلا 1",
+        "beach-villa-1-image-2": "فيلا 2",
+        "beach-villa-1-image-3": "فيلا 3",
+        "beach-villa-1-image-4": "فيلا 4",
+        "beach-villa-1-image-5": "فيلا 5",
+        "beach-villa-1-living": "طاولة طعام، صالة، وحدة بار،مطبخ صغير",
+        "beach-villa-1-bedroom-details": "سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، منضدة زينة مزدوجة، تواليت مغلق وبيديه، حوض استحمام",
+        "beach-villa-1-external": "حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دُش خارجي",
+        
+        // فيلا شاطئية - غرفتي نوم
+        "beach-villa-2-title": "فيلا غرفتي نوم على الشاطئ",
+        "beach-villa-2-area": "المساحة: 367 متر مربع (المساحة الداخلية: 196 متر مربع، المساحة الخارجية: 171 متر مربع)",
+        "beach-villa-2-bedrooms": "غرف النوم: سرير كبير الحجم في غرفة النوم الرئيسية، وسريرين كوين في غرفة النوم الثانية",
+        "beach-villa-2-occupancy": "الحد الأقصى للإشغال: 4 أشخاص بالغين وطفلين",
+        "beach-villa-2-image-1": "فيلا 1",
+        "beach-villa-2-image-2": "فيلا 2",
+        "beach-villa-2-image-3": "فيلا 3",
+        "beach-villa-2-image-4": "فيلا 4",
+        "beach-villa-2-image-5": "فيلا 5",
+        "beach-villa-2-image-6": "فيلا 6",
+        "beach-villa-2-image-7": "فيلا 7",
+        "beach-villa-2-living": "صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف، مطبخ صغير",
+        "beach-villa-2-main-bedroom": "سرير كينج، خزانة الملابس، منضدة الزينة المزدوجة، تواليت وبيديه، حوض استحمام، دش، طاولة الزينة",
+        "beach-villa-2-second-bedroom": "سريرين حجم كوين، خزانة الملابس، منطقة الدش، تواليت وبيديه، حوض استحمام",
+        "beach-villa-2-external": "حمام سباحة لا متناهي، منصة حمام السباحة، سرير نهاري، كراسي حمام السباحة، صالة جلوس خارجية، دش خارجي",
+        
+        // فلل كراون
+        "crown-villas-title": "مجموعة فلل كراون المطلة على الشاطئ",
+        "crown-villas-description": "استمتع برفاهية لا مثيل لها في مجموعة ڤلل كراون المطلة على الشاطئ على جزيرة خاصة في جزيرة شيبارة. اختر من بين ڤيلا جميلة بثلاث غرف نوم أو ثلاث ڤلل ساحرة بغرفة نوم واحدة، كل منها مصممة لتكون ملاذًا مثاليًا للجزيرة. مثالية للرحلات الرومانسية أو التجمعات العائلية أو اللحظات التي لا تُنسى مع الأصدقاء، يمكنك حجز ڤلل فردية لقضاء إجازة مريحة أو حجز المجموعة بأكملها لتجربة فريدة وحصرية.",
+        "crown-villas-image-alt": "مجموعة فلل كراون",
+        
+        // فيلا كراون - ثلاث غرف نوم
+        "crown-villa-3-title": "فيلا كراون على الشاطئ - ثلاث غرف نوم",
+        "crown-villa-3-area": "المساحة: 692 متر مربع (المساحة الداخلية: 317 متر مربع، المساحة الخارجية: 375 متر مربع)",
+        "crown-villa-3-bedrooms": "غرف النوم: سرير بحجم كينج في كل غرفة نوم رئيسية، وسريرين بحجم كوين في غرفة النوم الثالثة",
+        "crown-villa-3-occupancy": "الحد الأقصى للإشغال: 6 أشخاص بالغين و 3 أطفال",
+        "crown-villa-3-image-1": "فيلا 1",
+        "crown-villa-3-image-2": "فيلا 2",
+        "crown-villa-3-image-3": "فيلا 3",
+        "crown-villa-3-image-4": "فيلا 4",
+        "crown-villa-3-image-5": "فيلا 5",
+        "crown-villa-3-image-6": "فيلا 6",
+        "crown-villa-3-image-7": "فيلا 7",
+        "crown-villa-3-image-8": "فيلا 8",
+        "living-areas": "مناطق المعيشة:",
+        "crown-villa-3-living": "مطبخ رئيسي، صالة الاستقبال، طاولة الطعام، وحدة البار، تواليت الضيوف",
+        "main-bedrooms": "غرفتا النوم الرئيسيتان الأولى والثانية",
+        "crown-villa-3-main-bedrooms": "سرير كبنج، خزانة الملابس، دش مزدوج، تواليت منفصل وبيديه، حوض الاستحمام، طاولة الزينة",
+        "third-bedroom": "غرفة النوم الثالثة",
+        "crown-villa-3-third-bedroom": "سريرين بحجم كوين، خزانة الملابس، تواليت وبيديه، حوض الاستحمام والدش",
+        "crown-villa-3-external": "مسبح لا متناهي، كراسي الاستلقاء بجانب المسبح، تناول الطعام في الهواء الطل، صالة خارجية، منطقة الشواء، بار خارجي، دش خارجي مزدوج",
+        "additional-features": "الميزات الإضافية",
+        "crown-villa-3-additional": "غرفة الموظفين",
+        
+        // فيلا كراون - غرفة نوم واحدة
+        "crown-villa-1-title": "فيلا كراون على الشاطئ - غرفة نوم واحدة",
+        "crown-villa-1-area": "المساحة: 248 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 145 متر مربع)",
+        "crown-villa-1-bedroom": "غرفة النوم: سرير بحجم كينج",
+        "crown-villa-1-occupancy": "الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع",
+        "crown-villa-1-image-1": "فيلا 1",
+        "crown-villa-1-image-2": "فيلا 2",
+        "crown-villa-1-image-3": "فيلا 3",
+        "crown-villa-1-image-4": "فيلا 4",
+        "crown-villa-1-living": "طاولة طعام، صالة، وحدة بار،مطبخ صغير",
+        "crown-villa-1-bedroom-details": "سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، منضدة زينة مزدوجة، تواليت مغلق وبيديه، حوض استحمام",
+        "crown-villa-1-external": "حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دُش خارجي",
+        
+        // فلل ملكية
+        "royal-villas-title": "مجموعة الفلل الملكية المطلة على الشاطئ",
+        "royal-villas-description": "اكتشف فخامة مجموعة الڤلل الملكية المطلة على الشاطئ في جزيرة شيبارة المنعزلة، والتي تضم رصيفًا خاصًا لليخت الخاص بك. اختر من بين ڤيلا مذهلة مكونة من أربع غرف نوم وثلاث ڤلل رائعة مكونة من غرفة نوم واحدة، وكلها مصممة لتكون ملاذًا استثنائيًا على الجزيرة. مثالية للهروب الرومانسي أو لم شمل الأسرة أو التجمعات مع الأصدقاء، يمكنك حجز كل ڤيلا على حدة لقضاء عطلة حميمة أو حجز المجموعة بأكملها للاحتفال بذكرى لا تُنسى.",
+        "royal-villas-image-alt": "مجموعة الفلل الملكية",
+        "contact-for-inquiries": "اتصل بنا للاستفسارات حول الحجوزات",
+        
+        // فيلا ملكية - أربع غرف نوم
+        "royal-villa-4-title": "فيلا ملكية على الشاطئ - أربع غرف نوم",
+        "royal-villa-4-area": "المساحة: 900 متر مربع (المساحة الأولى: 451 متر مربع المساحة الثانية: 449 متر مربع)",
+        "royal-villa-4-bedrooms": "غرف النوم: غرفة نوم رئيسية وغرفة نوم ثانية: سرير بحجم كينج غرفتا نوم ثالثة ورابعة: سرير بحجم كينج وسريرين بحجم كوين.",
+        "royal-villa-4-occupancy": "الحد الأقصى للإشغال: 8 أشخاص بالغين و 4 أطفال",
+        "royal-villa-4-image-1": "فيلا 1",
+        "royal-villa-4-image-2": "فيلا 2",
+        "royal-villa-4-image-3": "فيلا 3",
+        "royal-villa-4-image-4": "فيلا 4",
+        "royal-villa-4-image-5": "فيلا 5",
+        "royal-villa-4-image-6": "فيلا 6",
+        "royal-villa-4-image-7": "فيلا 7",
+        "royal-villa-4-living": "صالة الاستقبال، غرفة الطعام، غرفة المكتب، غرفة الترفيه، وحدة البار، تواليت الضيوف",
+        "royal-villa-4-main-bedrooms": "سرير بحجم كينج، خزانة ملابس، دش مزدوج، طاولة زينة مزدوجة، مرحاض منفصل وبيديه، حوض استحمام، طاولة زينة",
+        "royal-villa-4-second-bedroom": "سرير بحجم كينج، خزانة الملابس، دش، طاولة زينة، تواليت منفصل وبيديه، حوض استحمام، طاولة زينة",
+        "royal-villa-4-third-bedroom": "سرير بحجم كينج، خزانة الملابس، طاولة زينة، تواليت وبيديه، حوض استحمام ودش",
+        "fourth-bedroom": "غرفة النوم الرابعة",
+        "royal-villa-4-fourth-bedroom": "سريرين بحجم كوين، خزانة الملابس، طاولة زينة، تواليت وبيديه، حوض استحمام ودش",
+        "royal-villa-4-external": "مسبح لا متناهي، كراسي الاستلقاء بجانب المسبح، تراس خارجي، تناول الطعام في الهواء الطلق، صالة استقبال خارجية، منطقة الشواء، بار خارجي، دش خارجي مزدوج",
+        "royal-villa-4-additional": "غرفة الموظفين",
+        
+        // فيلا ملكية - غرفة نوم واحدة
+        "royal-villa-1-title": "فيلا ملكية على الشاطئ - غرفة نوم واحدة",
+        "royal-villa-1-area": "المساحة: 248 متر مربع (المساحة الداخلية: 103 متر مربع، المساحة الخارجية: 145 متر مربع)",
+        "royal-villa-1-bedroom": "غرفة النوم: سرير بحجم كينج",
+        "royal-villa-1-occupancy": "الحد الأقصى للإشغال: شخصين بالغين، طفل، و رضيع",
+        "royal-villa-1-image-1": "فيلا 1",
+        "royal-villa-1-image-2": "فيلا 2",
+        "royal-villa-1-image-3": "فيلا 3",
+        "royal-villa-1-image-4": "فيلا 4",
+        "royal-villa-1-living": "طاولة طعام، صالة، وحدة بار،مطبخ صغير",
+        "royal-villa-1-bedroom-details": "سرير كبير، خزانة ملابس، طاولة زينة، دش مزدوج، منضدة زينة مزدوجة، تواليت مغلق وبيديه، حوض استحمام",
+        "royal-villa-1-external": "حمام سباحة لا متناهي، تراس، سرير نهاري مزدوج، صالة جلوس خارجية، دُش خارجي",
+        
+        // سياسة الحجوزات
+        "reservation-policy": "سياسة الحجوزات",
+        "read-more": "قراءة المزيد",
+        "check-in-out-times": "مواعيد تسجيل الوصول والمغادرة",
+        "check-in-time": "موعد تسجيل الوصول: 3:00 ظهرًا",
+        "check-out-time": "موعد تسجيل المغادرة: 12:00 ظهرًا",
+        "prices": "الأسعار",
+        "prices-description": "جميع أسعار الغرف والرسوم والرسوم الإضافية هي بالريال السعودي (SAR) وتخضع لضريبة البلدية بنسبة 5% (MT) وضريبة القيمة المضافة بنسبة 15% (VAT). يتم تطبيق ضريبة القيمة المضافة على السعر وضريبة البلدية",
+        "early-late": "الوصول المبكر والمغادرة المتأخرة",
+        "early-late-description": "لكي نضمن راحتك وتجربة سفر سلسة، ننصح بحجز الغرفة لليلة السابقة لضمان توفرها عند وصولك المبكر للمغادرين في وقت متأخر، يمكنك حجز ليلة إضافية للاستمتاع بالغرفة حتى موعد مغادرتك في حال عدم الحجز الإضافي نقدم خدمة تخزين الأمتعة مجانًا، بالإضافة إلى مرافق غرفة تغيير الملابس لتستعد لرحلتك القادمة براحة تامة",
+        "guest-fees": "رسوم الضيوف الإضافيين والأطفال",
+        "guest-fees-description": "وفقًا للحد الأقصى للإشغال المعمول به في الڤيلا، ينطبق ما يلي على الضيوف الاضافيين: لللأطفال دون سن 12 عامًا, الإقامة مجانية عند مشاركة الغرفة مع والديهم أو الأوصياء عليهم في حدود المساحة المتاحة للضيوف من سن 12 عامًا فأكثر يتوجب عليهم دفع رسوم إضافية قدرها ريال 1500 سعودي + ضريبة القيمة المضافة",
+        "accommodation": "الإقامة",
+        "accommodation-description": "لا يفرض منتجع شيبارة أي رسوم إضافية على الأطفال دون سن 12 عامًا الذين يشغلون نفس غرفة الضيوف مع والديهم أو الأوصياء عليهم (إذا سمحت المساحة) الضيوف الذين تبلغ أعمارهم 12 عامًا فأكثر، سيتم فرض رسوم قدرها 1500 ريال سعودي + ضريبة القيمة المضافة وضريبة البلدية لكل ليلة",
+        "children-meals": "خطة وجبات الأطفال",
+        "children-meals-description": "الأطفال دون سن 6 سنوات يتناولون الطعام مجانًا عند تناول الطعام مع شخص بالغ باستثناء تناول الطعام في الڤيلا: الأطفال من سن 6 إلى 12 عامًا يحصلون على خصم 50% على جميع الأطعمة والمشروبات في قائمة أسعار البالغين يتم تطبيق السعر العادي على قائمة الأطفال. الضيوف من سن 12 عامًا فأكثر يتوجب عليهم دفع الرسوم الكاملة للاطعمة والمشروبات خلال إقامتكم في يوليو، أغسطس، أو سبتمبر: الأطفال أقل من 12 سنوات: مجانًا عند تناول الطعام مع شخص بالغ (باستثناء خدمة الطعام داخل الفلل). الأطفال بعمر 12 سنة فما فوق: يتم تطبيق السعر الكامل على الأطعمة والمشروبات.",
+        "cancellation-policy": "سياسة إلغاء الحجز",
+        "cancellation-policy-description": "متطلبات الحجز: بطاقة ائتمان صالحة يجب تقديم بطاقة ائتمان صالحة عند الحجز عدم تقديمها سيؤدي إلى إلغاء الحجز تلقائي سياسة الإلغاء والتعديل: الإلغاءات والتغييرات يجب إجراؤها قبل الساعة 6 مساءً بتوقيت المملكة العربية السعودية وقبل 14 يومًا على الأقل من تاريخ الوصول المحدد رسوم الإلغاء المتأخر أو عدم الحضور: في حالة الإلغاء أو التعديل بعد الموعد المحدد، أو في حالة عدم الحضور، سيتم تطبيق رسوم تعادل التكلفة الإجمالية للإقامة شاملةً ضريبة القيمة المضافة ورسوم البلدية التغييرات الجوهرية: أي تغييرات جوهرية على الحجز خلال فترة الإلغاء تتطلب موافقة مسبقة من إدارة المنتجع يرجى التأكد من قراءة وفهم سياسة الحجز والإلغاء بالكامل قبل إتمام الحجز في حال وجود أي استفسارات، لا تتردد في التواصل معنا",
+        "guarantee-policy": "سياسة ضمان الحجز",
+        "guarantee-policy-description": "الوديعة: تعادل التكلفة الإجمالية للإقامة، بما في ذلك ضريبة القيمة المضافة ورسوم البلدية طريقة الدفع: يتم خصمها من بطاقة الائتمان المقدمة عند الحجز موعد الخصم: قبل 14 يومًا من تاريخ الوصول المتوقع في حالة عدم توفر بطاقة ائتمان: يمكن إجراء تحويل بنكي بدلاً من ذلك ملاحظات هامة: قد تخضع سياسة الضمان للتغيير بناءً على الموسم والعروض الترويجية المتاحة ، يرجى التأكد من مراجعة الشروط والأحكام الخاصة بحجزك",
+        "accessibility-info": "معلومات عن إمكانية الوصول",
+        "accommodations": "أماكن الإقامة",
+        "accommodations-description": "- يحتوي المنتجع على أربع فيلات مجهزة بحوض سباحة خاص بمرافق ذوي الاحتياجات الخاصة مكونة من غرفتي نوم، وكل منها مجهز بحوض سباحة خاص. o يتم الوصول إلى الفيلات عبر منحدرات ذات منحدر مريح، مع درابزينات ودرابزينات. o أحواض السباحة متوافقة مع متطلبات ذوي الاحتياجات الخاصة ومجهزة بمصاعد محمولة لحمامات السباحة. - o جميع الفلل لها مدخل مباشر إلى الشاطئ. ميزات غرفة النوم الرئيسية - غرفة نوم ADA في الفيلا المكونة من غرفتي نوم. - مجهزة بدُش قابل للطي. - مرحاض يسهل الوصول إليه. ميزات إمكانية الوصول - الغرور على ارتفاع يسهل الوصول إليه. - مناظر يسهل الوصول إليها. - تم تركيب مقابض للإمساك من أجل السلامة. دورات المياه والمطاعم - تتوفر دورات مياه لذوي الاحتياجات الخاصة في جميع أنحاء المنتجع. - خيارات طعام يمكن الوصول إليها في مواقع مختلفة. إمكانية الوصول إلى أحواض السباحة - تتميز أحواض السباحة المخصصة للعائلات والكبار بمداخل يمكن الوصول إليها. المرافق الأخرى - سبا ومركز لياقة بدنية مع مداخل يسهل الوصول إليها. - يمكن أيضاً الوصول إلى منطقة مشاهدة ملاعب التجديف والتنس. وسائل الراحة العامة - يتم الترحيب بالنزلاء من خلال ممر فسيح يسهل الوصول إليه يؤدي من المدخل إلى ردهة الفندق والعديد من وسائل الراحة، بما في ذلك مسبح الكبار والمطاعم المتخصصة. - توجد العديد من دورات المياه المخصصة للجنسين والمتوافقة مع متطلبات ذوي الاحتياجات الخاصة في مواقع استراتيجية في جميع أنحاء المنتجع لسهولة الوصول إليها. o تشمل المواقع الرئيسية ردهة الوصول، وبار ومطعم الشواء العائلي في حوض السباحة العائلي، والمنتجع الصحي، ومركز الغوص. o كل دورة مياه مجهزة بميزات لاستيعاب النزلاء ذوي الاحتياجات الخاصة، مما يضمن الخصوصية والراحة. المواصلات والمسارات - تتوفر عربات غولف يسهل الوصول إليها لاستخدام الضيوف. - يمكن الوصول إلى مسارات العربات. - منطقة الوصول الرئيسية والأرصفة البحرية بها مداخل يسهل الوصول إليها. المراكز الطبية ومراكز الأنشطة - يتوفر مركز طبي يسهل الوصول إليه. - يمكن الوصول إلى مداخل مركز الغوص والرياضات المائية. معدات تيسير الوصول - 1 كرسي متحرك - مصعد المسبح - 1 كرسي متحرك للشاطئ ننصح بالتحقق من التفاصيل للحصول على أحدث المعلومات حول سياسة الضمان، يرجى التواصل معنا أو زيارة موقعنا الإلكتروني هدفنا هو ضمان حجز إقامتك بكل سهولة ويسر، مع توفير المرونة اللازمة لتلبية احتياجاتك",
+        
+        // القسم الأخير
+        "sustainable-future": "حيث المستقبل المستدام",
+        "help-description": "نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها",
+        "for-inquiries": "للاستفسارات",
+        "rights": "البحر الأحمر 2024  © جميع الحقوق محفوظة",
+        "back-to-top": "الرجوع إلى الأعلى ↑"
+      },
+      en: {
+        // الهيدر
+        "brand": "Shebara",
+        "nav-villas": "Villas",
+        "nav-offers": "Special Offers",
+        "nav-dining": "Dining",
+        "nav-activities": "Experiences & Activities",
+        "nav-spa": "Spa & Wellness",
+        "nav-location": "Location",
+        "nav-contact": "Contact Us",
+        "book": "Book Your Stay",
+        
+        // الهيرو
+        "hero-title": "Experience Absolute Harmony",
+        "hero-description": "Every corner of the island is carefully inspired to reflect the beauty and charm of the place. Enjoy a unique spatial experience where architecture blends with nature in perfect harmony.",
+        "play-pause": "⏯",
+        "mute-unmute": "🔇",
+        "video-not-supported": "Your browser does not support video playback.",
+        
+        // فلل فوق الماء
+        "water-villas-title": "Overwater Villas",
+        "water-villas-description": "A majestic string of pearls, seamlessly merging with the tranquility of nature to emerge as a renewed destination for future generations.",
+        "water-villas-image-alt": "Overwater Villas",
+        
+        // فيلا فوق الماء - غرفة نوم واحدة
+        "water-villa-1-title": "Overwater Villa - One Bedroom",
+        "water-villa-1-area": "Area: 188 sqm (Indoor: 103 sqm, Outdoor: 85 sqm)",
+        "water-villa-1-bedroom": "Room: King size bed",
+        "water-villa-1-occupancy": "Maximum Occupancy: 2 adults, 1 child, and 1 infant",
+        "water-villa-1-image-1": "Villa 1",
+        "water-villa-1-image-2": "Villa 2",
+        "water-villa-1-image-3": "Villa 3",
+        "water-villa-1-image-4": "Villa 4",
+        "water-villa-1-image-5": "Villa 5",
+        "previous": "Previous",
+        "next": "Next",
+        "explore-more": "Explore More",
+        "book-your-stay": "Book Your Stay",
+        "villa-features": "Villa Features",
+        "living-area": "Living Area:",
+        "water-villa-1-living": "Dining table, living room, bar unit, kitchenette",
+        "bedroom": "Bedroom:",
+        "water-villa-1-bedroom-details": "King bed, wardrobe, dressing table, double shower, enclosed toilet with bidet, bathtub",
+        "external-features": "External Features:",
+        "water-villa-1-external": "Infinity pool, terrace, double daybed, outdoor seating area, outdoor shower",
+        
+        // فيلا فوق الماء - غرفتي نوم
+        "water-villa-2-title": "Overwater Villa - Two Bedrooms",
+        "water-villa-2-area": "Area: 288 sqm (Indoor: 189 sqm, Outdoor: 99 sqm)",
+        "water-villa-2-bedrooms": "Bedrooms: King size bed in master bedroom, two queen beds in second bedroom",
+        "water-villa-2-occupancy": "Maximum Occupancy: 4 adults, 2 children, and 1 infant",
+        "water-villa-2-image-1": "Villa 1",
+        "water-villa-2-image-2": "Villa 2",
+        "water-villa-2-image-3": "Villa 3",
+        "water-villa-2-image-4": "Villa 4",
+        "water-villa-2-image-5": "Villa 5",
+        "water-villa-2-living": "Reception area, dining table, bar unit, guest toilet, kitchenette",
+        "main-bedroom": "Master Bedroom",
+        "water-villa-2-main-bedroom": "King bed, wardrobe, double dressing table, toilet with bidet, bathtub, shower, dressing table",
+        "second-bedroom": "Second Bedroom",
+        "water-villa-2-second-bedroom": "Two queen beds, wardrobe, shower area, toilet with bidet, bathtub",
+        "water-villa-2-external": "Infinity pool, pool deck, daybed, pool chairs, outdoor seating area, outdoor shower",
+        
+        // فلل شاطئية
+        "beach-villas-title": "Beach Villas",
+        "beach-villas-description": "Welcome to our magnificent beach villas, located along the pristine shores of the Red Sea, where crystal blue waters meet soft white sands in perfect harmony.",
+        "beach-villas-image-alt": "Beach Villas",
+        
+        // فيلا شاطئية - غرفة نوم واحدة
+        "beach-villa-1-title": "Beach Villa - One Bedroom",
+        "beach-villa-1-area": "Area: 248 sqm (Indoor: 103 sqm, Outdoor: 145 sqm)",
+        "beach-villa-1-bedroom": "Room: King size bed",
+        "beach-villa-1-occupancy": "Maximum Occupancy: 2 adults, 1 child, and 1 infant",
+        "beach-villa-1-image-1": "Villa 1",
+        "beach-villa-1-image-2": "Villa 2",
+        "beach-villa-1-image-3": "Villa 3",
+        "beach-villa-1-image-4": "Villa 4",
+        "beach-villa-1-image-5": "Villa 5",
+        "beach-villa-1-living": "Dining table, living room, bar unit, kitchenette",
+        "beach-villa-1-bedroom-details": "King bed, wardrobe, dressing table, double shower, double dressing table, enclosed toilet with bidet, bathtub",
+        "beach-villa-1-external": "Infinity pool, terrace, double daybed, outdoor seating area, outdoor shower",
+        
+        // فيلا شاطئية - غرفتي نوم
+        "beach-villa-2-title": "Beach Villa - Two Bedrooms",
+        "beach-villa-2-area": "Area: 367 sqm (Indoor: 196 sqm, Outdoor: 171 sqm)",
+        "beach-villa-2-bedrooms": "Bedrooms: King size bed in master bedroom, two queen beds in second bedroom",
+        "beach-villa-2-occupancy": "Maximum Occupancy: 4 adults and 2 children",
+        "beach-villa-2-image-1": "Villa 1",
+        "beach-villa-2-image-2": "Villa 2",
+        "beach-villa-2-image-3": "Villa 3",
+        "beach-villa-2-image-4": "Villa 4",
+        "beach-villa-2-image-5": "Villa 5",
+        "beach-villa-2-image-6": "Villa 6",
+        "beach-villa-2-image-7": "Villa 7",
+        "beach-villa-2-living": "Reception area, dining table, bar unit, guest toilet, kitchenette",
+        "beach-villa-2-main-bedroom": "King bed, wardrobe, double dressing table, toilet with bidet, bathtub, shower, dressing table",
+        "beach-villa-2-second-bedroom": "Two queen beds, wardrobe, shower area, toilet with bidet, bathtub",
+        "beach-villa-2-external": "Infinity pool, pool deck, daybed, pool chairs, outdoor seating area, outdoor shower",
+        
+        // فلل كراون
+        "crown-villas-title": "Crown Beachfront Villa Collection",
+        "crown-villas-description": "Enjoy unparalleled luxury in the Crown Beachfront Villa Collection on a private island in Shebara. Choose from a beautiful three-bedroom villa or three charming one-bedroom villas, each designed as the perfect island sanctuary. Ideal for romantic getaways, family reunions, or memorable moments with friends, you can book individual villas for a comfortable vacation or reserve the entire collection for a unique and exclusive experience.",
+        "crown-villas-image-alt": "Crown Villas Collection",
+        
+        // فيلا كراون - ثلاث غرف نوم
+        "crown-villa-3-title": "Crown Beachfront Villa - Three Bedrooms",
+        "crown-villa-3-area": "Area: 692 sqm (Indoor: 317 sqm, Outdoor: 375 sqm)",
+        "crown-villa-3-bedrooms": "Bedrooms: King size bed in each master bedroom, two queen beds in the third bedroom",
+        "crown-villa-3-occupancy": "Maximum Occupancy: 6 adults and 3 children",
+        "crown-villa-3-image-1": "Villa 1",
+        "crown-villa-3-image-2": "Villa 2",
+        "crown-villa-3-image-3": "Villa 3",
+        "crown-villa-3-image-4": "Villa 4",
+        "crown-villa-3-image-5": "Villa 5",
+        "crown-villa-3-image-6": "Villa 6",
+        "crown-villa-3-image-7": "Villa 7",
+        "crown-villa-3-image-8": "Villa 8",
+        "living-areas": "Living Areas:",
+        "crown-villa-3-living": "Main kitchen, reception area, dining table, bar unit, guest toilet",
+        "main-bedrooms": "First and Second Master Bedrooms",
+        "crown-villa-3-main-bedrooms": "King bed, wardrobe, double shower, separate toilet with bidet, bathtub, dressing table",
+        "third-bedroom": "Third Bedroom",
+        "crown-villa-3-third-bedroom": "Two queen beds, wardrobe, toilet with bidet, bathtub and shower",
+        "crown-villa-3-external": "Infinity pool, poolside loungers, outdoor dining, outdoor lounge, barbecue area, outdoor bar, double outdoor shower",
+        "additional-features": "Additional Features",
+        "crown-villa-3-additional": "Staff room",
+        
+        // فيلا كراون - غرفة نوم واحدة
+        "crown-villa-1-title": "Crown Beachfront Villa - One Bedroom",
+        "crown-villa-1-area": "Area: 248 sqm (Indoor: 103 sqm, Outdoor: 145 sqm)",
+        "crown-villa-1-bedroom": "Bedroom: King size bed",
+        "crown-villa-1-occupancy": "Maximum Occupancy: 2 adults, 1 child, and 1 infant",
+        "crown-villa-1-image-1": "Villa 1",
+        "crown-villa-1-image-2": "Villa 2",
+        "crown-villa-1-image-3": "Villa 3",
+        "crown-villa-1-image-4": "Villa 4",
+        "crown-villa-1-living": "Dining table, living room, bar unit, kitchenette",
+        "crown-villa-1-bedroom-details": "King bed, wardrobe, dressing table, double shower, double dressing table, enclosed toilet with bidet, bathtub",
+        "crown-villa-1-external": "Infinity pool, terrace, double daybed, outdoor seating area, outdoor shower",
+        
+        // فلل ملكية
+        "royal-villas-title": "Royal Beachfront Villa Collection",
+        "royal-villas-description": "Discover the luxury of the Royal Beachfront Villa Collection on the secluded island of Shebara, featuring a private yacht dock. Choose from a stunning four-bedroom villa or three magnificent one-bedroom villas, all designed as exceptional island sanctuaries. Perfect for romantic escapes, family reunions, or gatherings with friends, you can book each villa individually for an intimate holiday or reserve the entire collection for an unforgettable celebration.",
+        "royal-villas-image-alt": "Royal Villas Collection",
+        "contact-for-inquiries": "Contact Us for Booking Inquiries",
+        
+        // فيلا ملكية - أربع غرف نوم
+        "royal-villa-4-title": "Royal Beachfront Villa - Four Bedrooms",
+        "royal-villa-4-area": "Area: 900 sqm (First Area: 451 sqm, Second Area: 449 sqm)",
+        "royal-villa-4-bedrooms": "Bedrooms: Master bedroom and second bedroom: King size bed, Third and fourth bedrooms: King size bed and two queen beds.",
+        "royal-villa-4-occupancy": "Maximum Occupancy: 8 adults and 4 children",
+        "royal-villa-4-image-1": "Villa 1",
+        "royal-villa-4-image-2": "Villa 2",
+        "royal-villa-4-image-3": "Villa 3",
+        "royal-villa-4-image-4": "Villa 4",
+        "royal-villa-4-image-5": "Villa 5",
+        "royal-villa-4-image-6": "Villa 6",
+        "royal-villa-4-image-7": "Villa 7",
+        "royal-villa-4-living": "Reception area, dining room, study room, entertainment room, bar unit, guest toilet",
+        "royal-villa-4-main-bedrooms": "King size bed, wardrobe, double shower, double dressing table, separate toilet with bidet, bathtub, dressing table",
+        "royal-villa-4-second-bedroom": "King size bed, wardrobe, shower, dressing table, separate toilet with bidet, bathtub, dressing table",
+        "royal-villa-4-third-bedroom": "King size bed, wardrobe, dressing table, toilet with bidet, bathtub and shower",
+        "fourth-bedroom": "Fourth Bedroom",
+        "royal-villa-4-fourth-bedroom": "Two queen beds, wardrobe, dressing table, toilet with bidet, bathtub and shower",
+        "royal-villa-4-external": "Infinity pool, poolside loungers, outdoor terrace, outdoor dining, outdoor reception area, barbecue area, outdoor bar, double outdoor shower",
+        "royal-villa-4-additional": "Staff room",
+        
+        // فيلا ملكية - غرفة نوم واحدة
+        "royal-villa-1-title": "Royal Beachfront Villa - One Bedroom",
+        "royal-villa-1-area": "Area: 248 sqm (Indoor: 103 sqm, Outdoor: 145 sqm)",
+        "royal-villa-1-bedroom": "Bedroom: King size bed",
+        "royal-villa-1-occupancy": "Maximum Occupancy: 2 adults, 1 child, and 1 infant",
+        "royal-villa-1-image-1": "Villa 1",
+        "royal-villa-1-image-2": "Villa 2",
+        "royal-villa-1-image-3": "Villa 3",
+        "royal-villa-1-image-4": "Villa 4",
+        "royal-villa-1-living": "Dining table, living room, bar unit, kitchenette",
+        "royal-villa-1-bedroom-details": "King bed, wardrobe, dressing table, double shower, double dressing table, enclosed toilet with bidet, bathtub",
+        "royal-villa-1-external": "Infinity pool, terrace, double daybed, outdoor seating area, outdoor shower",
+        
+        // سياسة الحجوزات
+        "reservation-policy": "Reservation Policy",
+        "read-more": "Read More",
+        "check-in-out-times": "Check-in and Check-out Times",
+        "check-in-time": "Check-in time: 3:00 PM",
+        "check-out-time": "Check-out time: 12:00 PM",
+        "prices": "Prices",
+        "prices-description": "All room rates, fees, and additional charges are in Saudi Riyal (SAR) and subject to 5% Municipality Tax (MT) and 15% Value Added Tax (VAT). VAT is applied to the price and municipality tax.",
+        "early-late": "Early Arrival and Late Departure",
+        "early-late-description": "To ensure your comfort and a smooth travel experience, we recommend booking the room for the previous night to ensure availability upon early arrival. For late departures, you can book an additional night to enjoy the room until your departure time. If no additional booking is made, we offer complimentary luggage storage, plus changing room facilities to prepare for your next journey in complete comfort.",
+        "guest-fees": "Additional Guest and Children Fees",
+        "guest-fees-description": "According to the maximum occupancy policy in the villa, the following applies to additional guests: For children under 12 years old, accommodation is free when sharing the room with their parents or guardians within the available space. Guests aged 12 years and older must pay an additional fee of 1500 Saudi Riyals + VAT.",
+        "accommodation": "Accommodation",
+        "accommodation-description": "Shebara Resort does not impose any additional fees for children under 12 years old who occupy the same guest room with their parents or guardians (if space permits). Guests aged 12 years and older will be charged a fee of 1500 Saudi Riyals + VAT and municipality tax per night.",
+        "children-meals": "Children's Meal Plan",
+        "children-meals-description": "Children under 6 years old eat for free when dining with an adult, except for in-villa dining: Children aged 6 to 12 years receive a 50% discount on all food and beverages from the adult menu. The regular price applies to the children's menu. Guests aged 12 years and older must pay the full price for food and beverages. During your stay in July, August, or September: Children under 12 years: Free when dining with an adult (excluding in-villa dining service). Children aged 12 years and above: Full price applies to food and beverages.",
+        "cancellation-policy": "Cancellation Policy",
+        "cancellation-policy-description": "Reservation Requirements: A valid credit card must be provided when making a reservation. Failure to provide it will result in automatic cancellation. Cancellation and Modification Policy: Cancellations and changes must be made before 6:00 PM Saudi Arabian Time and at least 14 days prior to the scheduled arrival date. Late Cancellation or No-Show Fees: In case of cancellation or modification after the specified time, or in case of no-show, a fee equal to the total cost of the stay including VAT and municipality fees will be applied. Substantial Changes: Any substantial changes to the reservation during the cancellation period require prior approval from the resort management. Please ensure you read and understand the full booking and cancellation policy before completing your reservation. If you have any inquiries, do not hesitate to contact us.",
+        "guarantee-policy": "Booking Guarantee Policy",
+        "guarantee-policy-description": "Deposit: Equal to the total cost of the stay, including VAT and municipality fees. Payment Method: Deducted from the credit card provided at the time of booking. Deduction Date: 14 days before the expected arrival date. In case no credit card is available: A bank transfer can be made instead. Important Notes: The guarantee policy may be subject to change based on season and available promotions. Please ensure to review the terms and conditions specific to your booking.",
+        "accessibility-info": "Accessibility Information",
+        "accommodations": "Accommodations",
+        "accommodations-description": "- The resort has four villas equipped with a private pool for people with disabilities, each with two bedrooms, and each equipped with a private pool. o Access to the villas is via ramps with a comfortable slope, with handrails and guardrails. o The pools are compatible with accessibility requirements and equipped with portable pool lifts. - o All villas have direct access to the beach. Master Bedroom Features - ADA bedroom in the two-bedroom villa. - Equipped with a foldable shower. - Accessible toilet. Accessibility Features - Vanity at an accessible height. - Accessible views. - Grab handles installed for safety. Restrooms and Restaurants - Accessible restrooms are available throughout the resort. - Accessible food options available at various locations. Pool Accessibility - The family and adult pools feature accessible entrances. Other Facilities - Spa and fitness center with accessible entrances. - The paddle tennis and tennis court viewing area is also accessible. General Amenities - Guests are welcomed through a spacious accessible corridor leading from the entrance to the hotel lobby and various amenities, including the adult pool and specialty restaurants. - There are several gender-neutral restrooms compliant with accessibility requirements in strategic locations throughout the resort for easy access. o Key locations include the arrival lobby, the family pool barbecue bar and restaurant, the spa, and the dive center. o Each restroom is equipped with features to accommodate guests with disabilities, ensuring privacy and comfort. Transportation and Pathways - Accessible golf carts are available for guest use. - Cart paths are accessible. - The main access area and marine piers have accessible entrances. Medical Centers and Activity Centers - An accessible medical center is available. - Access to the dive center and water sports center entrances. Accessibility Equipment - 1 wheelchair - Pool lift - 1 beach wheelchair We advise checking the details for the latest information on the guarantee policy. Please contact us or visit our website. Our goal is to ensure your reservation is made with ease and convenience, while providing the necessary flexibility to meet your needs.",
+        
+        // القسم الأخير
+        "sustainable-future": "Where Sustainable Future Begins",
+        "help-description": "We are happy to assist with any inquiries or information you need",
+        "for-inquiries": "For Inquiries",
+        "rights": "Red Sea 2024 © All Rights Reserved",
+        "back-to-top": "Back to Top ↑"
+      }
+    };
+
+    // دالة تعيين اللغة
+function setLanguage(lang) {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  
+  // تحديث النصوص
+  document.querySelectorAll('[data-translate]').forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (translations[lang] && translations[lang][key]) {
+      element.textContent = translations[lang][key];
+    }
+  });
+  
+  // تحديث النصوص البديلة للصور
+  document.querySelectorAll('[data-translate-alt]').forEach(element => {
+    const key = element.getAttribute('data-translate-alt');
+    if (translations[lang] && translations[lang][key]) {
+      element.alt = translations[lang][key];
+    }
+  });
+  
+  // إغلاق قائمة اللغة
+  document.querySelector('.language-menu').style.display = 'none';
+  
+  // حفظ اللغة المفضلة
+  localStorage.setItem('preferred-language', lang);
+}
+
+// تهيئة اللغة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('preferred-language') || 'ar';
+  setLanguage(savedLang);
+  document.getElementById('current-lang').innerText = savedLang === 'ar' ? 'العربية' : 'English';
+});
+
+// سلايدر: تحديث العنوان والوصف
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = Array.from(document.querySelectorAll('.villa-slider .slide'));
+  const titleEl = document.getElementById('slide-title');
+  const descEl = document.getElementById('slide-desc');
+  const prev = document.querySelector('.villa-slider .prev');
+  const next = document.querySelector('.villa-slider .next');
+  let idx = slides.findIndex(s => s.classList.contains('active'));
+  if (idx === -1) idx = 0;
+
+  function show(i){
+    i = (i + slides.length) % slides.length;
+    slides.forEach(s => s.classList.remove('active'));
+    slides[i].classList.add('active');
+    titleEl.textContent = slides[i].dataset.title || '';
+    descEl.textContent = slides[i].dataset.desc || '';
+    idx = i;
+  }
+
+  if (prev && next) {
+    prev.addEventListener('click', ()=>{ show(idx - 1); resetAuto(); });
+    next.addEventListener('click', ()=>{ show(idx + 1); resetAuto(); });
+
+    let auto = setInterval(()=> show(idx + 1), 5000);
+    function resetAuto(){ clearInterval(auto); auto = setInterval(()=> show(idx + 1), 5000); }
+
+    show(idx);
+  }
+});
+
+// ✅ دالة واحدة فقط لعرض/إخفاء تفاصيل العرض
+function toggleDetails(btn) {
+  const container = btn.closest('.villa-banner, .villa-card');
+  if (!container) return;
+
+  const details = container.querySelector('.villa-details');
+  if (!details) return;
+
+  const isOpen = details.classList.toggle('open');
+
+  const currentLang = document.documentElement.lang;
+  btn.textContent = isOpen
+    ? (currentLang === 'ar' ? 'إخفاء التفاصيل' : 'Hide Details')
+    : (currentLang === 'ar' ? 'اكتشف لمزيد' : 'Explore More');
+
+  details.setAttribute('aria-hidden', !isOpen);
+}
+
+// ✅ سياسة الخصوصية
+function togglePolicy(btn) {
+  const details = btn.closest('.policy-box').querySelector('.policy-details');
+  const isOpen = details.style.display === "block";
+
+  details.style.display = isOpen ? "none" : "block";
+  const currentLang = document.documentElement.lang;
+  btn.textContent = isOpen 
+    ? (currentLang === 'ar' ? 'قراءة المزيد' : 'Read More') 
+    : (currentLang === 'ar' ? 'إخفاء' : 'Hide');
+  details.setAttribute("aria-hidden", isOpen);
+}
+
+// ✅ القائمة المنسدلة للغة
+document.querySelector('.language-btn').addEventListener('click', function() {
+  const menu = document.querySelector('.language-menu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.language-switcher')) {
+    document.querySelector('.language-menu').style.display = 'none';
+  }
+});
+
+// ✅ الفيديو
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById("bg-video");
+  const playPauseBtn = document.getElementById("play-pause");
+  const muteUnmuteBtn = document.getElementById("mute-unmute");
+
+  if (playPauseBtn && muteUnmuteBtn) {
+    playPauseBtn.addEventListener("click", () => {
+      if(video.paused) video.play();
+      else video.pause();
+    });
+
+    muteUnmuteBtn.addEventListener("click", () => {
+      video.muted = !video.muted;
+    });
+  }
+});
+
+// ✅ تغيير الهيدر عند التمرير
+(function(){
+  const header = document.querySelector('header');
+  function onScroll(){
+    if(window.scrollY > 50) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+})();
+  </script>
+</body>
+</html>
