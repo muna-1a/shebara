@@ -13,6 +13,140 @@
       color: #333;
     }
 
+    header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: none;
+  box-shadow: none;
+}
+
+/* كونتينر للهيدر */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;               /* كله يصير صف */
+  align-items: center;         /* يضبط الطول العمودي */
+  justify-content: space-between; /* توزيع بين اليسار واليمين */
+  height: 70px;
+}
+
+/* الشعار */
+.logo {
+  font-size: 50px;
+  font-weight: 600;
+  color: #f8f6f6;
+}
+
+/* القوائم */
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #f9f3f3;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background: rgba(241, 239, 239, 0.886);
+}
+
+/* أزرار اليمين */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-primary {
+  border: 1px solid #f0ecec;
+  background: none;
+  color: #f3efef;
+  padding: 8px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #ebe4e4;
+    }
+
+    .btn-primary {
+      border: 1px solid #f1eeee;
+      background: none;
+      color: #ede7e7;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #fdfbfb;
+  color: #eee8e8;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
     /* ===== البانر ===== */
     .hero {
       position: relative;
@@ -563,6 +697,37 @@ input[type="checkbox"] {
 </head>
 <body>
 
+  <header>
+  <div class="header-container">
+    <div class="logo">شيبارة</div>
+
+    <nav>
+      <ul>
+        <li><a href="villas.html">الفلل</a></li>
+        <li><a href="offers.html">العروض الخاصة</a></li>
+        <li><a href="dining.html">تناول الطعام</a></li>
+        <li><a href="activities.html">التجارب والنشاطات</a></li>
+        <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+        <li><a href="location.html">الموقع</a></li>
+        <li><a href="contact.html">للتواصل معنا</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+      <div class="language-switcher">
+        <button class="language-btn">
+          العربية <i class="fas fa-chevron-down"></i>
+        </button>
+        <ul class="language-menu">
+          <li><a href="index-ar.html">العربية</a></li>
+          <li><a href="index-en.html">English</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
   <!-- البانر -->
   <section class="hero">
     <!-- الشريط فوق الصورة -->
@@ -578,7 +743,7 @@ input[type="checkbox"] {
       <div class="bar-left">
         <span>غرفة</span>
         <span>الضيوف: 2</span>
-        <span>29 سبتمبر 2025</span>
+        <span id="dateDisplay">29 سبتمبر 2025</span>
         <button class="search-btn">بحث</button>
       </div>
     </div>
@@ -703,9 +868,7 @@ input[type="checkbox"] {
     <div class="price-section">
       <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
       <p>سعر الفيلا شامل الإفطار</p>
-      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  9,000 ﷼
-</div>
+      <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">9,000 ﷼</div>
     </div>
   </div>
 </div>
@@ -764,9 +927,7 @@ input[type="checkbox"] {
         <div class="price-section">
           <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
           <p>سعر الفيلا شامل الإفطار</p>
-          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  9,000 ﷼
-</div>
+         <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">9,000 ﷼</div>
         </div>
       </div>
     </div>
@@ -814,9 +975,7 @@ input[type="checkbox"] {
     <div class="price-section">
       <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
       <p>سعر الفيلا شامل الإفطار</p>
-      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  17,000 ﷼
-</div>
+     <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">17,000 ﷼</div>
     </div>
   </div>
 </div>
@@ -877,9 +1036,7 @@ input[type="checkbox"] {
         <div class="price-section">
           <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
           <p>سعر الفيلا شامل الإفطار</p>
-          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  17,000 ﷼
-</div>
+          <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">17,000 ﷼</div>
         </div>
       </div>
     </div>
@@ -930,9 +1087,7 @@ input[type="checkbox"] {
     <div class="price-section">
       <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
       <p>سعر الفيلا شامل الإفطار</p>
-      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  10,000 ﷼
-</div>
+      <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">11,400 ﷼</div>
     </div>
   </div>
 </div>
@@ -992,9 +1147,7 @@ input[type="checkbox"] {
         <div class="price-section">
           <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
           <p>سعر الفيلا شامل الإفطار</p>
-          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  10,000 ﷼
-</div>
+         <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">11,400 ﷼</div>
         </div>
       </div>
     </div>
@@ -1044,9 +1197,7 @@ input[type="checkbox"] {
     <div class="price-section">
       <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
       <p>سعر الفيلا شامل الإفطار</p>
-      <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  18,000 ﷼
-</div>
+      <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">18,000 ﷼</div>
     </div>
   </div>
 </div>
@@ -1108,9 +1259,7 @@ input[type="checkbox"] {
         <div class="price-section">
           <h3>فيلا شاملة الإفطار <i class="fas fa-circle-exclamation"></i></h3>
           <p>سعر الفيلا شامل الإفطار</p>
-          <div class="price" onclick="window.location.href='adon.html'" style="cursor:pointer;">
-  18,000 ﷼
-</div>
+          <div class="price" onclick="selectVillaPrice(this)" style="cursor:pointer;">18,000 ﷼</div>
         </div>
       </div>
     </div>
@@ -1390,8 +1539,20 @@ modalNext4.addEventListener("click", () => {
 });
 showModalSlide4(modalIndex4);
 
+document.addEventListener("DOMContentLoaded", function() {
+  const savedDate = localStorage.getItem("selectedDate");
+  if (savedDate) {
+    document.getElementById("dateDisplay").textContent = savedDate;
+  }
+});
 
-
+function selectVillaPrice(element) {
+    const priceText = element.textContent.replace(/[^0-9.]/g, ""); // حذف الرموز
+    const price = parseFloat(priceText);
+    localStorage.setItem('villaPrice', price); // حفظ السعر في localStorage
+    // يمكنك إعادة التوجيه مباشرةً إذا أردت
+    window.location.href = 'adon.html'; 
+}
 </script>
 </body>
 </html>
