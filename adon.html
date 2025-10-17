@@ -13,6 +13,140 @@
       color: #333;
     }
 
+    header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: none;
+  box-shadow: none;
+}
+
+/* كونتينر للهيدر */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;               /* كله يصير صف */
+  align-items: center;         /* يضبط الطول العمودي */
+  justify-content: space-between; /* توزيع بين اليسار واليمين */
+  height: 70px;
+}
+
+/* الشعار */
+.logo {
+  font-size: 50px;
+  font-weight: 600;
+  color: #f8f6f6;
+}
+
+/* القوائم */
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #f9f3f3;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background: rgba(241, 239, 239, 0.886);
+}
+
+/* أزرار اليمين */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-primary {
+  border: 1px solid #f0ecec;
+  background: none;
+  color: #f3efef;
+  padding: 8px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #ebe4e4;
+    }
+
+    .btn-primary {
+      border: 1px solid #f1eeee;
+      background: none;
+      color: #ede7e7;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #fdfbfb;
+  color: #eee8e8;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
     /* ===== البانر ===== */
     .hero {
       position: relative;
@@ -69,7 +203,7 @@
     }
 
     .bar-right button:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(249, 246, 246, 0.879);
     }
 
     .bar-right i {
@@ -108,7 +242,7 @@
     /* مربع التنبيه */
     .notice {
       background-color: #ffeaea;
-      color: #000;
+      color: #f9f2f2;
       text-align: center;
       padding: 15px 20px;
       font-size: 20px;
@@ -430,9 +564,6 @@ input[type="checkbox"] {
   color: #fff;
 }
 
-
-
-
 .modal {
   display: none; /* مخفي افتراضياً */
   position: fixed;
@@ -613,27 +744,117 @@ input[type="checkbox"] {
 .after-location .back-to-top:hover {
   text-decoration: underline;
 }
+
+.booking-summary {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff; /* لون المربع */
+  border-radius: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 25px;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 25px;
+  max-width: 100%;
+}
+
+.booking-info {
+  display: flex;
+  flex-direction: column; /* يخلي العناصر فوق بعض */
+  align-items: flex-start; /* يخليهم من اليسار */
+  gap: 5px; /* مسافة بسيطة بين الاسم والتاريخ */
+}
+
+.booking-info h3 {
+  font-size: 20px;
+  margin: 0;
+  color: #121111;
+}
+
+.booking-info p {
+  font-size: 14px;
+  color: #777;
+  margin: 2px 0 0 0;
+}
+
+.booking-details {
+  text-align: right;
+}
+
+.booking-details .price {
+  font-weight: 600;
+  font-size: 18px;
+  color: #121111; /* نفس لون النص */
+  background: none; /* بدون خلفية */
+  border: none; /* بدون مربع */
+}
+
+.bar-right p {
+  color: #fff;
+  font-size: 18px;
+  margin: 0;
+}
+
   </style>
 </head>
 <body>
+
+   <header>
+  <div class="header-container">
+    <div class="logo">شيبارة</div>
+
+    <nav>
+      <ul>
+        <li><a href="villas.html">الفلل</a></li>
+        <li><a href="offers.html">العروض الخاصة</a></li>
+        <li><a href="dining.html">تناول الطعام</a></li>
+        <li><a href="activities.html">التجارب والنشاطات</a></li>
+        <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+        <li><a href="location.html">الموقع</a></li>
+        <li><a href="contact.html">للتواصل معنا</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+      <div class="language-switcher">
+        <button class="language-btn">
+          العربية <i class="fas fa-chevron-down"></i>
+        </button>
+        <ul class="language-menu">
+          <li><a href="index-ar.html">العربية</a></li>
+          <li><a href="index-en.html">English</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
 
   <!-- البانر -->
   <section class="hero">
     <div class="booking-bar">
       <div class="bar-right">
-        <button><i class="fas fa-circle-exclamation"></i> المنتجع</button>
-        <button><i class="fas fa-images"></i> معرض الصور</button>
-        <button><i class="fas fa-map-marker-alt"></i> الخريطة</button>
+       <p>بحث جديد</p>
       </div>
 
       <div class="bar-left">
-        <span>غرفة</span>
-        <span>الضيوف: 2</span>
-        <span>29 سبتمبر 2025</span>
-        <button class="search-btn">بحث</button>
+        <p>HOTEL</p>
       </div>
     </div>
   </section>
+
+ <div class="booking-summary">
+  <div class="booking-info">
+    <h3>Shebara Resort</h3>
+    <p id="resortDate">16 - 17 أكتوبر 2025</p>
+  </div>
+  <div class="booking-details">
+    <p class="price" id="selectedVillaPrice">-- ﷼</p>
+  </div>
+</div>
+
 
   <!-- قسم عزز اقامتك -->
   <section>
@@ -868,11 +1089,6 @@ toggleButtons.forEach(btn => {
   });
 });
 
-
-
-
-
-
     // === السلايدر الأساسي (الكرت) ===
   const mainSlider = document.querySelector(".villa-card .slider");
   const mainSlides = mainSlider.querySelectorAll("img");
@@ -1032,7 +1248,64 @@ document.querySelectorAll(".toggle-btn").forEach(btn => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+  const savedDate = localStorage.getItem("selectedDate");
+  if (savedDate) {
+    document.getElementById("resortDate").textContent = savedDate;
+  }
+});
 
+// زر "تخطي هذه الخطوة"
+ const skipBtn = document.querySelector('.skip-btn');
+  skipBtn.addEventListener('click', () => {
+    window.location.href = 'buy.html';
+  });
+
+  // زر "تابع"
+  const continueBtn = document.querySelector('.continue-btn');
+  continueBtn.addEventListener('click', () => {
+    window.location.href = 'buy.html';
+  });
+
+  let villaPrice = parseFloat(localStorage.getItem('villaPrice')) || 0;
+let totalAddons = 0;
+
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const addonPrice = parseFloat(btn.dataset.price);
+    const infoText = document.querySelector(`.info-text[data-id="${btn.dataset.id}"]`);
+
+    if(btn.classList.contains('selected')) {
+      btn.classList.remove('selected');
+      totalAddons -= addonPrice;
+      infoText.style.display = 'none';
+    } else {
+      btn.classList.add('selected');
+      totalAddons += addonPrice;
+      infoText.style.display = 'inline';
+    }
+
+    const totalAmount = villaPrice + totalAddons;
+    document.getElementById('totalAmount').textContent = totalAmount.toFixed(2) + " ﷼";
+
+    // خزّن المجموع النهائي في localStorage للصفحة القادمة
+    localStorage.setItem('finalPrice', totalAmount);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    // عرض التاريخ كما كان لديك
+    const savedDate = localStorage.getItem("selectedDate");
+    if (savedDate) {
+        document.getElementById("resortDate").textContent = savedDate;
+    }
+
+    // عرض السعر المختار
+    const savedPrice = localStorage.getItem('villaPrice');
+    if (savedPrice) {
+        document.getElementById('selectedVillaPrice').textContent = parseFloat(savedPrice).toLocaleString('EG') + " ﷼";
+    }
+});
   </script>
 </body>
 </html>
