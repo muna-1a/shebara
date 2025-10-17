@@ -315,7 +315,7 @@ nav a:hover {
     </div>
 
     <!-- زر البحث -->
-    <button class="btn-submit" onclick="window.location.href='ar.html'">
+    <button class="btn-submit" onclick="searchAvailable()">
   البحث عن المتوفر
 </button>
   </div>
@@ -337,6 +337,16 @@ document.addEventListener('click', function(e) {
     document.querySelector('.language-menu').classList.remove('show');
   }
 });
+
+function searchAvailable() {
+  const dateValue = document.getElementById("checkin").value;
+  if (dateValue) {
+    localStorage.setItem("selectedDate", dateValue);
+    window.location.href = "ar.html";
+  } else {
+    alert("الرجاء اختيار تاريخ أولاً");
+  }
+}
 </script>
 
 </body>
