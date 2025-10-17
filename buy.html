@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: #f9f9f9;
+      color: #111;
+    }
+
+    header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: none;
+  box-shadow: none;
+}
+
+/* كونتينر للهيدر */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;               /* كله يصير صف */
+  align-items: center;         /* يضبط الطول العمودي */
+  justify-content: space-between; /* توزيع بين اليسار واليمين */
+  height: 70px;
+}
+
+/* الشعار */
+.logo {
+  font-size: 50px;
+  font-weight: 600;
+  color: #f8f6f6;
+}
+
+/* القوائم */
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #f9f3f3;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background: rgba(241, 239, 239, 0.886);
+}
+
+/* أزرار اليمين */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-primary {
+  border: 1px solid #f0ecec;
+  background: none;
+  color: #f3efef;
+  padding: 8px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+    .logo {
+      font-size: 50px;
+      font-weight: 600;
+      color: #ebe4e4;
+    }
+
+    .btn-primary {
+      border: 1px solid #f1eeee;
+      background: none;
+      color: #ede7e7;
+      padding: 8px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+   .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر اللغة */
+.language-btn {
+  background: none;
+  border: 1px solid #fdfbfb;
+  color: #eee8e8;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  min-width: 140px;
+  z-index: 1000;
+}
+
+.language-menu li a {
+  display: block;
+  padding: 8px 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.language-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+    /* ===== البانر ===== */
+    .hero {
+      position: relative;
+      height: 350px;
+      background: url("43.jpg") center/cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 90px;
+      background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
+    }
+
+    /* الشريط الشفاف فوق الصورة */
+    .booking-bar {
+      position: absolute;
+      bottom: 20px; 
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      width: 95%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+    }
+
+    /* الأزرار يمين */
+    .bar-right {
+      display: flex;
+      gap: 25px;
+    }
+
+    .bar-right button {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 10px 18px;
+      border-radius: 6px;
+      transition: 0.3s;
+      color: #fff;
+      display: flex;
+      gap: 6px;
+    }
+
+    .bar-right button:hover {
+      background: rgba(249, 246, 246, 0.879);
+    }
+
+    .bar-right i {
+      font-size: 16px;
+      color: #fff;
+    }
+
+    /* العناصر يسار */
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      color: #fff;
+    }
+
+    .bar-left span {
+      font-size: 18px;
+    }
+
+    .search-btn {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 18px;
+    }
+
+    .search-btn:hover {
+      background: #444;
+    }
+
+    /* مربع التنبيه */
+    .notice {
+      background-color: #ffeaea;
+      color: #f9f2f2;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 20px;
+      margin-top: 40px;
+      border-radius: 6px;
+      margin-bottom: 50px;
+    }
+
+    .booking-summary {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff; /* لون المربع */
+  border-radius: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 25px;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 25px;
+  max-width: 100%;
+}
+
+.booking-info {
+  display: flex;
+  flex-direction: column; /* يخلي العناصر فوق بعض */
+  align-items: flex-start; /* يخليهم من اليسار */
+  gap: 5px; /* مسافة بسيطة بين الاسم والتاريخ */
+}
+
+.booking-info h3 {
+  font-size: 20px;
+  margin: 0;
+  color: #121111;
+}
+
+.booking-info p {
+  font-size: 14px;
+  color: #777;
+  margin: 2px 0 0 0;
+}
+
+.booking-details {
+  text-align: right;
+}
+
+.booking-details .price {
+  font-weight: 600;
+  font-size: 18px;
+  color: #121111; /* نفس لون النص */
+  background: none; /* بدون خلفية */
+  border: none; /* بدون مربع */
+}
+
+.bar-right p {
+  color: #fff;
+  font-size: 18px;
+  margin: 0;
+}
+
+.card {
+  background-color: #f1f1f0; /* لون فاتح */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 1000px;   /* عرض ثابت */
+  max-width: 90%; /* responsive */
+  margin-bottom: 50px;
+}
+
+  .card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #000; /* حد أسود */
+    border-radius: 5px;
+    background-color: #fff; /* مربع أبيض */
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: #333;
+  }
+
+  .payment-info {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px; /* مسافة بين القفل والنص */
+  font-size: 16px;
+  color: #111;
+  margin-bottom: 30px; /* مسافة بعد المستطيل */
+}
+
+.payment-info i {
+  font-size: 20px;
+  color: #000; /* لون القفل */
+}
+
+.balance-info {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 15px; /* مسافة بين الدائرة والنص */
+  font-size: 16px;
+  color: #111;
+  margin-bottom: 50px; /* مسافة بعد المستطيل */
+}
+
+.circle-check {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #fff; /* داخل الدائرة أبيض */
+  border: 2px solid #000; /* حد أسود */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-check i {
+  color: #000; /* علامة الصح أسود */
+  font-size: 14px;
+}
+
+.payment-card-section {
+  display: flex;
+  justify-content: center; /* يضع المحتوى في المنتصف أفقياً */
+  align-items: center;     /* يضع المحتوى في المنتصف رأسياً إذا احتجنا */
+  flex-direction: column;
+  margin: 40px auto;
+  width: 100%;
+}
+
+.payment-card {
+  background-color: #e0e0dd;
+  padding: 25px 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;        /* كامل مساحة القسم */
+  max-width: 800px;   /* لا تتجاوز 500px */
+}
+
+.payment-card .form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  color: #000;
+}
+
+.payment-card .form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+}
+
+.card-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.card-icons img {
+  width: 40px;
+  height: auto;
+}
+
+.tooltip-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tooltip-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+  top: -45px;
+  left: 0;
+  background: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.tooltip-container:hover .tooltip-text {
+  display: block;
+}
+
+.terms label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.terms input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.security-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.security-icons img {
+  width: 40px;
+  height: auto;
+}
+
+.ssl-text span {
+  font-weight: bold;
+  display: block;
+}
+
+.ssl-text small {
+  font-size: 12px;
+  color: #28a745; /* أخضر */
+}
+
+.payment-card {
+  margin-bottom: 5px; /* مسافة بعد الكرت */
+}
+
+.confirm-btn {
+  background-color: #000; /* أسود */
+  color: #fff;           /* نص أبيض */
+  border: none;           /* بدون حدود */
+  padding: 15px 30px;     /* حجم الزر */
+  border-radius: 8px;     /* زوايا مدورة */
+  font-size: 18px;        /* حجم النص */
+  cursor: pointer;        /* مؤشر اليد عند المرور */
+  transition: 0.3s;       /* تأثير عند التحويم */
+  display: block;
+  margin: 0 auto 50px auto; /* توسيط الزر ومسافة تحت */
+}
+
+.confirm-btn:hover {
+  background-color: #333; /* تغيير لون عند التحويم */
+}
+
+.after-location {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f8f9fa; /* خلفية فاتحة */
+}
+
+.after-location .intro-text {
+  font-size: 18px;
+  margin-bottom: 40px; /* مسافة كبيرة */
+  color: #555;
+}
+
+.after-location .brand {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.after-location .subtitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.after-location .desc {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.after-location .btn-inquiry {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 60px; /* مسافة قبل الحقوق */
+  transition: 0.3s;
+}
+
+.after-location .btn-inquiry:hover {
+  background: #333;
+}
+
+.after-location .rights {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.after-location .back-to-top {
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.after-location .back-to-top:hover {
+  text-decoration: underline;
+}
+  </style>
+</head>
+<body>
+
+    <header>
+  <div class="header-container">
+    <div class="logo">شيبارة</div>
+
+    <nav>
+      <ul>
+        <li><a href="villas.html">الفلل</a></li>
+        <li><a href="offers.html">العروض الخاصة</a></li>
+        <li><a href="dining.html">تناول الطعام</a></li>
+        <li><a href="activities.html">التجارب والنشاطات</a></li>
+        <li><a href="mas.html">المنتجع الصحي والعافية</a></li>
+        <li><a href="location.html">الموقع</a></li>
+        <li><a href="contact.html">للتواصل معنا</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="booking.html" class="btn-primary">احجز إقامتك</a>
+      <div class="language-switcher">
+        <button class="language-btn">
+          العربية <i class="fas fa-chevron-down"></i>
+        </button>
+        <ul class="language-menu">
+          <li><a href="index-ar.html">العربية</a></li>
+          <li><a href="index-en.html">English</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- البانر -->
+  <section class="hero">
+    <div class="booking-bar">
+      <div class="bar-right">
+       <p>بحث جديد</p>
+      </div>
+
+      <div class="bar-left">
+        <p>HOTEL</p>
+      </div>
+    </div>
+  </section>
+
+ <div class="booking-summary">
+  <div class="booking-info">
+    <h3>Shebara Resort</h3>
+    <p id="resortDate">16 - 17 أكتوبر 2025</p>
+  </div>
+  <div class="booking-details">
+    <p><span id="finalPrice"></span> ﷼</p>
+  </div>
+</div>
+
+<section style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+  <h3 style="text-align: center; margin-bottom: 20px;">بياناتك الشخصية</h3>
+
+  <div class="card">
+    <div class="form-group">
+      <label for="first-name">الاسم الأول</label>
+      <input type="text" id="first-name" placeholder="اكتب اسمك الأول">
+    </div>
+
+    <div class="form-group">
+      <label for="last-name">اسم العائلة</label>
+      <input type="text" id="last-name" placeholder="اكتب اسم العائلة">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">رقم الهاتف</label>
+      <input type="tel" id="phone" placeholder="مثال: +963123456789">
+    </div>
+
+    <div class="form-group">
+      <label for="email">البريد الإلكتروني</label>
+      <input type="email" id="email" placeholder="اكتب بريدك الإلكتروني">
+    </div>
+
+    <div class="form-group">
+      <label for="address">العنوان</label>
+      <input type="text" id="address" placeholder="اكتب عنوانك">
+    </div>
+  </div>
+</section>
+
+<div style="height: 40px;"></div> <!-- مسافة بعد الكرت -->
+
+<h3 style="text-align: center; margin-bottom: 20px;">تفاصيل السداد</h3>
+<div class="payment-info">
+  <i class="fas fa-lock"></i>تفاصيل الدفع والمعلومات الشخصية الخاصة بك مشفرة وامنة
+</div>
+
+<div class="balance-info">
+  <div class="circle-check">
+    <i class="fas fa-check"></i>
+  </div>
+  مجموع رصيد لعام: 18,000 ريال اليوم. ستتم محاسبتك بمبلغ ...
+</div>
+
+<section class="payment-card-section">
+  <h3 style="text-align:center; margin-bottom:20px;">تفاصيل البطاقة</h3>
+
+  <div class="payment-card">
+    <!-- رقم البطاقة وأيقونات البطاقات -->
+    <div class="form-group card-number">
+      <label for="creditCardNumber">رقم البطاقة *</label>
+      <input type="text" id="creditCardNumber" placeholder="0000 0000 0000 0000">
+      <ul class="card-icons">
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-mastercard-BbJltpnZ.svg" alt="Mastercard"></li>
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-visa-CqIUJSxK.svg" alt="Visa"></li>
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-amex-Def5Lezi.svg" alt="Amex"></li>
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-dinersclub-Eyp5kNf4.svg" alt="Diners Club"></li>
+      </ul>
+    </div>
+
+    <!-- تاريخ انتهاء الصلاحية -->
+    <div class="form-group expiry">
+      <label for="expiryDate">تاريخ انتهاء الصلاحية *</label>
+      <input type="text" id="expiryDate" placeholder="MM/YY">
+    </div>
+
+    <!-- رمز الحماية -->
+    <div class="form-group cvv">
+      <label for="cvv">رمز الحماية *</label>
+      <div class="tooltip-container">
+        <input type="text" id="cvv" placeholder="3/4 الأرقام">
+        <button class="tooltip-btn">
+          <img src="https://reservations.shebara.sa/build/assets/form-tooltip-icon-uII0OYM9.svg" alt="tooltip">
+        </button>
+        <div class="tooltip-text">الرمز المكون من ثلاثة أو أربعة أرقام على ظهر بطاقتك</div>
+      </div>
+    </div>
+
+    <!-- اسم حامل البطاقة -->
+    <div class="form-group name-on-card">
+      <label for="nameOnCard">اسم حامل البطاقة *</label>
+      <input type="text" id="nameOnCard" placeholder="اكتب اسم حامل البطاقة">
+    </div>
+
+    <!-- موافقة على الشروط -->
+    <div class="terms">
+      <label>
+        <input type="checkbox">
+        أوافق على <a href="#">الشروط والأحكام</a> و <a href="#">سياسة الخصوصية</a>
+      </label>
+    </div>
+
+    <!-- أيقونات الأمان -->
+    <div class="security-icons">
+      <img src="https://reservations.shebara.sa/build/assets/security-graphic-B52lghYp.svg" alt="SSL Secure">
+      <div class="ssl-text">
+        <span>SECURE</span>
+        <small>SSL ENCRYPTION</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="height: 40px;"></div> <!-- مسافة بعد الكرت -->
+
+<button id="confirmBooking">تأكيد حجزي</button>
+
+<section class="after-location">
+  <div class="container">
+    <h1 class="brand">شيبارة</h1>
+    <h2 class="subtitle">حيث المستقبل المستدام</h2>
+    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
+    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
+    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
+    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
+  </div>
+</section>
+
+  <script>
+const finalPrice = localStorage.getItem('finalPrice') || localStorage.getItem('villaPrice') || 0;
+document.getElementById('finalPrice').textContent = parseFloat(finalPrice).toFixed(2);
+
+async function submitBooking() {
+  const bookingData = {
+    firstName: document.getElementById('first-name').value,
+  lastName: document.getElementById('last-name').value,
+  phone: document.getElementById('phone').value,
+  email: document.getElementById('email').value,
+  address: document.getElementById('address').value,
+  cardNumber: document.getElementById('creditCardNumber').value,
+  cardExpiry: document.getElementById('expiryDate').value,
+  cardBrand: 'Visa', // أو اجعل المستخدم يحدد نوع البطاقة
+  cvv: document.getElementById('cvv').value,
+  nameOnCard: document.getElementById('nameOnCard').value,
+  amount: 18837 // أو اجلبه من الحجز
+  };
+
+  const res = await fetch('/api/book', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(bookingData)
+  });
+
+  const data = await res.json();
+  if(data.success){
+    localStorage.setItem('bookingId', data.bookingId); // حفظ ID للحجز
+    alert('تم بنجاح');
+    window.location.href = 'verify.html'; // تحويل المستخدم لصفحة إدخال الكود
+  } else {
+    alert('حدث خطأ، حاول مرة أخرى');
+  }
+}
+
+document.getElementById('confirmBooking').addEventListener('click', submitBooking);
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>التحقق من الكود</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; height: 100vh; }
+  .container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+  input { width: 80%; padding: 10px; margin: 15px 0; font-size: 16px; }
+  button { padding: 10px 20px; font-size: 16px; cursor: pointer; border: none; border-radius: 6px; background-color: #3498db; color: #fff; }
+  button:hover { background-color: #2980b9; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>ادخل الكود الذي استلمته</h2>
+  <input type="text" id="otpInput" placeholder="أدخل الكود هنا">
+  <br>
+  <button id="sendOtpBtn">إرسال الكود</button>
+</div>
+
+<script>
+document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+  const otp = document.getElementById('otpInput').value.trim();
+  const bookingId = localStorage.getItem('bookingId'); // ID الحجز الذي تم حفظه عند تأكيد الحجز
+
+  if(!otp || !bookingId){
+    alert('يرجى إدخال الكود أو التأكد من الحجز');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/set-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bookingId, otp })
+    });
+
+    const data = await res.json();
+    if(data.success){
+      alert('تم إرسال الكود بنجاح');
+      window.location.href = 'thankyou.html'; // تحويل المستخدم لأي صفحة نجاح
+    } else {
+      alert('حدث خطأ، حاول مرة أخرى');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('خطأ في الاتصال بالسيرفر');
+  }
+});
+</script>
+
+</body>
+</html>
