@@ -706,64 +706,39 @@ nav a:hover {
 const finalPrice = localStorage.getItem('finalPrice') || localStorage.getItem('villaPrice') || 0;
 document.getElementById('finalPrice').textContent = parseFloat(finalPrice).toFixed(2);
 
-async function submitBooking() {
-  // جميع الحقول المطلوبة
-  const fields = [
-    'first-name',
-    'last-name',
-    'phone',
-    'email',
-    'address'
-  ];
-
+function proceedToPayment() {
+  const fields = ['first-name','last-name','phone','email','address'];
   let allFilled = true;
 
-  // تحقق من كل الحقول
   fields.forEach(id => {
     const input = document.getElementById(id);
     if (!input.value.trim()) {
-      input.style.border = '2px solid red'; // إطار أحمر للمربع الفارغ
+      input.style.border = '2px solid red';
       allFilled = false;
     } else {
-      input.style.border = '1px solid #000'; // يرجع طبيعي لو معبّى
+      input.style.border = '1px solid #000';
     }
   });
 
   if (!allFilled) {
     alert('يرجى تعبئة جميع الحقول قبل المتابعة');
-    return; // يوقف الكود وما يروح للصفحة الثانية
+    return;
   }
 
-  // إرسال البيانات للخادم
-  const bookingData = {
+  const personalData = {
     firstName: document.getElementById('first-name').value,
     lastName: document.getElementById('last-name').value,
     phone: document.getElementById('phone').value,
     email: document.getElementById('email').value,
     address: document.getElementById('address').value,
+    finalPrice: finalPrice
   };
+  localStorage.setItem('personalData', JSON.stringify(personalData));
 
-  try {
-    const res = await fetch('https://shebara.onrender.com/api/book', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bookingData)
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      localStorage.setItem('bookingId', data.bookingId);
-      alert('تم الحجز بنجاح');
-      window.location.href = 'payment.html';
-    } else {
-      alert('حدث خطأ أثناء الحجز، حاول مرة أخرى');
-    }
-  } catch (error) {
-    alert('فشل الاتصال بالخادم، حاول مجددًا لاحقًا');
-  }
+  window.location.href = 'payment.html';
 }
 
-document.getElementById('confirmBooking').addEventListener('click', submitBooking);
+document.getElementById('confirmBooking').addEventListener('click', proceedToPayment);
 </script>
 </body>
 </html>

