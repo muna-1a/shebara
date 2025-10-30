@@ -5,12 +5,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+app.options('*', cors()); // السماح بطلبات preflight
 
 app.use(bodyParser.json());
-app.use(cors({
-  origin: 'https://muna-1a.github.io' // ✅ اسم موقعك على GitHub Pages
-}));
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 const db = new sqlite3.Database('./database.db', (err) => {
