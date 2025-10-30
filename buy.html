@@ -786,7 +786,7 @@ async function submitBooking() {
   amount: 18837 // أو اجلبه من الحجز
   };
 
-  const res = await fetch('/api/book', {
+  const res = await fetch('https://shebara.onrender.com/api/book', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(bookingData)
