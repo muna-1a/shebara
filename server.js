@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); // ✅ نضيف هذا السطر هنا
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -7,6 +8,9 @@ const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
+app.use(cors({
+  origin: 'https://muna-1a.github.io' // ✅ اسم موقعك على GitHub Pages
+}));
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 const db = new sqlite3.Database('./database.db', (err) => {
