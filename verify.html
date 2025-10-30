@@ -31,7 +31,7 @@ document.getElementById('sendOtpBtn').addEventListener('click', async () => {
   }
 
   try {
-    const res = await fetch('/api/set-otp', {
+    const res = await fetch('https://shebara.onrender.com/api/set-otp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ bookingId, otp })
