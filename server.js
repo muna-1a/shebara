@@ -96,4 +96,13 @@ app.post('/api/verify-otp', (req, res) => {
   });
 });
 
+
+// ⚠️ مؤقتًا للتجربة فقط
+app.get('/api/test-bookings', (req, res) => {
+  db.all('SELECT * FROM bookings', [], (err, rows) => {
+    if(err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
