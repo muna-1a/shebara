@@ -601,7 +601,6 @@ nav a:hover {
 
  <script>
 const finalPrice = localStorage.getItem('finalPrice') || localStorage.getItem('villaPrice') || 0;
-document.getElementById('finalPrice').textContent = parseFloat(finalPrice).toFixed(2);
 
 async function submitBooking() {
   const bookingData = {

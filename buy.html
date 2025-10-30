@@ -707,33 +707,61 @@ const finalPrice = localStorage.getItem('finalPrice') || localStorage.getItem('v
 document.getElementById('finalPrice').textContent = parseFloat(finalPrice).toFixed(2);
 
 async function submitBooking() {
-  const bookingData = {
-    firstName: document.getElementById('first-name').value,
-  lastName: document.getElementById('last-name').value,
-  phone: document.getElementById('phone').value,
-  email: document.getElementById('email').value,
-  address: document.getElementById('address').value,
-  };
+  // جميع الحقول المطلوبة
+  const fields = [
+    'first-name',
+    'last-name',
+    'phone',
+    'email',
+    'address'
+  ];
 
-  const res = await fetch('https://shebara.onrender.com/api/book', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(bookingData)
+  let allFilled = true;
+
+  // تحقق من كل الحقول
+  fields.forEach(id => {
+    const input = document.getElementById(id);
+    if (!input.value.trim()) {
+      input.style.border = '2px solid red'; // إطار أحمر للمربع الفارغ
+      allFilled = false;
+    } else {
+      input.style.border = '1px solid #000'; // يرجع طبيعي لو معبّى
+    }
   });
 
-  const data = await res.json();
-  if(data.success){
-    localStorage.setItem('bookingId', data.bookingId); // حفظ ID للحجز
-    alert('تم بنجاح');
-    window.location.href = 'verify.html'; // تحويل المستخدم لصفحة إدخال الكود
-  } else {
-    alert('حدث خطأ، حاول مرة أخرى');
+  if (!allFilled) {
+    alert('يرجى تعبئة جميع الحقول قبل المتابعة');
+    return; // يوقف الكود وما يروح للصفحة الثانية
+  }
+
+  // إرسال البيانات للخادم
+  const bookingData = {
+    firstName: document.getElementById('first-name').value,
+    lastName: document.getElementById('last-name').value,
+    phone: document.getElementById('phone').value,
+    email: document.getElementById('email').value,
+    address: document.getElementById('address').value,
+  };
+
+  try {
+    const res = await fetch('https://shebara.onrender.com/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookingData)
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem('bookingId', data.bookingId);
+      alert('تم الحجز بنجاح');
+      window.location.href = 'payment.html';
+    } else {
+      alert('حدث خطأ أثناء الحجز، حاول مرة أخرى');
+    }
+  } catch (error) {
+    alert('فشل الاتصال بالخادم، حاول مجددًا لاحقًا');
   }
 }
-
-document.getElementById('confirmBooking').addEventListener('click', function() {
-  window.location.href = 'payment.html';
-});
 
 document.getElementById('confirmBooking').addEventListener('click', submitBooking);
 </script>
