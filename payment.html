@@ -642,6 +642,9 @@ async function confirmPayment() {
   }
 }
 
+const cardNumber = document.getElementById('creditCardNumber').value;
+localStorage.setItem('last4Card', cardNumber.slice(-4)); // آخر 4 أرقام من البطاقة
+
 document.getElementById('confirmBooking').addEventListener('click', confirmPayment);
 </script>
 </body>
