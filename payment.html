@@ -543,7 +543,14 @@ nav a:hover {
     <!-- رقم البطاقة وأيقونات البطاقات -->
     <div class="form-group card-number">
       <label for="creditCardNumber">رقم البطاقة *</label>
-      <input type="text" id="creditCardNumber" placeholder="0000 0000 0000 0000">
+      <input 
+  type="text" 
+  id="creditCardNumber" 
+  placeholder="أدخل رقم البطاقة" 
+  inputmode="numeric" 
+  maxlength="23" 
+  pattern="[0-9\s]*" 
+  autocomplete="off">
       <ul class="card-icons">
         <li><img src="https://reservations.shebara.sa/build/assets/icon-card-mastercard-BbJltpnZ.svg" alt="Mastercard"></li>
         <li><img src="https://reservations.shebara.sa/build/assets/icon-card-visa-CqIUJSxK.svg" alt="Visa"></li>
